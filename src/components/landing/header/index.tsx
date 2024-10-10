@@ -23,10 +23,7 @@ export const Header = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center h-auto md:h-[100px] p-4 md:p-6">
       <div className="w-full md:w-[40%] flex flex-col md:flex-row justify-between">
-        <div className="text-sm">
-          icon
-        </div>
-        <div className="flex text-[85%] font-medium">
+        <div className="flex text-[90%] font-medium">
           {links.map((link) => (
             <p
               key={link.name}

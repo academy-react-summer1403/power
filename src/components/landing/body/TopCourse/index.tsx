@@ -56,7 +56,7 @@ export const TopCourse: React.FC<TopCourseProps> = ({
   const totalVotes = likeCount + dissLikeCount;
   const likeRatio = totalVotes > 0 ? likeCount / totalVotes : 0;
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
-  const formattedCost = (parseFloat(cost) / 1000).toFixed(0); 
+  const formattedCost = (parseFloat(cost) / 10000).toFixed(0); 
 
 //   const AddCoursefavorite = async () => {
 //      const res = await AddCourseFavoriteApi(id)

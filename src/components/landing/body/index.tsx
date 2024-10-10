@@ -393,7 +393,7 @@ export const Body = () => {
           {" "}
           اخرین اخبار ما{" "}
         </h1>
-        <div className="w-[1440px] h-[575px] flex justify-center gap-3">
+        <div className="">
           <NewsWrapper newsList={newsList} />
         </div>
       </div>

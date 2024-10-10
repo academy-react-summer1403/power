@@ -1,6 +1,5 @@
-"use client";
-
 import React from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { LandingNews } from ".";
 
 interface News {
@@ -18,20 +17,29 @@ interface NewsWrapperProps {
 
 export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
   return (
-    <>
-      {newsList.news
-        ? newsList.news.map((item) => (
+    <div className="w-[1440px] h-[575px] flex justify-center gap-3 overflow-hidden">
+      <Swiper
+        spaceBetween={30}
+        slidesPerView={4}
+        pagination={{ clickable: true }}
+        navigation={true}
+        className="w-full h-full flex justify-center flex-nowrap"
+      >
+        {newsList.news ? newsList.news.map((item) => (
+          <SwiperSlide className="flex w-full h-full justify-center" >
             <LandingNews 
-            key={item.id} 
-            Id={item.id} 
-            title={item.title}
-            Img={item.currentImageAddressTumb}
-            Date={item.insertDate}
-            miniDescribe={item.miniDescribe}
-            View={item.currentView}
+              Id={item.id} 
+              title={item.title}
+              Img={item.currentImageAddressTumb}
+              Date={item.insertDate}
+              miniDescribe={item.miniDescribe}
+              View={item.currentView}
             />
-          ))
-        : <div> در حال بارگذاری... </div>}
-    </>
+          </SwiperSlide>
+        )) : (
+          <div>در حال بارگذاری...</div>
+        )}
+      </Swiper>
+    </div>
   );
 };
