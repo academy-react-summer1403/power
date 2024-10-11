@@ -28,7 +28,7 @@ interface CourseWrapperProps {
 export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) => {
     return (
         <>
-            {stateTopCourse.map((item) => (
+            {stateTopCourse? stateTopCourse.map((item) => (
                 <TopCourse
                     key={item.id}
                     tumbImageAddress={item.tumbImageAddress}
@@ -46,7 +46,7 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) 
                     id={item.courseId}
                     isUserFavorite={item.isUserFavorite}
                 />
-            ))}
+            )): <div className="text-center"> منتظر بمانید ... </div>}
         </>
     );
 };

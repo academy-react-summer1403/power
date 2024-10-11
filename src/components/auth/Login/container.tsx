@@ -11,6 +11,7 @@ import { setItem } from "@/core/services/common/storage.services";
 import { LoginApi } from "@/core/services/api/auth";
 import { Link } from "react-router-dom";
 import { AuthHeader } from "../authHeader";
+import AOS from 'aos';
 
 export const LoginContainer = () => {
   const [isLoading, setIsLoading] = useState(false); 
@@ -51,7 +52,7 @@ export const LoginContainer = () => {
     >
       <Form>
         <div className="bg-[#5751E1] h-auto md:h-screen flex justify-center items-center w-full">
-          <div className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
+          <div data-aos='flip-up' className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
             <div className="w-full overflow-y-auto md:w-[40%] h-full flex flex-wrap justify-center items-center bg-white rounded-[50px] p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
               <h1 className="w-full  text-[30px] md:text-[35px] 2xl:text-[40px]">
                 خوش اومدید!

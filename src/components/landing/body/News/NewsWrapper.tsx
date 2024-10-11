@@ -9,6 +9,9 @@ interface News {
   insertDate: string;
   miniDescribe: string;
   currentView: number;
+  DisLikeCount: number;
+  LikeCount: number ;
+  Catregory: string;
 }
 
 interface NewsWrapperProps {
@@ -34,6 +37,9 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
               Date={item.insertDate}
               miniDescribe={item.miniDescribe}
               View={item.currentView}
+              DisLikeCount={item.currentDissLikeCount}
+              LikeCount={item.currentLikeCount}
+              Catregory={item.newsCatregoryName}
             />
           </SwiperSlide>
         )) : (

@@ -44,7 +44,7 @@ export const StepThree: React.FC<StepThreeProps> = ({ setNumber, setCount }) => 
     >
       <Form>
         <div className="bg-[#5751E1] h-auto md:h-screen flex justify-center items-center w-full">
-          <div className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
+          <div data-aos='zoom-in' className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
             <div className="w-full md:w-[40%] h-full overflow-y-auto flex flex-wrap justify-center items-center bg-white rounded-[50px] p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
               <h1 className="w-full text-[30px] md:text-[35px] 2xl:text-[40px]">
                 ایمیل و پسورد را وارد کنید

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(../assets/font/fontIRAN.css);
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -16,16 +18,37 @@ input::selection{
 }
 
 body {
-  font-family: Poppins;
+  font-family: IRANSans !important;
+  font-weight: 500;
   direction: rtl;
   background: #FFFFFF;
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
-@font-face {
-  font-family: Poppins;
-  src: url(../assets/font/PoppinsLatin-Medium.ttf);
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:after {
+  content: attr(data-title);
+  background-color: white;
+  color: #111;
+  font-size: 14px;
+  position: absolute;
+  border-radius: 10px;
+  padding: 5px;
+  bottom: -1.8em;
+  white-space: nowrap;
+  box-shadow: 1px 1px 3px #3a3a3a;
+  opacity: 0;
+  border: 1px solid #111111;
+  z-index: 99999;
+  visibility: hidden;
+}
+[data-title] {
+  position: relative;
 }
 
 @layer utilities {
@@ -36,4 +59,8 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.dark{
+  background:rgb(24,21,78)
 }
