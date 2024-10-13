@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import {
   GetLandingApi,
   GetNewsForLanding,
+  GetTeacherForLanding,
   GetTopCoursesApi,
 } from "@/core/services/api/landing";
 import { HeroSection } from "./HeroSection";
@@ -22,6 +23,7 @@ export const Body = () => {
   const [LandingApi, setLandingApi] = useState([]);
   const [topCourseState, setTopCourseState] = useState([]);
   const [newsList, setNewsList] = useState([]);
+  const [teacherList, setTeacherList] = useState([]);
 
   // GetLandingReportApi
   useEffect(() => {
@@ -41,6 +43,12 @@ export const Body = () => {
       setLandingApi(result);
     };
 
+    const fetchLandingTeachers = async () => {
+        const result = await GetTeacherForLanding()
+        setTeacherList(result)
+    }
+
+    fetchLandingTeachers()
     fetchNews();
     fetchTopCourseData();
     fetchData();
@@ -55,7 +63,7 @@ export const Body = () => {
         <TopCoursesSection topCourseState={topCourseState} />
       </div>
       <NewsletterSection />
-      <StatsSection landingApi={LandingApi} />
+      <StatsSection teacherList={teacherList} landingApi={LandingApi} />
       <FAQSection />
       <LearningJourney />
       <BlogSection newsList={newsList} />

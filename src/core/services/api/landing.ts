@@ -36,3 +36,14 @@ export const GetNewsForLanding = async () => {
       console.error(error, "error");
     }
   };
+
+
+export const GetTeacherForLanding = async () => { 
+    try {
+        const res = await axios.get(`${BaseUrl}/Home/GetTeachers`); 
+        return res.data;
+    } catch (error) {
+        console.log(error, "error");
+        return null;
+    }
+  }
