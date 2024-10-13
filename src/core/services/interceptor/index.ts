@@ -17,11 +17,11 @@ const onSuccess = <T>(response: AxiosResponse<ApiResponse<T>>): T => {
 };
 
 const onError = (err: AxiosError): Promise<never> => {
-  const router = useRouter(); // Get router instance
+  const router = useRouter();
 
   if (err.response?.status === 401) {
     removeItem("token");
-    router.push("/Login"); // Use Next.js router for navigation
+    router.push("/Login"); 
   }
 
   if (err.response) {

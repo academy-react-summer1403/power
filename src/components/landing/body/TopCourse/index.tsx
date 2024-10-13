@@ -58,13 +58,10 @@ export const TopCourse: React.FC<TopCourseProps> = ({
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
   const formattedCost = (parseFloat(cost) / 10000).toFixed(0); 
 
-//   const AddCoursefavorite = async () => {
-//      const res = await AddCourseFavoriteApi(id)
-//      if (res.success === true) {
-//         toast.success("Course Favorite")
-//      }
-//      else toast.error("Try again later")
-//   }
+  const AddCoursefavorite = async () => {
+    const CouseId = id;
+     const res = await AddCourseFavoriteApi(CouseId)
+  }
 
   return (
     <div className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-[#FFFFFF] border border-[#B5B5C380]">
@@ -75,7 +72,7 @@ export const TopCourse: React.FC<TopCourseProps> = ({
         height={190}
         className="rounded-xl h-[190px]  w-[300px]"
       />
-      <div className=" absolute w-9 h-9 flex justify-center items-center cursor-pointer bg-white left-9 top-10 rounded-md" onClick={() => AddCourseFavoriteApi()} >
+      <div className=" absolute w-9 h-9 flex justify-center items-center cursor-pointer bg-white left-9 top-10 rounded-md" onClick={() => AddCoursefavorite()} >
                 <Image src={isUserFavorite? FavotiteTruePic : FavoritePic } alt="" />
       </div>
       <div className="p-4 w-[95%]">

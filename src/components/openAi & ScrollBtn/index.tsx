@@ -4,7 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { handleInputChange } from "@/core/validation/forbiddenWords";
 import { FaArrowCircleUp, FaMoon, FaSun } from "react-icons/fa";
+import UpArow from "@/assets/Icon.png"
 import { AiOutlineMessage } from "react-icons/ai";
+import Image from "next/image";
 
 interface Message {
   sender: "user" | "bot";
@@ -367,7 +369,7 @@ export const ChatBot: React.FC = () => {
           showScrollBtn ? " bottom-6 " : "  bottom-[-50px]"
         } `}
       >
-        <FaArrowCircleUp />
+        <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt='' />
       </button>
     </div>
   );

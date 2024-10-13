@@ -47,7 +47,7 @@ export const HeroSection = () => {
         </div>
       </div>
       <div
-        className="h-[700px] lg:h-[450px] w-full lg:w-[720px] flex-wrap lg:flex-nowrap bg-cover bg-center flex justify-center"
+        className="h-[700px] hidden lg:h-[450px] w-full lg:w-[720px] flex-wrap lg:flex-nowrap bg-cover bg-center lg:flex justify-center"
         style={{
           backgroundImage: `url(${HeroSectionPic.src})`,
           backgroundSize: "cover",

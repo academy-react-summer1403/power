@@ -1,4 +1,5 @@
 import { BaseUrl } from "@/config";
+import http from "../interceptor"
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -22,7 +23,7 @@ export const GetTopCoursesApi = async () => {
 
 export const AddCourseFavoriteApi = async (CouseId : string) => {
     try {
-        await axios.post(`${BaseUrl}/Course/AddCourseFavorite` , CouseId)
+        await http.post('/Course/AddCourseFavorite' , CouseId)
     } catch (error) {
         console.log(error , "error")
     }

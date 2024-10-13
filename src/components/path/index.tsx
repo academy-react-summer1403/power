@@ -22,7 +22,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
                         500, 
                     ]}
                     repeat={Infinity}
-                    speed={30} 
+                    speed={20} 
                     className='w-full text-center text-[40px] font-semibold text-[#161439]'
                 />
             )}
