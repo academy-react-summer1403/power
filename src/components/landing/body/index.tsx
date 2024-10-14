@@ -10,7 +10,7 @@ import {
   GetTopCoursesApi,
 } from "@/core/services/api/landing";
 import { HeroSection } from "./HeroSection";
-import { CategorySection } from "./TopCourse/CategorySection";
+import { CategorySection } from "./CategorySection";
 import { BodyAboutUs } from "./BodyAboutUs";
 import { BlogSection } from "./BlogSection";
 import { TopCoursesSection } from "./TopCoursesSection";

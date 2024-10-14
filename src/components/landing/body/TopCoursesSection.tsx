@@ -1,5 +1,5 @@
 import React from "react";
-import { CourseWrapper } from "./TopCourse/CourseWrapper";
+import { CourseWrapper } from "../../Course/CourseWrapper";
 import ArowPic from "@/assets/landing/HeroSection/arow.png";
 import HeroSectionBack from "@/assets/landing/HeroSection/heroSectionBack.png";
 import Image from "next/image";

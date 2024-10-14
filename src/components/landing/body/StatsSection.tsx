@@ -31,14 +31,14 @@ export const StatsSection = ({ landingApi, teacherList }) => {
           </button>
         </div>
         <div className="w-[850px] h-full flex flex-wrap gap-14">
-          {teacherList.slice(0, 4).map((item, index) => {
+          {teacherList? teacherList.slice(0, 4).map((item, index) => {
             return (
               <div
                 className="w-[390px] h-[185px] items-center flex justify-center gap-6"
                 key={index}
               >
                 <div className="w-[180px] h-[120px] flex justify-center items-center overflow-hidden rounded-full bg-gradient-to-r from-[#F7F6F9] to-[#E9F5F5]">
-                  <Image
+                  {/* <Image
                     className="rounded-full"
                     src={
                       item.pictureAddress
@@ -48,7 +48,7 @@ export const StatsSection = ({ landingApi, teacherList }) => {
                     alt=""
                     width={180}
                     height={180}
-                  />
+                  /> */}
                 </div>
                 <div className=" h-full w-full flex flex-wrap items-end">
                   <div className="text-[#161439] font-semibold w-[160px] text-[20px]">
@@ -64,10 +64,10 @@ export const StatsSection = ({ landingApi, teacherList }) => {
                 </div>
               </div>
             );
-          })}
+          }): <div> منتظر بمانبد </div>}
         </div>
       </div>
-      <div className="w-[1410px] flex items-center h-[270px] rounded-[40px] bg-[#282568] shadow-[0_25px_70px_0] shadow-[#28256866] ">
+      <div className="w-[1410px] flex items-center h-[270px] rounded-[40px] bg-[#282568] overflow-hidden shadow-[0_25px_70px_0] shadow-[#28256866] ">
         <StatItem label="وبلاگ ها" count={landingApi?.newsCount ?? 0} />
         <StatItem label="بهترین اساتید" count={landingApi?.teacherCount ?? 0} />
         <StatItem label="دروس دانشکده" count={landingApi?.courseCount ?? 0} />

@@ -15,6 +15,7 @@ import FavotiteTruePic from "@/assets/landing/course/favorite-true.png";
 import { DateConvert } from "@/core/services/utils/date";
 import { AddCourseFavoriteApi } from "@/core/services/api/landing";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 interface TopCourseProps {
   tumbImageAddress: string;
@@ -34,7 +35,7 @@ interface TopCourseProps {
   isUserFavorite: boolean;
 }
 
-export const TopCourse: React.FC<TopCourseProps> = ({
+export const Course: React.FC<TopCourseProps> = ({
   tumbImageAddress,
   title,
   date,
@@ -64,7 +65,7 @@ export const TopCourse: React.FC<TopCourseProps> = ({
   }
 
   return (
-    <div className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-[#FFFFFF] border border-[#B5B5C380]">
+    <Link to={``} className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-[#FFFFFF] border border-[#B5B5C380]">
       <Image
         src={imageSrc}
         alt={title}
@@ -111,6 +112,6 @@ export const TopCourse: React.FC<TopCourseProps> = ({
         </div>
 
       </div>
-    </div>
+    </Link>
   );
 };

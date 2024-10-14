@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { TopCourse } from "./index";
+import { Course } from "./index";
 
 interface Course {
     id: number;
@@ -29,7 +29,7 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) 
     return (
         <>
             {stateTopCourse? stateTopCourse.map((item) => (
-                <TopCourse
+                <Course
                     key={item.id}
                     tumbImageAddress={item.tumbImageAddress}
                     title={item.title}
