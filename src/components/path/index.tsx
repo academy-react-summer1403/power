@@ -12,7 +12,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
     const fullPath = [...defaultPath, ...path];
 
     return (
-        <div className='h-[150px] w-full flex flex-wrap justify-center items-center' style={{backgroundImage:`url(${BackPic.src})`, backgroundSize: 'cover'}}>
+        <div className='h-[150px] w-full flex flex-wrap justify-center items-center relative' 
+             style={{backgroundImage: `url(${BackPic.src})`, backgroundSize: 'cover'}}>
+            <div className='absolute inset-0 dark:bg-black opacity-40 dark:opacity-70'></div>
+
             {title && (
                 <TypeAnimation
                     sequence={[
@@ -23,12 +26,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
                     ]}
                     repeat={Infinity}
                     speed={20} 
-                    className='w-full text-center text-[40px] font-semibold text-[#161439]'
+                    className='relative w-full text-center text-[40px] font-semibold dark:text-gray-200'
                 />
             )}
-            <ul style={{ listStyleType: 'none', padding: 0, marginTop: '10px' }}>
+            <ul className='relative list-none p-0 mt-2'>
                 {fullPath.map((segment, index) => (
-                    <li className=' inline w-full text-[20px]' key={index}>
+                    <li className='inline w-full text-[20px] text-gray-800 dark:text-gray-300' key={index}>
                         {segment}
                         {index < fullPath.length - 1 && ' > '}
                     </li>

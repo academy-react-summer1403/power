@@ -35,7 +35,7 @@ interface FilterSectionProps {
   handleCourseLevelChange: (courseLevelId: string) => void;
 }
 
-const FilterSection: React.FC<FilterSectionProps> = ({
+export const FilterSection: React.FC<FilterSectionProps> = ({
   filter, 
   categories, 
   courseTypes, 
@@ -47,7 +47,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   handleCourseLevelChange 
 }) => {
   return (
-    <div className="w-[20%] h-auto p-4 flex flex-col gap-2">
+    <div className="w-full md:w-[20%] h-auto p-4 flex flex-col gap-4">
       <input
         type="text"
         name="search"
@@ -56,16 +56,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
         onChange={handleFilterChange}
         className="p-2 border rounded"
       />
-      <div className="bg-[#F7F7F9] h-auto w-full p-1 rounded-xl">
-        <p className="text-[20px]">دسته بندی</p>
-        <ul>
+      <div className="bg-[#F7F7F9] h-auto w-full p-4 rounded-xl">
+        <p className="text-[20px] font-semibold">دسته بندی</p>
+        <ul className="flex flex-col gap-2">
           {categories.map((category) => (
-            <li key={category.id}>
-              <label>
+            <li key={category.id} className="flex items-center gap-2">
+              <label className="cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filter.category === category.id}
                   onChange={() => handleCategoryChange(category.id)}
+                  className="mr-2"
                 />
                 {category.techName}
               </label>
@@ -73,16 +74,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           ))}
         </ul>
       </div>
-      <div className="bg-[#F7F7F9] h-auto w-full p-1 rounded-xl">
-        <p className="text-[20px]">نوع دوره</p>
-        <ul>
+      <div className="bg-[#F7F7F9] h-auto w-full p-4 rounded-xl">
+        <p className="text-[20px] font-semibold">نوع دوره</p>
+        <ul className="flex flex-col gap-2">
           {courseTypes.map((type) => (
-            <li key={type.id}>
-              <label>
+            <li key={type.id} className="flex items-center gap-2">
+              <label className="cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filter.courseType === type.id}
                   onChange={() => handleCourseTypeChange(type.id)}
+                  className="mr-2"
                 />
                 {type.typeName}
               </label>
@@ -90,16 +92,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           ))}
         </ul>
       </div>
-      <div className="bg-[#F7F7F9] h-auto w-full p-1 rounded-xl">
-        <p className="text-[20px]">سطح دوره</p>
-        <ul>
+      <div className="bg-[#F7F7F9] h-auto w-full p-4 rounded-xl">
+        <p className="text-[20px] font-semibold">سطح دوره</p>
+        <ul className="flex flex-col gap-2">
           {courseLevels.map((level) => (
-            <li key={level.id}>
-              <label>
+            <li key={level.id} className="flex items-center gap-2">
+              <label className="cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filter.courseLevel === level.id}
                   onChange={() => handleCourseLevelChange(level.id)}
+                  className="mr-2"
                 />
                 {level.levelName}
               </label>
@@ -117,10 +120,9 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           onChange={handleRangeChange}
           className="p-2 border rounded"
         />
-        <p>{`مقدار کل: ${filter.costRange[1]}, مقدار حال: ${filter.costRange[0]}`}</p>
+        <p>{`مقدار کل: ${filter.costRange[1]}، مقدار حال: ${filter.costRange[0]}`}</p>
       </div>
     </div>
   );
-}
+};
 
-export default FilterSection;

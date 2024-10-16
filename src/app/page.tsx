@@ -3,10 +3,11 @@
 import { Login } from "@/pages/auth/login";
 import { Landing } from "@/pages/landing";
 import { NotFound } from "@/pages/404";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChatBot } from "@/components/openAi & ScrollBtn";
 import { CourseList } from "@/pages/courseList";
 import { SignUpContainer } from "@/components/auth/signUp/step/SignUpContainer";
+import { CourseDetail } from "@/pages/courseDetail";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
                             <Route path="/Login" element={<Login/>} />
                             <Route path="/SignUp" element={<SignUpContainer/>} />
                             <Route path="/CourseList" element={<CourseList/>} />
+                            <Route path="/CoursDeatil/:id" element={<CourseDetail/>} />
                             <Route path="*" element={<NotFound/>} />
                   </Routes>
         </Router>

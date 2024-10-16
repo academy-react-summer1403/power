@@ -1,6 +1,7 @@
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { BaseUrl } from "@/config";
+import http from "../interceptor"
 
 export const getallCourseList = async () => {
   try {
@@ -31,7 +32,7 @@ export const getallbypgCourseList = async (
     if (level) queryParams.push(`courseLevelId=${level}`);
     if (sort) queryParams.push(`SortingCol=${sort}`);
     if (cat.length) {
-      if (cat) {
+      if (cat.length) {
         queryParams.push(`ListTech=${cat}`);
         queryParams.push(`TechCount=1`);
       }
@@ -110,7 +111,7 @@ export const getCourseById = async (id : string) => {
     //console.log("Fetching started...");
 
     const result = await axios.get(`${BaseUrl}/Home/GetCourseDetails?CourseId=${id}`);
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];
@@ -121,7 +122,7 @@ export const getCommentById = async (id : string) => {
     //console.log("Fetching started...");
 
     const result = await axios.get(`${BaseUrl}/Course/GetCourseCommnets/${id}`);
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];
@@ -142,7 +143,7 @@ export const addReserve = async (id : string) => {
   try {
     //console.log("Fetching started...");
     const objj = { courseId: id };
-    const result = await axios.post(`${BaseUrl}/CourseReserve/ReserveAdd`, objj);
+    const result = await http.post(`${BaseUrl}/CourseReserve/ReserveAdd`, objj);
     return result;
   } catch (error) {
     console.log(error);
@@ -155,7 +156,7 @@ export const reserved = async () => {
     const result = await axios.get(`${BaseUrl}/SharePanel/GetMyCoursesReserve`);
     //console.log(result);
 
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];
@@ -199,18 +200,6 @@ export const deletliked = async (data : string) => {
     return [];
   }
 };
-export const topCourse = async () => {
-  try {
-    //console.log("Fetching started...");
-    const result = await axios.get(`${BaseUrl}Home/GetCoursesTop?Count=5`);
-    //console.log(result);
-
-    return result;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-};
 export const favorite = async (a : string) => {
   try {
     console.log("Fetching started...");
@@ -224,9 +213,7 @@ export const favorite = async (a : string) => {
 };
 export const addcomment = async (data : string) => {
   try {
-    //console.log("Fetching started...");
-    const result = await axios.post(`${BaseUrl}/Course/AddCommentCourse`, data);
-    //console.log(result);
+    const result = await http.post(`/Course/AddCommentCourse`, data);
 
     return result;
   } catch (error) {
@@ -248,8 +235,7 @@ export const repcomment = async (rc: string) => {
 
 export const likedCourseCmnt = async (id : string) => {
   try {
-    console.log("Fetching started...");
-    const result = await axios.post(
+    const result = await http.post(
       `${BaseUrl}/Course/AddCourseCommentLike?CourseCommandId=${id}`
     );
     return result;
@@ -284,3 +270,12 @@ export const deletlikedCourseCmnt = async (id : string) => {
     return [];
   }
 };
+// GetTeacherDetailForCourseDetail
+export const GetTeacherDetailById = async (id : string) => {
+    try {
+      const res =await axios.get(`${BaseUrl}/Home/GetTeacherDetails?TeacherId=${id}`);
+      res.data;
+    } catch (error) {
+      console.log(error , "Error")
+    }
+}

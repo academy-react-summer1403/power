@@ -7,7 +7,6 @@ import FaceBookPic from "@/assets/landing/body/Symbol (3).png";
 import Image from "next/image";
 
 export const StatsSection = ({ landingApi, teacherList }) => {
-  console.log(teacherList);
 
   return (
     <div className="h-[1105px] w-full flex flex-wrap justify-center items-center">
