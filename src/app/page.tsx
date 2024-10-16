@@ -18,7 +18,7 @@ export default function Home() {
                             <Route path="/Login" element={<Login/>} />
                             <Route path="/SignUp" element={<SignUpContainer/>} />
                             <Route path="/CourseList" element={<CourseList/>} />
-                            <Route path="/CoursDeatil/:id" element={<CourseDetail/>} />
+                            <Route path="/CourseDetail/:id" element={<CourseDetail/>} />
                             <Route path="*" element={<NotFound/>} />
                   </Routes>
         </Router>
