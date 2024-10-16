@@ -9,11 +9,11 @@
   --foreground: #171717;
 }
 
-::selection{
+::selection {
   background-color: transparent;
 }
 
-input::selection{
+input::selection {
   background-color: skyblue;
 }
 
@@ -21,35 +21,12 @@ body {
   font-family: IRANSans !important;
   font-weight: 500;
   direction: rtl;
-  background: #FFFFFF;
+  background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  transition: 0.5s;
 }
 
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
-}
-[data-title]:after {
-  content: attr(data-title);
-  background-color: white;
-  color: #111;
-  font-size: 14px;
-  position: absolute;
-  border-radius: 10px;
-  padding: 5px;
-  bottom: -1.8em;
-  white-space: nowrap;
-  box-shadow: 1px 1px 3px #3a3a3a;
-  opacity: 0;
-  border: 1px solid #111111;
-  z-index: 99999;
-  visibility: hidden;
-}
-[data-title] {
-  position: relative;
-}
 
 @layer utilities {
   .text-balance {
@@ -61,6 +38,22 @@ body {
   display: none;
 }
 
-.dark{
-  background:rgb(17, 16, 36)
+.dark {
+  background: rgb(17, 16, 36);
+  color: white;
+}
+.dark select{
+  background: transparent;
+}
+
+.dark option{
+  color: black;
+}
+
+input{
+  background: transparent;
+}
+
+select{
+  background: transparent;
 }

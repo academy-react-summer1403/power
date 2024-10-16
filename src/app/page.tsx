@@ -8,6 +8,7 @@ import { CourseList } from "@/pages/courseList";
 import { SignUpContainer } from "@/components/auth/signUp/step/SignUpContainer";
 import { CourseDetail } from "@/pages/courseDetail";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { NewsListPage } from "@/pages/newsList";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
                             <Route path="/Login" element={<Login/>} />
                             <Route path="/SignUp" element={<SignUpContainer/>} />
                             <Route path="/CourseList" element={<CourseList/>} />
+                            <Route path="/NewsList" element={<NewsListPage/>} />
                             <Route path="/CourseDetail/:id" element={<CourseDetail/>} />
                             <Route path="*" element={<NotFound/>} />
                   </Routes>

@@ -30,7 +30,7 @@ export const Body = () => {
     AOS.init({ duration: 1000 });
     const fetchNews = async () => {
       const result = await GetNewsForLanding();
-      setNewsList(result);
+      setNewsList(result.news ? result.news.slice(0, 4) : result.slice(0, 4));
     };
 
     const fetchTopCourseData = async () => {

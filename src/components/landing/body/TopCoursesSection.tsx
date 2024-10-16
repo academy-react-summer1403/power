@@ -7,18 +7,18 @@ import Image from "next/image";
 export const TopCoursesSection = ({ topCourseState }) => {
   return (
     <div
-      className="mt-32 w-full h-[1024px] flex justify-center items-center"
+      className="mt-32 w-full h-[1024px] flex justify-center items-center bg-white dark:bg-[#1c1c1c]"
       style={{ backgroundImage: `url(${HeroSectionBack.src})` }}
     >
       <div className="w-[1440px] h-[750px] flex flex-wrap justify-center ">
         <div className="w-[720px] h-[215px] flex flex-wrap justify-center">
-          <p className="text-base w-[175px] h-[35px] rounded-[30px] bg-[#EFEEFE] text-[#5751E1] text-center font-medium">
+          <p className="text-base content-center w-[175px] h-[35px] rounded-[30px] bg-[#EFEEFE] dark:bg-[#2c2c2c] text-[#5751E1] dark:text-[#a0a0ff] text-center font-medium">
             دوره ها کلاس برتر
           </p>
-          <div className="text-[#161439] text-4xl font-semibold tracking-tight">
+          <div className="text-[#161439] dark:text-[#1f1c2a] text-4xl font-semibold tracking-tight">
             بهترین دوره های آموزشی جهان ما را کاوش کنید
           </div>
-          <p className="text-[#6D6C80]">
+          <p className="text-[#6D6C80] dark:text-[#1a172d]">
             امروزه به دلیل آن که ارتباطات فضای مجازی رونق زیادی یافته است
           </p>
         </div>

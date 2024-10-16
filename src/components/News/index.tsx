@@ -32,33 +32,40 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
   Catregory,
 }) => {
   return (
-    <div className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white border border-[#B5B5C380] rounded-[10px]">
+    <div className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]">
       <Image
         src={Img ? NewsDefualtPic : NewsDefualtPic}
         alt={title}
         className="w-[295px] h-[225px] object-cover rounded-[15px]"
       />
       <div className="p-5 w-full">
-        <h3 className=" w-[290px] overflow-hidden h-[30px] text-lg font-semibold">
+        <h3 className=" w-[290px] overflow-hidden h-[30px] text-lg font-semibold text-gray-900 dark:text-white">
           {title}
         </h3>
         <div className=" mt-2 w-[90%] h-auto flex items-center justify-between">
           <div className="bg-[#5751E1] w-auto h-auto rounded-[30px] text-white p-1">
             {Catregory}
           </div>
-          <p className="text-sm text-gray-500">{DateConvert(Date)}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{DateConvert(Date)}</p>
         </div>
-        <p className=" mt-2 border-b border-[#B5B5C380] w-[295px] h-[45px] text-[#6D6C80] flex flex-wrap overflow-hidden text-base">
+        <p className="mt-2 border-b border-[#B5B5C380] dark:border-gray-600 w-[295px] h-[45px] text-[#6D6C80] dark:text-gray-300 flex flex-wrap overflow-hidden text-base">
           {miniDescribe}
         </p>
         <div className="w-[95%] mt-6 h-auto flex items-center justify-between">
-                    <div className="flex gap-1 items-center text-[#6D6C80]">
-                       <Image src={EyePic} alt=""/> {View} 
-                    </div>
-                    <div className="flex gap-1">
-                            <button className="w-[70px] h-[35px] bg-[#EFEFF1] rounded-[30px] flex items-center justify-center"> <Image className="w-6 h-6" src={DisLikePic} alt="Like"/> {DisLikeCount} </button>
-                            <button className="w-[70px] h-[35px] bg-[#EFEFF1] rounded-[30px] flex items-center justify-center"> <Image className="w-6 h-6" src={LikePIc} alt="Like"/> {LikeCount} </button>
-                    </div>
+        <div className="flex gap-1 items-center text-[#6D6C80] dark:text-gray-300">
+            <Image src={EyePic} alt="" /> {View}
+          </div>
+          <div className="flex gap-1">
+          <button className="w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center">
+              {" "}
+              <Image className="w-6 h-6" src={DisLikePic} alt="Like" />{" "}
+              {DisLikeCount}{" "}
+            </button>
+            <button className="w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center">
+              {" "}
+              <Image className="w-6 h-6" src={LikePIc} alt="Like" /> {LikeCount}{" "}
+            </button>
+          </div>
         </div>
       </div>
     </div>

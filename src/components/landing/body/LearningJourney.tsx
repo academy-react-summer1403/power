@@ -8,9 +8,9 @@ import { CardsWrapper } from "./CardsWrapper";
 
 export const LearningJourney = () => {
   return (
-    <div className="h-auto w-full bg-[#282568] flex flex-wrap text-center justify-center items-center p-6">
+    <div className="h-auto w-full bg-[#282568] dark:bg-gray-800 flex flex-wrap text-center justify-center items-center p-6">
       <div className="w-full max-w-[1440px] h-full flex flex-col justify-center items-center">
-        <h2 className="bg-[#5751E1] w-[230px] h-[30px] rounded-[30px] text-white font-medium text-center">
+        <h2 className="bg-[#5751E1] dark:bg-[#4c40c1] w-[230px] h-[30px] rounded-[30px] text-white font-medium text-center">
           {" "}
           چگونه سفر را شروع می کنیم{" "}
         </h2>
@@ -18,7 +18,7 @@ export const LearningJourney = () => {
           {" "}
           سفر یادگیری خود را از همین امروز شروع کنید!{" "}
         </h1>
-        <p className="w-full sm:w-[510px] h-auto leading-7 text-[#ACAACC] mt-2">
+        <p className="w-full sm:w-[510px] h-auto leading-7 text-gray-400 mt-2">
           شهودی Groove اعضای maketeam صندوق ورودی را با هم به اشتراک گذاشت
           سازماندهی، اولویت بندی و.در این قسمت.
         </p>
@@ -51,9 +51,9 @@ export const LearningJourney = () => {
 };
 
 const Card = ({ image, title, description }) => (
-  <div className="w-[100%] sm:w-[275px] h-auto flex flex-col items-center justify-center mb-6">
+  <div className="w-[100%] sm:w-[275px] h-auto flex flex-col items-center justify-center mb-6  dark:bg-gray-600 rounded-lg p-4">
     <Image src={image} className="h-24 w-24" alt={title} />
     <h1 className="w-full text-white font-semibold mt-6">{title}</h1>
-    <p className="text-[#ACAACC] mt-4 text-center">{description}</p>
+    <p className="text-gray-300 mt-4 text-center">{description}</p>
   </div>
 );
