@@ -173,6 +173,14 @@ export const ChatBot: React.FC = () => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   const handleSend = () => {
     if (input.trim()) {
       const userMessage = input.trim();
@@ -278,13 +286,12 @@ export const ChatBot: React.FC = () => {
   };
 
   const toggleDarkMode = () => {
-    document.body.classList.toggle("dark");
-    setDarkMode((prevMode) => {
-        const newMode = !prevMode;
-        localStorage.setItem('darkMode', newMode.toString());
-        return newMode;
+    setDarkMode(prevMode => {
+      const newMode = !prevMode;
+      localStorage.setItem('darkMode', newMode.toString());
+      return newMode;
     });
-};
+  };
 
   return (
     <div className={darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}>

@@ -21,7 +21,7 @@ export const Header = () => {
     setLastScrollY(currentScrollY);
   };
 
-  const getLinkClassName = (path) => {
+  const getLinkClassName = (path : string) => {
     return location.pathname === path
       ? "text-[#5751E1] after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-[#5751E1] after:to-transparent mt-4"
       : "p-2 md:p-3 lg:p-5 dark:text-white transition-all hover:text-blue-500 hover:text-[110%]";

@@ -10,7 +10,7 @@ import { TypeAnimation } from "react-type-animation";
 
 export const HeroSection = () => {
   return (
-<div className="relative h-auto lg:h-[520px] w-full flex items-end justify-center">
+<div className="relative h-auto lg:h-[520px] w-full flex items-end justify-center" data-aos="fade-up" >
   <Image
     src={HeroSectionBack}
     alt="Hero Section Background"

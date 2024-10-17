@@ -26,20 +26,20 @@ export const NewsFilterSection: React.FC<NewsFilterSectionProps> = ({
   handleSortChange,
 }) => {
   return (
-    <div className="w-full md:w-[20%] p-4 flex flex-col gap-4">
+    <div className="w-full md:w-[20%] p-4 flex flex-col gap-4 ">
       <input
         type="text"
         name="query"
         placeholder="جستجوی اخبار"
         value={filter.query}
         onChange={handleFilterChange}
-        className="p-2 border rounded"
+        className="p-2 border dark:bg-gray-700 outline-none dark:border-gray-600 rounded"
       />
-      <div className="w-full bg-[#F7F7F9] rounded-xl p-1">
-        <p className="text-[#161439] text-[20px]">دسته بندی:</p>
+      <div className="w-full bg-[#F7F7F9] dark:bg-gray-700 rounded-xl p-1">
+        <p className="text-[#161439] text-white text-[20px]">دسته بندی:</p>
         <ul className="flex flex-col mt-4 gap-2 max-h-[130px] overflow-y-auto">
           {categories.map((category) => (
-            <li key={category.id}>
+            <li className="flex gap-1" key={category.id}>
               {" "}
               <label className="flex items-center p-1">
                 {" "}
