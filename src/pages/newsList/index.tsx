@@ -93,7 +93,7 @@ export const NewsListPage: React.FC = () => {
             handleCategoryChange={handleCategoryChange}
             handleSortChange={handleSortChange}
           />
-          <div className="h-auto w-[80%] flex flex-wrap gap-4">
+          <div className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
               <div className="flex items-center justify-center">
                 {`${totalCount} خبر در دسترس است`}
@@ -110,7 +110,7 @@ export const NewsListPage: React.FC = () => {
                 </select>
               </div>
             </div>
-            <div className="flex h-[1075px] items-start flex-wrap justify-center gap-4">
+            <div className="flex h-auto lg:h-[1475px] items-start flex-wrap justify-center gap-4">
               <NewsWrapper newsList={news} />
             </div>
               <NewsPagination
