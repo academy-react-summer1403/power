@@ -9,24 +9,26 @@ import Image from "next/image";
 import { disLikedCourseCmnt, likedCourseCmnt } from "@/core/services/api/course";
 import toast from "react-hot-toast";
 
-interface CourseCommentProps {
+interface NewsCommentProps {
   Img: string;
-  author: string;
+  autor: any;
   Explanation: string;
   Like: number;
   DisLikes: number;
   Date: string;
   id: number;
+  title: string;
 }
 
-export const CourseComment: React.FC<CourseCommentProps> = ({
+export const NewsComment: React.FC<NewsCommentProps> = ({
   Img,
-  author,
+  autor,
   Explanation,
   Like,
   DisLikes,
   Date,
   id,
+  title,
 }) => {
   const AddCommentLike = async () => {
     try {
@@ -49,11 +51,14 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
   return (
     <div className="flex w-full border-b border-gray-300 dark:border-gray-600 p-4">
       <div className="flex h-full justify-center w-[10%] items-center">
-        <img src={Img? Img : AcountDefualtPic} alt="" className="w-28 h-28 bg-cover rounded-full" />
+        <img src={Img} alt="" className="w-28 h-28 bg-cover rounded-full" />
       </div>
       <div className="flex flex-col w-[90%] p-3 justify-center flex-wrap">
         <div className="flex justify-between w-full">
-          <h3 className="text-lg font-semibold dark:text-white">{author}</h3>
+          <h3 className="text-lg font-semibold dark:text-white">{autor}</h3>
+        </div>
+        <div className="flex justify-between w-full">
+          <h3 className="text-lg w-auto h-auto font-semibold dark:text-white">{title}</h3>
           <span className="text-gray-500 dark:text-gray-400">{DateConvert(Date)}</span>
         </div>
         <p className="my-2 w-full text-[#6D6C80] dark:text-gray-300">{Explanation}</p>

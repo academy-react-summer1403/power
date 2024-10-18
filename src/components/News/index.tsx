@@ -7,6 +7,7 @@ import LikePIc from "@/assets/landing/news/like.png";
 import DisLikePic from "@/assets/landing/news/dislike.png";
 import Image from "next/image";
 import { DateConvert } from "@/core/services/utils/date";
+import { Link } from "react-router-dom";
 
 interface LandingNewsProps {
   Id: string;
@@ -31,11 +32,15 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
   LikeCount,
   Catregory,
 }) => {
+
+
   return (
-    <div className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]">
+    <Link to={`/NewsDetail/` + Id} className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]">
       <Image
-        src={Img ? NewsDefualtPic : NewsDefualtPic}
+        src={Img || NewsDefualtPic}
         alt={title}
+        width={295}
+        height={225}
         className="w-[295px] h-[225px] object-cover rounded-[15px]"
       />
       <div className="p-5 w-full">
@@ -68,6 +73,6 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

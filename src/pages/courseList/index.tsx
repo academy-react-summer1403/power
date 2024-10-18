@@ -20,7 +20,7 @@ import { FilterSection } from "@/components/Course/FilterSection";
 type Filter = {
   search: string;
   sort: string;
-  category: string;
+  category: string[];
   courseType: string;
   courseLevel: string;
   costRange: [number, number];
@@ -42,7 +42,7 @@ export const CourseList: React.FC = () => {
   const [filter, setFilter] = useState<Filter>({
     search: "",
     sort: "",
-    category: "",
+    category: [],
     courseType: "",
     courseLevel: "",
     costRange: [0, 1000000],
@@ -96,26 +96,31 @@ useEffect(() => {
     setFilter({ ...filter, costRange: [parseInt(values[0]), parseInt(values[1])] });
   };
 
-  // Handle Sorting
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    if (value) {
-      setFilter({ ...filter, sort: value });
-      setCurrentPage(1); 
-    }
+// Handle Sorting
+const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const value = e.target.value;
+  if (value) {
+    setFilter({ ...filter, sort: value });
+    setCurrentPage(1); 
+  } else {
+    setFilter(prev => ({ ...prev, sort: "" }));
+  }
+  setCurrentPage(1)
 };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  // Handle category selection
-  const handleCategoryChange = (categoryId: string) => {
-    setFilter(prev => ({
-        ...prev,
-        category: prev.category === categoryId ? "" : categoryId 
-    }));
-    setCurrentPage(1); 
+// Handle category change
+const handleCategoryChange = (categoryId: string) => {
+  setFilter((prev) => {
+    const newCategories = prev.category.includes(categoryId)
+      ? prev.category.filter((id) => id !== categoryId) 
+      : [...prev.category, categoryId]; 
+    return { ...prev, category: newCategories };
+  });
+  setCurrentPage(1);
 };
 
   // Handle course type selection
@@ -159,17 +164,17 @@ useEffect(() => {
                   onChange={handleSortChange}
                   className="p-2 border rounded mt-2"
                 >
-                  <option value="PriceAsc">قیمت (صعودی)</option>
-                  <option value="PriceDesc">قیمت (نزولی)</option>
+                  <option value="cost">قیمت (صعودی)</option>
+                  <option value="cost">قیمت (نزولی)</option>
                 </select>
                 <select
                   name="sort"
                   onChange={handleSortChange}
                   className="p-2 border rounded mt-2 ml-2"
                 >
-                  <option value="Popularity">محبوبیت</option>
+                  <option value="likeCount">محبوبیت</option>
                   <option value="Active">دوره فعال</option>
-                  <option value="CourseCount">تعداد دوره</option>
+                  <option value="courseRate">بروز ترین</option>
                 </select>
 
                 <button className="w-10 h-10 flex justify-center items-center bg-[#5751E1]  rounded">

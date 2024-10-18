@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import http from "../interceptor";
 import { BaseUrl } from "@/config";
 
@@ -38,35 +38,30 @@ export const getPaperCat = async (): Promise<Array<any> | null> => {
   }
 };
 
-export const getPaperCaById = async (id) => {
+export const getPaperDetail = async (id : string) => {
   try {
-    //console.log("Fetching started...");
+    const result = await axios.get(`${BaseUrl}/News/${id}`);
 
-    const result = await http.get(`/News/${id}`);
-
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const getCommentById = async (id) => {
+export const getCommentById = async (id : string) => {
   try {
-    //console.log("Fetching started...");
 
-    const result = await http.get(`/News/GetNewsComments?NewsId=${id}`);
+    const result = await axios.get(`${BaseUrl}/News/GetNewsComments?NewsId=${id}`);
 
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const likedPaper = async (id) => {
+export const likedPaper = async (id : string) => {
   try {
-    //console.log("Fetching started...");
     const result = await http.post(`/News/NewsLike/${id}`);
-    //console.log(result);
 
     return result;
   } catch (error) {
@@ -74,10 +69,9 @@ export const likedPaper = async (id) => {
     return [];
   }
 };
-export const deletlikedPaper = async (id) => {
+export const deletlikedPaper = async (id : string) => {
   console.log(id);
   try {
-    //console.log("Fetching started...");
     const result = await http.delete("/News/DeleteLikeNews", { data: id });
     console.log("ss", data);
 
@@ -87,11 +81,10 @@ export const deletlikedPaper = async (id) => {
     return [];
   }
 };
-export const newsDisLiked = async (id) => {
+export const newsDisLiked = async (id : string) => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/News/NewsDissLike/${id}`);
-    //console.log(result);
 
     return result;
   } catch (error) {
@@ -99,31 +92,27 @@ export const newsDisLiked = async (id) => {
     return [];
   }
 };
-export const newsFavorite = async (id) => {
+export const newsFavorite = async (id : string) => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/News/AddFavoriteNews?NewsId=${id}`);
-    //console.log(result);
-
     return result;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const delNewsFavorite = async (id) => {
+export const delNewsFavorite = async (id : string) => {
   try {
     console.log("Fetching started...");
     const result = await http.delete("/News/DeleteFavoriteNews", { data: id });
-    //console.log(result);
-
     return result;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const getPaperCommentReplies = async (id) => {
+export const getPaperCommentReplies = async (id : string) => {
   try {
     console.log("Fetching started...");
 
@@ -135,7 +124,7 @@ export const getPaperCommentReplies = async (id) => {
     return [];
   }
 };
-export const addPaperComment = async (comment) => {
+export const addNewsComment = async (comment : any) => {
   try {
     console.log("Fetching started...");
 
@@ -147,7 +136,7 @@ export const addPaperComment = async (comment) => {
     return [];
   }
 };
-export const addPaperReplyComment = async (reply) => {
+export const addPaperReplyComment = async (reply : string) => {
   try {
     console.log("Fetching started...");
 

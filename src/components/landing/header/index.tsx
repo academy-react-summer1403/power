@@ -49,9 +49,9 @@ export const Header = () => {
   }, [lastScrollY]);
 
   return (
-    <div className={`flex justify-start flex-col  md:flex-row md:justify-between items-center h-16 md:h-[100px] p-4 md:p-6 transition-all dark:bg-gray-950 ${isSticky ? 'fixed top-0 z-50 left-0 right-0  shadow-md bg-white ' : ''}`}>
+    <div className={`flex justify-start flex-col w-full  md:flex-row md:justify-between items-center h-16 md:h-[100px] p-4 md:p-6 transition-all dark:bg-gray-950 ${isSticky ? 'fixed top-0 z-50 left-0 right-0  shadow-md bg-white ' : ''}`}>
       <div className="w-full md:w-[40%] flex flex-col md:flex-row justify-between items-center">
-        <div className=" hidden md:flex text-[90%] font-medium">
+        <div className=" hidden md:flex text-[80%] font-medium">
           <Link to="/" className={getLinkClassName("/")}>صفحه اصلی</Link>
           <Link to="/CourseList" className={getLinkClassName("/CourseList")}>دوره های آموزشی</Link>
           <Link to="/contact" className={getLinkClassName("/contact")}>درباره ما</Link>

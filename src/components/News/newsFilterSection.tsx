@@ -36,7 +36,7 @@ export const NewsFilterSection: React.FC<NewsFilterSectionProps> = ({
         className="p-2 border dark:bg-gray-700 outline-none dark:border-gray-600 rounded"
       />
       <div className="w-full bg-[#F7F7F9] dark:bg-gray-700 rounded-xl p-1">
-        <p className="text-[#161439] text-white text-[20px]">دسته بندی:</p>
+        <p className="text-[#161439] dark:text-white text-[20px]">دسته بندی:</p>
         <ul className="flex flex-col mt-4 gap-2 max-h-[130px] overflow-y-auto">
           {categories.map((category) => (
             <li className="flex gap-1" key={category.id}>

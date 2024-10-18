@@ -138,6 +138,7 @@ export const ChatBot: React.FC = () => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
   const [userMessageHistory, setUserMessageHistory] = useState<string[]>([]);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
@@ -155,17 +156,19 @@ export const ChatBot: React.FC = () => {
       hasWelcomed.current = true;
     }
 
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowScrollBtn(true);
-      } else {
-        setShowScrollBtn(false);
-      }
+    const handleScrollProgress = () => {
+      const totalHeight =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+  const currentScroll = window.scrollY;
+  const scrollProgress = (currentScroll / totalHeight) * 100;
+  setProgress(scrollProgress);
+  setShowScrollBtn(scrollProgress > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScrollProgress);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll",  handleScrollProgress);
     };
   }, []);
 
@@ -295,10 +298,14 @@ export const ChatBot: React.FC = () => {
 
   return (
     <div className={darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
+            <div
+        className={`fixed z-50 bottom-0 left-0 h-3 ${darkMode ? 'bg-[#7875ac]' : 'bg-[#15133a]'} transition-all`}
+        style={{ width: `${progress}%` }}
+      />
       <button 
         title={darkMode ? 'لایت مد' : 'دارک مد'}
         onClick={toggleDarkMode} 
-        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-6 right-40' : 'bottom-6 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
+        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-8 right-40' : 'bottom-8 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
       >
         {darkMode ? <FaSun /> : <FaMoon />} 
       </button>
@@ -306,7 +313,7 @@ export const ChatBot: React.FC = () => {
         <div
           title="باته پشتیبان"
           onClick={toggleChat}
-          className="hover:scale-105 fixed z-50 bottom-4 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
+          className="hover:scale-105 fixed z-50 bottom-6 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
         >
           <span
             role="img"
@@ -317,7 +324,7 @@ export const ChatBot: React.FC = () => {
           </span>
         </div>
       ) : (
-        <div className="fixed z-50 bottom-4 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
+        <div className="fixed z-50 bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
           <div className="overflow-y-auto max-h-60">
             {messages.map((msg, index) => (
               <div
@@ -373,7 +380,7 @@ export const ChatBot: React.FC = () => {
         title="رفتن به بالا"
         onClick={scrollToTop}
         className={`fixed z-40 w-9 h-9 justify-center flex items-center right-24 bg-[#514dad] shadow-[4px_4px_0_0] text-white p-2 rounded-lg shadow-[#3D3D3D] transition-all transform ${
-          showScrollBtn ? " bottom-6 " : "  bottom-[-50px]"
+          showScrollBtn ? " bottom-8 " : "  bottom-[-50px]"
         } `}
       >
         <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt='' />

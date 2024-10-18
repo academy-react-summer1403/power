@@ -9,7 +9,7 @@ import { AddCommentValidation } from "@/core/validation/AddCourseComment";
 import { addcomment } from "@/core/services/api/course";
 import toast from "react-hot-toast";
 
-export const AddComment = () => {
+export const CourseAddComment = () => {
   const Params = useParams();
 
   const onSubmit = async (values: { Describe: string; Title: string }) => {
@@ -47,7 +47,7 @@ export const AddComment = () => {
             <div className="w-full max-w-[90%]">
               <h4 className="w-full text-[#6D6C80] dark:text-[#D1D1D1]">عنوان پیام</h4>
               <Field
-                className="w-full h-[50px] border rounded-md dark:bg-[#2C2C2C] dark:border-gray-600"
+                className="w-full h-[50px] border rounded-md bg-white dark:bg-[#2C2C2C] dark:border-gray-600"
                 name="Title"
               />
               <ErrorMessage name="Title" component="p" className="text-red-500 mt-1" />

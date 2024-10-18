@@ -6,27 +6,34 @@ import Image from "next/image";
 
 export const TopCoursesSection = ({ topCourseState }) => {
   return (
-    <div
-      className="mt-32 w-full h-[1024px] flex justify-center items-center bg-white dark:bg-[#1c1c1c]"
-      style={{ backgroundImage: `url(${HeroSectionBack.src})` }}
-    >
-      <div className="w-[1440px] h-[750px] flex flex-wrap justify-center ">
+    <div className="mt-32 w-full h-auto lg:h-[1024px] flex justify-center items-center bg-white dark:bg-[#111024] relative">
+      <Image
+        src={HeroSectionBack.src}
+        alt="Hero Section Background"
+        layout="fill"
+        objectFit="cover"
+        className="absolute inset-0 z-10 dark:opacity-5"
+      />
+      <div className="w-[1440px] h-auto lg:h-[750px] flex flex-wrap justify-center relative z-20">
         <div className="w-[720px] h-[215px] flex flex-wrap justify-center">
           <p className="text-base content-center w-[175px] h-[35px] rounded-[30px] bg-[#EFEEFE] dark:bg-[#2c2c2c] text-[#5751E1] dark:text-[#a0a0ff] text-center font-medium">
             دوره ها کلاس برتر
           </p>
-          <div className="text-[#161439] dark:text-[#1f1c2a] text-4xl font-semibold tracking-tight">
+          <div className="text-[#161439] dark:text-white text-4xl font-semibold tracking-tight">
             بهترین دوره های آموزشی جهان ما را کاوش کنید
           </div>
-          <p className="text-[#6D6C80] dark:text-[#1a172d]">
+          <p className="text-[#6D6C80] dark:text-white">
             امروزه به دلیل آن که ارتباطات فضای مجازی رونق زیادی یافته است
           </p>
         </div>
-        <div className="w-auto h-auto flex items-center">
+        <div className="w-auto h-auto flex flex-wrap lg:flex-none items-center">
           <button className="rotate-180 w-16 h-16 bg-[#5751E1] border border-black shadow-[3.6px_2.4px_0_0] shadow-[#23232B] rounded-[30px] flex justify-center items-center">
             <Image src={ArowPic} alt="" />
           </button>
-          <div className="w-[1200px] 2xl:w-[1460px] h-[485px] flex justify-center gap-4" data-aos="fade-up">
+          <div
+            className="w-[1200px] 2xl:w-[1460px] h-auto flex-wrap lg:flex-nowrap lg:h-[485px] flex justify-center gap-4"
+            data-aos="fade-up"
+          >
             <CourseWrapper stateTopCourse={topCourseState} />
           </div>
           <button className="w-16 h-16 bg-[#5751E1] border border-black shadow-[3.6px_2.4px_0_0] shadow-[#23232B] rounded-[30px] flex justify-center items-center">

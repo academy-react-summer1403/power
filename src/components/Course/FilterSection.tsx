@@ -61,13 +61,14 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         <ul className="flex flex-col gap-2">
           {categories.map((category) => (
             <li key={category.id} className="flex items-center gap-2">
-              <label className="cursor-pointer flex items-center">
                 <input
                   type="checkbox"
+                  id={category.id}
                   checked={filter.category === category.id}
                   onChange={() => handleCategoryChange(category.id)}
                   className="mr-2 accent-indigo-600 dark:accent-indigo-400"
                 />
+              <label htmlFor={category.id}  className="cursor-pointer flex items-center">
                 <span className="text-black dark:text-white">{category.techName}</span>
               </label>
             </li>
