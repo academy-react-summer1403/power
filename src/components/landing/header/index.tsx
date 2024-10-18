@@ -14,6 +14,7 @@ export const Header = () => {
   const [isSticky, setSticky] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setMenuOpen] = useState(false); 
+  const [studentPanelLink, setStudentPanelLink] = useState("/StudentPanel");
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
@@ -21,7 +22,7 @@ export const Header = () => {
     setLastScrollY(currentScrollY);
   };
 
-  const getLinkClassName = (path : string) => {
+  const getLinkClassName = (path) => {
     return location.pathname === path
       ? "text-[#5751E1] after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-[#5751E1] after:to-transparent mt-4"
       : "p-2 md:p-3 lg:p-5 dark:text-white transition-all hover:text-blue-500 hover:text-[110%]";
@@ -41,6 +42,16 @@ export const Header = () => {
     return () => clearTimeout(timer);
   }, [isMenuOpen]);
 
+  // Check if token exists in local storage and set the link accordingly
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setStudentPanelLink("/StudentPanel"); // Link to student panel if token exists
+    } else {
+      setStudentPanelLink("/Login"); // Default to login if no token
+    }
+  }, []);
+  
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -49,9 +60,9 @@ export const Header = () => {
   }, [lastScrollY]);
 
   return (
-    <div className={`flex justify-start flex-col w-full  md:flex-row md:justify-between items-center h-16 md:h-[100px] p-4 md:p-6 transition-all dark:bg-gray-950 ${isSticky ? 'fixed top-0 z-50 left-0 right-0  shadow-md bg-white ' : ''}`}>
+    <div className={`flex justify-start flex-col w-full md:flex-row md:justify-between items-center h-16 md:h-[100px] p-4 md:p-6 transition-all dark:bg-gray-950 ${isSticky ? 'fixed top-0 z-50 left-0 right-0 shadow-md bg-white' : ''}`}>
       <div className="w-full md:w-[40%] flex flex-col md:flex-row justify-between items-center">
-        <div className=" hidden md:flex text-[80%] font-medium">
+        <div className="hidden md:flex text-[80%] font-medium">
           <Link to="/" className={getLinkClassName("/")}>صفحه اصلی</Link>
           <Link to="/CourseList" className={getLinkClassName("/CourseList")}>دوره های آموزشی</Link>
           <Link to="/contact" className={getLinkClassName("/contact")}>درباره ما</Link>
@@ -84,15 +95,15 @@ export const Header = () => {
           <Image src={FavoritePic} alt="Favorite" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
         </div>
-        <Link to="/Login" className="bg-[#FFC224] h-11 w-full md:w-36 border transition-all shadow-[3px_3px_0_0] hover:shadow-[2px_2px_0_0] shadow-[#3D3D3D] border-[#06235B30] content-center rounded-[50px] text-center">
+        <Link to={studentPanelLink} className="bg-[#FFC224] h-11 w-full md:w-36 border transition-all shadow-[3px_3px_0_0] hover:shadow-[2px_2px_0_0] shadow-[#3D3D3D] border-[#06235B30] content-center rounded-[50px] text-center">
           حساب کاربری
         </Link>
       </div>
 
-      <button title="منو"  className="flex md:hidden absolute right-4 top-4 dark:text-white" onClick={toggleMenu}>
-        {isMenuOpen ? <FaTimes  className="text-2xl" /> : <FaBars   className="text-2xl" />}
+      <button title="منو" className="flex md:hidden absolute right-4 top-4 dark:text-white" onClick={toggleMenu}>
+        {isMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
       </button>
-      
+
       <div className={`absolute z-50 top-0 left-0 w-full bg-white shadow-md p-4 transform ${isMenuOpen ? "translate-y-0 transition-transform" : "translate-y-[-100%] transition-transform"} dark:bg-gray-800`}>
         <div className="md:hidden flex items-center justify-between mb-4 dark:text-white">
           <button onClick={toggleMenu}>
@@ -132,7 +143,7 @@ export const Header = () => {
               <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
             </div>
             
-            <Link to="/Login" className="bg-[#FFC224] h-11 w-full md:w-36 border transition-all shadow-[3px_3px_0_0] hover:shadow-[2px_2px_0_0] shadow-[#3D3D3D] border-[#06235B30] content-center rounded-[50px] text-center">
+            <Link to={studentPanelLink} className="bg-[#FFC224] h-11 w-full md:w-36 border transition-all shadow-[3px_3px_0_0] hover:shadow-[2px_2px_0_0] shadow-[#3D3D3D] border-[#06235B30] content-center rounded-[50px] text-center">
               حساب کاربری
             </Link>
           </div>

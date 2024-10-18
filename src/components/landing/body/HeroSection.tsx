@@ -6,6 +6,7 @@ import ArowPic from "@/assets/landing/HeroSection/arow.png";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
+import { Link } from "react-router-dom";
 
 
 export const HeroSection = () => {
@@ -39,12 +40,11 @@ export const HeroSection = () => {
             هر سفر آموزشی و یادگیری دنبال کردن منحصر به فرد است ما به شما کمک
             خواهیم کرد
           </div>
-          <motion.button
-            whileTap={{ scale: 0.9 }}
+          <Link to="/CourseList"
             className="w-full md:w-[215px] h-12 bg-[#5751E1] text-white rounded-[50px] shadow-[4px_6px_0px] shadow-[#050071] flex justify-around items-center dark:bg-[#4a38b0]"
           >
             رایگان ازمایش کنید <Image src={ArowPic} alt="" />
-          </motion.button>
+          </Link>
         </div>
       </div>
       <div
