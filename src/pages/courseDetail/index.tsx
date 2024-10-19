@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetTopCoursesApi } from "@/core/services/api/landing";
 import { CourseDetailContainer } from "@/components/CourseDetail/continer";
+import { Loading } from "@/components/loading";
 
 interface CourseDetail {
   title: string;
@@ -102,7 +103,7 @@ export const CourseDetail = () => {
   };
 
   if (!detail) {
-    return null;
+    return <Loading/>;
   }
 
   const path = [`دوره های اموزشی > ${detail.title}`];
@@ -110,7 +111,7 @@ export const CourseDetail = () => {
 
   const totalVotes = detail.likeCount + detail.dissLikeCount;
   const likeRatio = totalVotes > 0 ? detail.likeCount / totalVotes : 0;
-  const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
+  const score = (totalVotes > 0 ? (1 + 4 * likeRatio) : 1).toFixed(1);
 
   return (
     <>

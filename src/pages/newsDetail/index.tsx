@@ -25,6 +25,7 @@ import { NewsWrapper } from "@/components/News/NewsWrapper";
 import { GetNewsForLanding } from "@/core/services/api/landing";
 import { NewsRelated } from "@/components/NewsDetail/newsRelated";
 import { NewsDetailContent } from "@/components/NewsDetail/newsDetailContent";
+import { Loading } from "@/components/loading";
 
 interface NewsDetailProp {
   title: string;
@@ -119,6 +120,10 @@ export const NewsDetail: React.FC = () => {
       setReadingTime(`${minutes} دقیقه`);
     }
   }, [detail]);
+
+  if(!detail){
+    return <Loading/>
+  }
 
   const path = [`وبلاگ ها > ${detail?.title}`];
   const title = "توضیحات خبر";
