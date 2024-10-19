@@ -12,7 +12,7 @@ import { CourseDetail } from "@/pages/courseDetail";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { NewsListPage } from "@/pages/newsList";
 import { NewsDetail } from "@/pages/newsDetail";
-import { Loading } from "@/components/loading/Index";
+import { Loading } from "@/components/loading";
 import { useState, useEffect } from "react";
 
 export default function Home() {
