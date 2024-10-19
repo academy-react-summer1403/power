@@ -8,7 +8,7 @@ interface Comment {
   autor: string;
   describe: string;
   likeCount: number;
-  disslikeCount: number;
+  dissLikeCount: number;
   inserDate: string;
   title: string; 
   id: number;
@@ -28,7 +28,7 @@ export const NewsCommentWrapper: React.FC<NewsCommentWrapperProps> = ({ Comment 
           autor={item.autor}
           Explanation={item.describe}
           Like={item.likeCount}
-          DisLikes={item.disslikeCount}
+          DisLikes={item.dissLikeCount}
           Date={item.inserDate}
           title={item.title}
           id={item.id}

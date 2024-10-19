@@ -12,12 +12,14 @@ import { CommentComponent } from "./commentComponent";
 interface CourseProps {
   detail: any;
   comment: any;
+  sortedComments: any; 
   topCourseState: any;
   AddCourseReserve: (courseId: number) => Promise<void>;
   score: number;
   toggleSection: (section: "detail" | "comment") => void;
   showComment: boolean;
   showDetail: boolean;
+  handleSortChange: (option: string) => void;
 }
 
 export const CourseDetailContainer: React.FC<CourseProps> = ({
@@ -29,6 +31,8 @@ export const CourseDetailContainer: React.FC<CourseProps> = ({
   showDetail,
   comment,
   topCourseState,
+  sortedComments,
+  handleSortChange
 }) => {
   return (
     <>
@@ -42,7 +46,7 @@ export const CourseDetailContainer: React.FC<CourseProps> = ({
           showDetail={showDetail}
         />
         {showDetail && <Details detail={detail} />}
-        {showComment && <CommentComponent Comment={comment} detail={detail} />}
+        {showComment && <CommentComponent Comment={sortedComments} detail={detail} handleSortChange={handleSortChange} />}
         <div className="w-[95%] mt-56 flex-wrap lg:flex-nowrap lg:h-[650px] flex justify-center gap-4 items-center">
           <CourseWrapper stateTopCourse={topCourseState} />
         </div>

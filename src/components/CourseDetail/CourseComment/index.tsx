@@ -58,7 +58,7 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
         </div>
         <p className="my-2 w-full text-[#6D6C80] dark:text-gray-300">{Explanation}</p>
         <div className="flex justify-between w-full text-sm text-gray-500 dark:text-gray-400">
-          <div className="bg-[#F7F7FB] dark:bg-gray-700 w-[80px] h-[35px] rounded-xl text-[#5751E1] content-center text-center">
+          <div className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-[#5751E1] content-center text-center">
             پاسخ
           </div>
           <div className="flex justify-center gap-3">

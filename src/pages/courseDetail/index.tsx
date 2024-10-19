@@ -43,6 +43,7 @@ export const CourseDetail = () => {
   const [topCourseState, setTopCourseState] = useState([]);
   const [showComment, setShowComment] = useState<boolean>(false);
   const [comment, setComment] = useState<Array<any>>([]);
+  const [sortedComments, setSortedComments] = useState<Array<any>>([]);
 
   const AddCourseReserve = async (courseId: number) => {
     const loadingToast = toast.loading("در حال ثبت نام...");
@@ -68,9 +69,27 @@ export const CourseDetail = () => {
       setTopCourseState(topCourse);
       setDetail(courseDetail);
       setComment(courseComments);
+      setSortedComments(sortComments(courseComments, "newest"));
     };
     fetchData();
   }, [params.id]);
+
+  const handleSortChange = (option) => {
+    setSortedComments(sortComments(comment, option));
+  };
+
+  const sortComments = (comments, option) => {
+    switch (option) {
+      case "newest":
+        return [...comments].sort((a, b) => new Date(b.insertDate) - new Date(a.insertDate));
+      case "mostLiked":
+        return [...comments].sort((a, b) => b.likeCount - a.likeCount);
+      case "leastLiked":
+        return [...comments].sort((a, b) => a.likeCount - b.likeCount);
+      default:
+        return comments; 
+    }
+  };
 
   const toggleSection = (section: "detail" | "comment") => {
     if (section === "detail") {
@@ -99,6 +118,7 @@ export const CourseDetail = () => {
       <Breadcrumb path={path} title={title} />
       <div className="w-full h-auto flex flex-wrap justify-center mt-32 mb-32">
         <CourseDetailContainer
+          handleSortChange={handleSortChange}
           detail={detail}
           score={score}
           AddCourseReserve={AddCourseReserve}
@@ -107,6 +127,7 @@ export const CourseDetail = () => {
           showDetail={showDetail}
           comment={comment}
           topCourseState={topCourseState}
+          sortedComments={sortedComments}
         />
       </div>
       <Footer />

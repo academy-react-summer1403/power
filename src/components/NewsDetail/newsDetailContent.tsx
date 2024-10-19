@@ -27,9 +27,11 @@ interface NewsDetailContentProps {
   detail: NewsDetail | null;
   OnSubmit: (comment: string) => void;
   comment: any; 
+  handleSortChange: (option: string) => void;
+  sortOption: string;
 }
 
-export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, OnSubmit, comment }) => {
+export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, OnSubmit, handleSortChange , sortOption ,  comment }) => {
   const [readingTime, setReadingTime] = useState<string>("");
 
   useEffect(() => {
@@ -111,6 +113,13 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, On
         <h1 className="text-[18px] text-black dark:text-white mb-8">بخش نظرات</h1>
         <NewsAddComment onSubmit={OnSubmit} />
         <h1 className="text-[#161439] dark:text-white mt-8 mb-8 w-full text-[24px]">نظر {detail?.commentsCount}</h1>
+        <div className="flex mb-4">
+          <select value={sortOption} onChange={(e) => handleSortChange(e.target.value)} className="rounded-xl border p-2 border-gray-500 w-52 h-auto">
+            <option value="newest">جدیدترین</option>
+            <option value="mostLiked">محبوب‌ترین</option>
+            <option value="leastLiked">کمترین لایک</option>
+          </select>
+        </div>
         <div className="w-full h-auto min-h-[400px] max-h-[650px] overflow-y-auto flex flex-wrap justify-center">
           <NewsCommentWrapper Comment={comment} />
         </div>

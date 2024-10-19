@@ -45,11 +45,38 @@ export const NewsDetail: React.FC = () => {
   const [readingTime, setReadingTime] = useState<string>("");
   const [comment, setComment] = useState([]);
   const [newsList, setNewsList] = useState([]);
+  const [sortedComments, setSortedComments] = useState([]);
+  const [sortOption, setSortOption] = useState("newest");
 
   const getNewsDetail = async () => {
     const res = await getPaperDetail(params.id);
     setDetail(res.detailsNewsDto);
     setComment(res.commentDtos);
+    setSortedComments(res.commentDtos);
+  };
+
+  const sortComments = (comments, option) => {
+    switch (option) {
+      case "newest":
+        return [...comments].sort(
+          (a, b) => new Date(b.insertDate) - new Date(a.insertDate)
+        );
+      case "mostLiked":
+        return [...comments].sort(
+          (a, b) => (b.likeCount || 0) - (a.likeCount || 0)
+        );
+      case "leastLiked":
+        return [...comments].sort(
+          (a, b) => (a.likeCount || 0) - (b.likeCount || 0)
+        );
+      default:
+        return comments;
+    }
+  };
+
+  const handleSortChange = (option) => {
+    setSortOption(option);
+    setSortedComments(sortComments(comment, option)); // Update sorted comments
   };
 
   const fetchNews = async () => {
@@ -104,17 +131,23 @@ export const NewsDetail: React.FC = () => {
         <NewsRelated newsList={newsList} />
 
         <div className="mt-32 mb-8 w-[1080px] h-auto flex flex-wrap justify-center overflow-hidden">
-        <NewsDetailContent detail={detail} OnSubmit={onSubmit} comment={comment} />
-            <div className="w-full h-auto flex flex-wrap items-center justify-center min-h-[700px]">
-              <div className="w-full h-auto text-[36px] text-[#161439] dark:text-white">
-                اخبار مرتبط
-              </div>
-              <div className="w-[1085px] overflow-x-auto h-auto min-h-[485px] flex justify-center gap-4 flex-wrap lg:flex-nowrap">
-                <NewsWrapper newsList={newsList} />
-              </div>
+          <NewsDetailContent
+            detail={detail}
+            OnSubmit={onSubmit}
+            comment={sortedComments} 
+            handleSortChange={handleSortChange} 
+            sortOption={sortOption} 
+          />
+          <div className="w-full h-auto flex flex-wrap items-center justify-center min-h-[700px]">
+            <div className="w-full h-auto text-[36px] text-[#161439] dark:text-white">
+              اخبار مرتبط
+            </div>
+            <div className="w-[1085px] overflow-x-auto h-auto min-h-[485px] flex justify-center gap-4 flex-wrap lg:flex-nowrap">
+              <NewsWrapper newsList={newsList} />
             </div>
           </div>
         </div>
+      </div>
       <Footer />
     </>
   );
