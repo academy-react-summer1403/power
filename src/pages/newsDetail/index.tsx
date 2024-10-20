@@ -26,6 +26,7 @@ import { GetNewsForLanding } from "@/core/services/api/landing";
 import { NewsRelated } from "@/components/NewsDetail/newsRelated";
 import { NewsDetailContent } from "@/components/NewsDetail/newsDetailContent";
 import { Loading } from "@/components/loading";
+import { NewsContainer } from "@/components/NewsDetail/container";
 
 interface NewsDetailProp {
   title: string;
@@ -121,8 +122,8 @@ export const NewsDetail: React.FC = () => {
     }
   }, [detail]);
 
-  if(!detail){
-    return <Loading/>
+  if (!detail) {
+    return <Loading />;
   }
 
   const path = [`وبلاگ ها > ${detail?.title}`];
@@ -133,25 +134,14 @@ export const NewsDetail: React.FC = () => {
       <Header />
       <div className="h-auto w-full flex flex-wrap justify-center gap-8 bg-white dark:bg-gray-800">
         <Breadcrumb path={path} title={title} />
-        <NewsRelated newsList={newsList} />
-
-        <div className="mt-32 mb-8 w-[1080px] h-auto flex flex-wrap justify-center overflow-hidden">
-          <NewsDetailContent
-            detail={detail}
-            OnSubmit={onSubmit}
-            comment={sortedComments} 
-            handleSortChange={handleSortChange} 
-            sortOption={sortOption} 
-          />
-          <div className="w-full h-auto flex flex-wrap items-center justify-center min-h-[700px]">
-            <div className="w-full h-auto text-[36px] text-[#161439] dark:text-white">
-              اخبار مرتبط
-            </div>
-            <div className="w-[1085px] overflow-x-auto h-auto min-h-[485px] flex justify-center gap-4 flex-wrap lg:flex-nowrap">
-              <NewsWrapper newsList={newsList} />
-            </div>
-          </div>
-        </div>
+        <NewsContainer
+          newsList={newsList}
+          detail={detail}
+          onSubmit={onSubmit}
+          sortedComments={sortedComments}
+          handleSortChange={handleSortChange}
+          sortOption={sortOption}
+        />
       </div>
       <Footer />
     </>
