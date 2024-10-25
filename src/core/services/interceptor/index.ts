@@ -1,42 +1,41 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { getItem, removeItem } from "../common/storage.services";
+// services/axiosInstance.ts
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { clearStorage, getItem, removeItem } from '../common/storage.services';
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL; // تغییر به NEXT_PUBLIC برای دسترسی به ENV
+const baseURL = process.env.NEXT_PUBLIC_VITE_BASE_URL; 
+
 const instance = axios.create({
-  baseURL,
+  baseURL: baseURL,
 });
 
-interface ApiResponse<T> {
-  data: T;
-}
-
-const onSuccess = <T>(response: AxiosResponse<ApiResponse<T>>): T => {
-  return response.data.data; // فرض بر این است که api شما در این فرمت پاسخ می‌دهد
+const onSuccess = (response: AxiosResponse) => {
+  return response.data;
 };
 
-const onError = (err: AxiosError) => {
-  if (err.response?.status === 401) {
-    removeItem("token");
-    window.location.pathname = "/Login";
+const onError = (error: AxiosError) => {
+  if (error.response) {
+    if (error.response.status === 401) {
+      clearStorage()
+    }
+
+    if (error.response.status >= 404 && error.response.status < 500) {
+      alert(`Client Error: ${error.response.status}`);
+    }
   }
 
-  // if (err?.response.status >= 400 && err.response.status < 500) {
-  //   alert("Client Error: " + err.response.status);
-  // }
-
-  return Promise.reject(err);
+  return Promise.reject(error);
 };
 
-instance.interceptors.request.use((opt: AxiosRequestConfig) => {
+// Interceptors
+instance.interceptors.response.use(onSuccess, onError);
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = getItem("token");
 
   if (token) {
-    opt.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return opt;
-});
 
-// افزودن interceptor برای پاسخ‌ها
-instance.interceptors.response.use(onSuccess, onError);
+  return config;
+});
 
 export default instance;

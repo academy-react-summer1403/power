@@ -22,9 +22,9 @@ export const Header = () => {
     setLastScrollY(currentScrollY);
   };
 
-  const getLinkClassName = (path) => {
+  const getLinkClassName = (path : string) => {
     return location.pathname === path
-      ? "text-[#5751E1] after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-[#5751E1] after:to-transparent mt-4"
+      ? "text-[#5751E1] after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#5751E1] after:to-transparent mt-4"
       : "p-2 md:p-3 lg:p-5 dark:text-white transition-all hover:text-blue-500 hover:text-[110%]";
   };
 
@@ -42,13 +42,12 @@ export const Header = () => {
     return () => clearTimeout(timer);
   }, [isMenuOpen]);
 
-  // Check if token exists in local storage and set the link accordingly
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setStudentPanelLink("/StudentPanel"); // Link to student panel if token exists
+      setStudentPanelLink("/StudentPanel/dashboard"); 
     } else {
-      setStudentPanelLink("/Login"); // Default to login if no token
+      setStudentPanelLink("/Login"); 
     }
   }, []);
   
@@ -91,10 +90,10 @@ export const Header = () => {
           <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
         </div>
-        <div title="علاقه مندی ها" className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative">
+        <Link to="/StudentPanel/favorites" title="علاقه مندی ها" className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative">
           <Image src={FavoritePic} alt="Favorite" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
-        </div>
+        </Link>
         <Link to={studentPanelLink} className="bg-[#FFC224] h-11 w-full md:w-36 border transition-all shadow-[3px_3px_0_0] hover:shadow-[2px_2px_0_0] shadow-[#3D3D3D] border-[#06235B30] content-center rounded-[50px] text-center">
           حساب کاربری
         </Link>

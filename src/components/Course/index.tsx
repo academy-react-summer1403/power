@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import DefualtPic from "@/assets/landing/course/defualtPic.png";
 import StarPic from "@/assets/landing/course/star.svg";
@@ -15,7 +15,7 @@ import FavotiteTruePic from "@/assets/landing/course/favorite-true.png";
 import { DateConvert } from "@/core/services/utils/date";
 import { AddCourseFavoriteApi } from "@/core/services/api/landing";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 interface TopCourseProps {
   tumbImageAddress: string;
@@ -52,8 +52,13 @@ export const Course: React.FC<TopCourseProps> = ({
   typeName,
   isUserFavorite
 }) => {
+  const navigate = useNavigate();
+  const [clickCount, setClickCount] = useState(0);
+
   const placeholderImage = DefualtPic;
-  const imageSrc = tumbImageAddress || placeholderImage;
+  const imageSrc = (tumbImageAddress && (tumbImageAddress.startsWith('/') || tumbImageAddress.startsWith('http')))
+    ? tumbImageAddress
+    : placeholderImage;
   const totalVotes = likeCount + dissLikeCount;
   const likeRatio = totalVotes > 0 ? likeCount / totalVotes : 0;
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
@@ -62,12 +67,19 @@ export const Course: React.FC<TopCourseProps> = ({
   const AddCoursefavorite = async () => {
     const CourseId = id;
     const res = await AddCourseFavoriteApi(CourseId);
-    // Consider adding feedback to the user after successful operation
     toast.success("Course added to favorites!");
   };
 
+  const handleDoubleClick = () => {
+    navigate(`/CourseDetail/${id}`);
+  };
+
+
   return (
-    <Link to={"/CourseDetail/" + id} className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]">
+    <div
+      className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]"
+      onDoubleClick={handleDoubleClick}
+    >
       <Image
         src={imageSrc}
         alt={title}
@@ -117,6 +129,6 @@ export const Course: React.FC<TopCourseProps> = ({
           <p className="text-[#5F5F66] dark:text-white"><span className="text-[#5751E1] font-bold">{formattedCost}</span> تومان</p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

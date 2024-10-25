@@ -1,4 +1,4 @@
-import {RequestCard} from './RequestCard';
+import {RequestCard} from './requestCard';
 import MorabiShavid from "@/assets/landing/body/Untitled-1(1).png";
 import DanshghoShavid from "@/assets/landing/body/Untitled-2.png";
 

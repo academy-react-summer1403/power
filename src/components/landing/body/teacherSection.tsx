@@ -23,11 +23,11 @@ interface StatsSectionProps {
   teacherList: Teacher[];
 }
 
-export const StatsSection: React.FC<StatsSectionProps> = ({ landingApi, teacherList }) => {
+export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teacherList }) => {
   return (
     <div className=" h-auto min-h-[1105px] w-full flex flex-wrap justify-center items-center">
       <div className=" h-auto lg:h-[425px] w-full flex flex-wrap lg:flex-none">
-        <div className="w-[450px] min-h-[425px] lg:h-full flex flex-wrap justify-center items-center">
+        <div className="w-[450px] min-h-[425px] lg:h-full flex flex-wrap justify-center items-center" data-aos="fade-up-left">
           <div className="w-[160px] h-[30px] bg-[#EFEEFE] dark:bg-[#5751E1] rounded-[30px] text-[#5751E1] dark:text-white text-center content-center font-medium">
             معلم های ماهر
           </div>
@@ -46,15 +46,15 @@ export const StatsSection: React.FC<StatsSectionProps> = ({ landingApi, teacherL
           {teacherList ? (
             teacherList.slice(0, 4).map((item, index) => {
               return (
-                <div className="w-[390px] h-[185px] items-center flex justify-center gap-6" key={index}>
+                <div className="w-[390px] h-[185px] items-center flex justify-center gap-6" data-aos="fade-up-right" key={index}>
                   <div className="w-[180px] h-[120px] flex justify-center items-center overflow-hidden rounded-full bg-gradient-to-r from-[#F7F6F9] to-[#E9F5F5]">
-                    {/* <Image
+                    <Image
                       className="rounded-full"
                       src={item.pictureAddress || TeacherDefualtPic}
                       alt={item.fullName}
                       width={180}
                       height={180}
-                    /> */}
+                    />
                   </div>
                   <div className="h-full w-full flex flex-wrap items-end">
                     <div className="text-[#161439] dark:text-white font-semibold w-[160px] text-[20px]">
@@ -95,7 +95,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({ landingApi, teacherL
 
 const StatItem: React.FC<{ label: string; count: number }> = ({ label, count }) => (
   <div className="border-l-2 border-white/50 h-[90%] w-1/4 flex flex-col items-center justify-center">
-    <div className="text-white text-[56px] font-bold">{count}</div>
+    <div className="text-white text-[56px] font-bold"  data-aos="zoom-out">{count}</div>
     <div className="text-white text-[18px]">{label}</div>
   </div>
 );

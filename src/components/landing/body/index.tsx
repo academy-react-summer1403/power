@@ -9,16 +9,17 @@ import {
   GetTeacherForLanding,
   GetTopCoursesApi,
 } from "@/core/services/api/landing";
-import { HeroSection } from "./HeroSection";
-import { CategorySection } from "./CategorySection";
-import { BodyAboutUs } from "./BodyAboutUs";
-import { BlogSection } from "./BlogSection";
-import { TopCoursesSection } from "./TopCoursesSection";
-import { NewsletterSection } from "./NewsletterSection";
-import { StatsSection } from "./StatsSection";
-import { FAQSection } from "./FAQSection";
-import { LearningJourney } from "./LearningJourney";
+import { HeroSection } from "./heroSection";
+import { CategorySection } from "./categorySection";
+import { BodyAboutUs } from "./bodyAboutUs";
+import { BlogSection } from "./blogSection";
+import { TopCoursesSection } from "./topCoursesSection";
+import { NewsletterSection } from "./newsletterSection";
+import { TeacherSection } from "./teacherSection";
+import { FAQSection } from "./faqSection";
+import { LearningJourney } from "./learningJourney";
 import { getCat } from "@/core/services/api/course";
+import { Loading } from "@/components/loading";
 
 export const Body = () => {
   const [LandingApi, setLandingApi] = useState([]);
@@ -62,16 +63,20 @@ export const Body = () => {
     fetchData();
   }, []);
 
+  if(!catList && !newsList && !teacherList && !topCourseState){
+    <Loading/>
+  }
+
   return (
     <>
       <HeroSection />
       <div className="w-full mt-32 h-auto flex flex-wrap justify-center">
-        <CategorySection catList={catList} />
         <BodyAboutUs />
+        <CategorySection catList={catList} />
         <TopCoursesSection topCourseState={topCourseState} />
       </div>
       <NewsletterSection />
-      <StatsSection teacherList={teacherList} landingApi={LandingApi} />
+      <TeacherSection teacherList={teacherList} landingApi={LandingApi} />
       <FAQSection />
       <LearningJourney />
       <BlogSection newsList={newsList} />

@@ -33,7 +33,7 @@ export const GetNewsForLanding = async () => {
       const res = await axios.get(`${BaseUrl}/News`); 
       return res.data;
     } catch (error) {
-      console.error(error, "error");
+      console.log(error, "error");
     }
   };
 

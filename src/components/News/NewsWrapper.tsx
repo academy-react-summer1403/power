@@ -12,6 +12,10 @@ interface News {
   DisLikeCount: number;
   LikeCount: number;
   Catregory: string;
+  currentDissLikeCount: number;
+  currentLikeCount: number;
+  newsCatregoryName: number;
+
 }
 
 interface NewsWrapperProps {
@@ -24,6 +28,7 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
       {newsList ? (
         newsList.map((item) => (
           <LandingNews
+            key={item.id}
             Id={item.id}
             title={item.title}
             Img={item.currentImageAddressTumb}

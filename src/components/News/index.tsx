@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import NewsDefualtPic from "@/assets/landing/news/newsDefualtPic.png";
+import NewsDefaultPic from "@/assets/landing/news/newsDefualtPic.png";
 import EyePic from "@/assets/landing/news/eye 1.png";
 import LikePIc from "@/assets/landing/news/like.png";
 import DisLikePic from "@/assets/landing/news/dislike.png";
@@ -35,9 +35,9 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
 
 
   return (
-    <Link to={`/NewsDetail/` + Id} className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]">
+    <Link to={`/NewsDetail/` + Id} className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]" data-aos="fade-up">
       <Image
-        src={Img || NewsDefualtPic}
+        src={Img || NewsDefaultPic}
         alt={title}
         width={295}
         height={225}

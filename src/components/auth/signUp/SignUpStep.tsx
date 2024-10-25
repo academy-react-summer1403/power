@@ -96,7 +96,7 @@ export const SignUpStep: React.FC<SignUpStepProps> = ({
   );
 
   return (
-    <div className="h-screen flex justify-center items-center relative overflow-hidden">
+    <div className="h-screen flex justify-center items-center relative overflow-hidden dark:bg-gray-900">
       {init && (
         <Particles
           id="tsparticles"
@@ -108,16 +108,16 @@ export const SignUpStep: React.FC<SignUpStepProps> = ({
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         <Form>
           <div className="relative z-10 flex justify-center items-center h-full">
-            <div className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
-              <div className="w-full overflow-y-auto md:w-[40%] h-[615px] flex flex-wrap justify-center items-center bg-white rounded-[50px] p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
-                <h1 className="w-full text-[30px] md:text-[35px] 2xl:text-[40px]">{stepTitle}</h1>
-                <p className="w-full text-[#6D6C80] text-[16px] md:text-[20px] mb-4">{stepDescription}</p>
+            <div className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 dark:bg-gray-800 rounded-[50px] flex">
+              <div className="w-full overflow-y-auto md:w-[40%] h-[615px] flex flex-wrap justify-center items-center bg-white rounded-[50px] dark:bg-gray-700 p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
+                <h1 className="w-full text-[30px] md:text-[35px] 2xl:text-[40px] text-gray-900 dark:text-white">{stepTitle}</h1>
+                <p className="w-full text-[#6D6C80] dark:text-gray-300 text-[16px] md:text-[20px] mb-4">{stepDescription}</p>
 
                 {fieldNames.map((fieldName) => (
                   <div key={fieldName}>
                     <Field
                       name={fieldName}
-                      className="bg-[#FBFBFB] w-[90%] md:w-[450px] h-[60px] outline-none rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4"
+                      className="bg-[#FBFBFB] dark:bg-gray-600 w-[90%] md:w-[450px] h-[60px] outline-none rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4 text-gray-900 dark:text-white"
                       placeholder={`لطفا ${fieldName} خود را وارد کنید`}
                     />
                     <ErrorMessage className="text-sm text-red-700" component="p" name={fieldName} />
@@ -126,7 +126,7 @@ export const SignUpStep: React.FC<SignUpStepProps> = ({
 
                 <button
                   type="submit"
-                  className="w-full md:w-[480px] mt-10 h-[60px] rounded-[50px] bg-[#FFC224] border border-black shadow-[4px_4px_0_0] shadow-[#3D3D3D]"
+                  className="w-full md:w-[480px] mt-10 h-[60px] rounded-[50px] bg-[#FFC224] border border-black shadow-[4px_4px_0_0] shadow-[#3D3D3D] dark:shadow-gray-600 dark:bg-[#FFC224] dark:border-gray-600 dark:shadow-[4px_4px_0_0]"
                 >
                   {buttonLabel}
                 </button>

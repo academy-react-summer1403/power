@@ -155,7 +155,7 @@ const handleCategoryChange = (categoryId: string) => {
           <div className="h-auto w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
               <div className="flex items-center justify-center">
-                {`${totalCount} کورس در دسترس است`}
+                {`${totalCount} دوره در دسترس است`}
               </div>
               <div className="flex items-center gap-3"> 
                 <p> مرتب سازی بر اساس: </p>

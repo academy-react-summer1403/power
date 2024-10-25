@@ -4,13 +4,13 @@ import Karshenas from "@/assets/landing/body/SVG (1).png";
 import YadBegir from "@/assets/landing/body/SVG.png";
 import Govahi from "@/assets/landing/body/SVG (2).png";
 import Email from "@/assets/landing/body/SVG (3).png";
-import { CardsWrapper } from "./CardsWrapper";
+import { CardsWrapper } from "./cardsWrapper";
 
 export const LearningJourney = () => {
   return (
     <div className="h-auto w-full bg-[#282568] dark:bg-gray-800 flex flex-wrap text-center justify-center items-center p-6">
       <div className="w-full max-w-[1440px] h-full flex flex-col justify-center items-center">
-        <h2 className="bg-[#5751E1] dark:bg-[#4c40c1] w-[230px] h-[30px] rounded-[30px] text-white font-medium text-center">
+        <h2 className="bg-[#5751E1] content-center dark:bg-[#4c40c1] w-[230px] h-[30px] rounded-[30px] text-white font-medium text-center">
           {" "}
           چگونه سفر را شروع می کنیم{" "}
         </h2>
@@ -51,7 +51,12 @@ export const LearningJourney = () => {
 };
 
 const Card = ({ image, title, description }) => (
-  <div className="w-[100%] sm:w-[275px] h-auto flex flex-col items-center justify-center mb-6  dark:bg-gray-600 rounded-lg p-4">
+  <div
+    className="w-[100%] sm:w-[275px] h-auto flex flex-col items-center justify-center mb-6  dark:bg-gray-600 rounded-lg p-4"
+    data-aos="flip-right"
+    data-aos-easing="ease-out-cubic"
+    data-aos-duration="2000"
+  >
     <Image src={image} className="h-24 w-24" alt={title} />
     <h1 className="w-full text-white font-semibold mt-6">{title}</h1>
     <p className="text-gray-300 mt-4 text-center">{description}</p>
