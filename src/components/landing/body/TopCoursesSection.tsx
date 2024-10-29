@@ -30,19 +30,13 @@ export const TopCoursesSection: React.FC<TopCoursesSectionProps> = ({ topCourseS
                         امروزه به دلیل آن که ارتباطات فضای مجازی رونق زیادی یافته است
                     </p>
                 </div>
-                <div className="w-auto h-auto flex flex-wrap lg:flex-none items-center">
-                    <button className="rotate-180 w-16 h-16 bg-[#5751E1] border border-black shadow-[3.6px_2.4px_0_0] shadow-[#23232B] rounded-[30px] flex justify-center items-center">
-                        <Image src={ArowPic} alt="Left Arrow" />
-                    </button>
+                <div className="w-full h-auto flex flex-wrap lg:flex-none items-center">
                     <div
-                        className="w-[1200px] 2xl:w-[1460px] h-auto flex-wrap lg:flex-nowrap lg:h-[485px] flex justify-center gap-4"
+                        className="w-full 2xl:w-[1460px] h-auto flex-wrap lg:flex-nowrap lg:h-[485px] flex justify-center gap-4"
                         data-aos="fade-up"
                     >
                         <CourseWrapper stateTopCourse={topCourseState} />
                     </div>
-                    <button className="w-16 h-16 bg-[#5751E1] border border-black shadow-[3.6px_2.4px_0_0] shadow-[#23232B] rounded-[30px] flex justify-center items-center">
-                        <Image src={ArowPic} alt="Right Arrow" />
-                    </button>
                 </div>
             </div>
         </div>

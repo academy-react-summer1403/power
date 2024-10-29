@@ -17,9 +17,9 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ getLinkClassName }) => {
         <FaUser className="mr-2" />
         <span className=" hidden lg:inline-block">اطلاعات کاربری</span>
       </Link>
-      <Link title="دوره های روزمره" to="courses" className={getLinkClassName("/StudentPanel/courses")}>
+      <Link title="دوره های روزرو شده" to="courses" className={getLinkClassName("/StudentPanel/courses")}>
         <FaBookOpen className="mr-2" />
-        <span className=" hidden lg:inline-block">دوره های روزمره</span>
+        <span className=" hidden lg:inline-block">دوره های روزرو شده</span>
       </Link>
       <Link title="دیدگاه های من" to="comments" className={getLinkClassName("/StudentPanel/comments")}>
         <FaComment className="mr-2" />

@@ -14,7 +14,8 @@ interface News {
   Catregory: string;
   currentDissLikeCount: number;
   currentLikeCount: number;
-  newsCatregoryName: number;
+  newsCatregoryName: number
+  currentUserIsLike: boolean;
 
 }
 
@@ -38,6 +39,7 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
             DisLikeCount={item.currentDissLikeCount}
             LikeCount={item.currentLikeCount}
             Catregory={item.newsCatregoryName}
+            currentUserIsLike={item.currentUserIsLike}
           />
         ))
       ) : (

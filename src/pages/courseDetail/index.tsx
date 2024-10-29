@@ -34,6 +34,11 @@ interface CourseDetail {
   describe: string;
   commentCount: number;
   techs: Array<any>;
+  isUserFavorite: boolean
+  currentUserDissLike: number
+currentUserLike : number
+currentUserRateNumber: number
+currentUserSetRate: boolean
 }
 
 export const CourseDetail = () => {

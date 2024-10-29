@@ -166,7 +166,7 @@ export const reserved = async () => {
 export const liked = async (id : string) => {
   try {
     console.log("Fetching started...");
-    const result = await axios.post(`${BaseUrl}/Course/AddCourseLike?CourseId=${id}`);
+    const result = await http.post(`/Course/AddCourseLike?CourseId=${id}`);
     //console.log(result);
 
     return result;
@@ -178,7 +178,7 @@ export const liked = async (id : string) => {
 export const disLiked = async (id : string) => {
   try {
     console.log("Fetching started...");
-    const result = await axios.post(`${BaseUrl}/Course/AddCourseDissLike?CourseId=${id}`);
+    const result = await http.post(`/Course/AddCourseDissLike?CourseId=${id}`);
     //console.log(result);
 
     return result;
@@ -190,10 +190,9 @@ export const disLiked = async (id : string) => {
 export const deletliked = async (data : string) => {
   try {
     console.log("Fetching started...");
-    const result = await axios.delete(`${BaseUrl}/Course/DeleteCourseLike`, {
+    const result = await http.delete(`/Course/DeleteCourseLike`, {
       data: data,
     });
-    //console.log(result);
 
     return result;
   } catch (error) {
@@ -258,6 +257,13 @@ export const disLikedCourseCmnt = async (id : string) => {
     return [];
   }
 };
+export const deleteCourseComment = async (id = String) => {
+  try {
+    await http.delete(`/Course/DeleteCourseComment?CourseCommandId=${id}`)
+  } catch (error) {
+    console.log(error , "error")
+  }
+}
 export const deleteLikedCourseCmnt = async (id : string) => {
   try {
     console.log("Fetching started...");
@@ -299,5 +305,16 @@ export const GetMyNewsComment = async () => {
   } catch (error) {
     console.log(error , "Error")
     return null
+  }
+}
+
+
+export const AddCourseRate = async (id : String ,RateNumber : number ) => {
+  try {
+    const res =await http.post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${RateNumber}`)
+    return res;
+  } catch (error) {
+    console.log(error , "Error")
+    return []
   }
 }

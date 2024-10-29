@@ -11,7 +11,7 @@ export const CourseButtons: React.FC<CourseButtonsProps> = ({
   showComment,
   toggleSection,
 }) => (
-  <div className="mt-14 w-[90%] flex gap-3">
+  <div className="mt-14 justify-center md:justify-normal w-[90%] flex gap-3">
   <button
     className={`w-[150px] h-[45px] rounded-[30px] ${
       showDetail

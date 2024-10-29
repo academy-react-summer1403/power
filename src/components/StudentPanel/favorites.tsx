@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SearchIcon from "@/assets/StudentPanel/search.png";
 import { DateConvert } from "@/core/services/utils/date";
-import { getfave } from "@/core/services/api/userPanel";
-import { getFavoriteNews } from "@/core/services/api/news";
+import { deletFavorite, getfave } from "@/core/services/api/userPanel";
+import { delNewsFavorite, getFavoriteNews } from "@/core/services/api/news";
+import { FaEye, FaTrash } from "react-icons/fa";
+import { Navigate, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface FavoriteCourse {
   courseId: string;
@@ -11,18 +14,23 @@ interface FavoriteCourse {
   teacherName?: string;
   reservedDate: string;
   accept: boolean;
+  teacheName: string;
+  favoriteId: string;
 }
 
 interface FavoriteNews {
   newsId: string;
   title: string;
   insertDate: string;
+  teacheName: string;
+  favoriteId: string;
 }
 
 const Favorites: React.FC = () => {
   const [favoriteCourses, setFavoriteCourses] = useState<FavoriteCourse[]>([]);
   const [favoriteNews, setFavoriteNews] = useState<FavoriteNews[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>(""); 
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const navigate = useNavigate();
 
   const fetchFavorites = async () => {
     try {
@@ -40,25 +48,52 @@ const Favorites: React.FC = () => {
     fetchFavorites();
   }, []);
 
-  // Combine the courses and news
   const combinedFavorites = [
-    ...favoriteCourses.map(course => ({
+    ...favoriteCourses.map((course) => ({
       ...course,
-      type: 'course',
+      type: "course",
       identifier: course.courseId,
-      displayTitle: course.courseTitle
+      displayTitle: course.courseTitle,
+      teacheName: course.teacheName,
+      favoriteId: course.favoriteId,
     })),
-    ...favoriteNews.map(news => ({
+    ...favoriteNews.map((news) => ({
       ...news,
-      type: 'news',
+      type: "news",
       identifier: news.newsId,
-      displayTitle: news.title
-    }))
+      displayTitle: news.title,
+      teacheName: news.teacheName,
+      favoriteId: news.favoriteId,
+    })),
   ];
 
-  const filteredFavorites = combinedFavorites.filter(favorite =>
+  const filteredFavorites = combinedFavorites.filter((favorite) =>
     favorite.displayTitle.includes(searchTerm)
   );
+
+  const handleViewDetail = (id: string, type: string) => {
+    if (type === "course") {
+      navigate(`/CourseDetail/${id}`);
+    } else if (type === "news") {
+      navigate(`/NewsDetail/${id}`);
+    }
+  };
+
+  const handleDeleteFavorite = async (favoriteId: string, type: string) => {
+    const data = new FormData();
+    data.append("CourseFavoriteId", favoriteId);
+    try {
+      if (type === "course") {
+        const res = await deletFavorite(data);
+        toast.success(res.message)
+      } else if (type === "news") {
+        await delNewsFavorite(favoriteId);
+      }
+      fetchFavorites();
+    } catch (error) {
+      console.error("Failed to delete favorite", error);
+    }
+  };
 
   return (
     <div className="bg-white dark:bg-[#222222] text-[#161439] dark:text-white p-4">
@@ -81,23 +116,50 @@ const Favorites: React.FC = () => {
         <div className="w-[200px] text-center">عنوان</div>
         <div className="w-[200px] text-center">نوع</div>
         <div className="w-[130px] text-center">تاریخ</div>
-        <div className="w-[150px] text-center">وضعیت</div>
+        <div className="w-[150px] text-center">نویسنده</div>
+        <div className="w-[150px] text-center">عملیات</div>
       </div>
+
+      <div className="after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
 
       <div className="max-h-[280px] overflow-y-auto">
         {filteredFavorites.length > 0 ? (
           filteredFavorites.map((favorite) => (
             <div
-              key={favorite}
+              key={favorite.identifier}
               className="flex justify-between items-center py-2 border-b border-[#EBEBEB] dark:border-[#444]"
             >
-              <div className="text-center w-[200px]">{favorite.displayTitle}</div>
-              <div className="w-[200px] text-center">{favorite.type === 'course' ? 'دوره' : 'خبر'}</div>
-              <div className="w-[130px] text-center">
-                {DateConvert(favorite.type === 'course' ? favorite.updateDate : favorite.lastUpdate)}
+              <div className="text-center w-[200px]">
+                {favorite.displayTitle}
               </div>
-              <div className="w-[150px] text-center">
-                {favorite.type === 'course' ? (favorite.accept ? "تأیید شده" : "منتظر بررسی") : "در حال بررسی"}
+              <div className="w-[200px] text-center">
+                {favorite.type === "course" ? "دوره" : "خبر"}
+              </div>
+              <div className="w-[130px] text-center">
+                {DateConvert(
+                  favorite.type === "course"
+                    ? favorite.reservedDate
+                    : favorite.lastUpdate
+                )}
+              </div>
+              <div className="w-[150px] text-center">{favorite.teacheName}</div>
+              <div className="w-[150px] text-center flex gap-5 space-x-2">
+                <button
+                  onClick={() =>
+                    handleViewDetail(favorite.identifier, favorite.type)
+                  }
+                  title="مشاهده جزئیات"
+                >
+                  <FaEye className="text-blue-500 hover:text-blue-700" />
+                </button>
+                <button
+                  onClick={() =>
+                    handleDeleteFavorite(favorite.favoriteId, favorite.type)
+                  }
+                  title="حذف مورد مورد علاقه"
+                >
+                  <FaTrash className="text-red-500 hover:text-red-700" />
+                </button>
               </div>
             </div>
           ))

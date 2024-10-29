@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SearchIcon from "@/assets/StudentPanel/search.png";
 import { DateConvert } from "@/core/services/utils/date";
-import { GetMyCourseComment, GetMyNewsComment } from "@/core/services/api/course";
+import {
+  GetMyCourseComment,
+  GetMyNewsComment,
+  deleteCourseComment,
+} from "@/core/services/api/course";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { FaEye, FaTrash } from "react-icons/fa";
 
 interface Comment {
   commentId: string;
@@ -11,17 +18,20 @@ interface Comment {
   insertDate: string;
   accept: boolean;
   courseTitle?: string;
+  courseId?: string; // Make optional to accommodate news comments
+  newsId?: string; // Add newsId to the comment for news comments
 }
 
 const Comments: React.FC = () => {
   const [courseComments, setCourseComments] = useState<Comment[]>([]);
   const [newsComments, setNewsComments] = useState<Comment[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const navigate = useNavigate();
 
   const fetchComments = async () => {
     try {
       const courseRes = await GetMyCourseComment();
-      const newsRes = await GetMyNewsComment();      
+      const newsRes = await GetMyNewsComment();
       setCourseComments(courseRes?.myCommentsDtos || []);
       setNewsComments(newsRes?.myNewsCommetDtos || []);
     } catch (error) {
@@ -35,10 +45,30 @@ const Comments: React.FC = () => {
 
   const combinedComments = [...courseComments, ...newsComments];
 
-  const filteredComments = combinedComments.filter(comment => 
-    comment.title.includes(searchTerm) || 
-    (comment.describe && comment.describe.includes(searchTerm))
+  const filteredComments = combinedComments.filter(
+    (comment) =>
+      comment.title.includes(searchTerm) ||
+      (comment.describe && comment.describe.includes(searchTerm))
   );
+
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      const res = await deleteCourseComment(commentId);
+      toast.success(res.message);
+      fetchComments();
+    } catch (error) {
+      console.error("Failed to delete comment:", error);
+      toast.error("Failed to delete comment");
+    }
+  };
+
+  const handleViewDetail = (comment: Comment) => {
+    if (comment.courseId) {
+      navigate(`/CourseDetail/${comment.courseId}`);
+    } else if (comment.newsId) {
+      navigate(`/NewsDetail/${comment.newsId}`);
+    }
+  };
 
   return (
     <div className="bg-white dark:bg-[#222222] text-[#161439] dark:text-white p-4">
@@ -61,11 +91,12 @@ const Comments: React.FC = () => {
         <div className="w-[200px] text-center">دوره / خبر</div>
         <div className="w-[130px] text-center">تاریخ</div>
         <div className="w-[200px] text-center">وضعیت</div>
-        <div className="w-full after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
+        <div className="w-[150px] text-center">عملیات</div>
       </div>
+        <div className="w-full mt-5 after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
       <div className="max-h-[280px] h-[200px] flex flex-wrap justify-center overflow-auto">
         {filteredComments.length > 0 ? (
-          filteredComments.map(comment => (
+          filteredComments.map((comment) => (
             <div
               key={comment.commentId}
               className="flex justify-between w-full items-center py-2 border-b border-[#EBEBEB] dark:border-[#444]"
@@ -78,7 +109,27 @@ const Comments: React.FC = () => {
                 {DateConvert(comment.insertDate)}
               </div>
               <div className="w-[200px] text-center">
-                {comment.accept ? "تأیید شده" : "منتظر بررسی"}
+                <span
+                  className={comment.accept ? "text-green-500" : "text-red-500"}
+                >
+                  {comment.accept ? "تأیید شده" : "منتظر بررسی"}
+                </span>
+              </div>
+              <div className="w-[150px] text-center flex gap-2">
+                <button
+                  onClick={() => handleViewDetail(comment)}
+                  className="text-blue-500 hover:text-blue-700"
+                  title="مشاهده جزئیات"
+                >
+                  <FaEye className="text-blue-500 hover:text-blue-700" />
+                </button>
+                <button
+                  onClick={() => handleDeleteComment(comment.commentId)}
+                  className="text-red-500 hover:text-red-700"
+                  title="حذف دیدگاه"
+                >
+                  <FaTrash className="text-red-500 hover:text-red-700" />
+                </button>
               </div>
             </div>
           ))

@@ -13,9 +13,12 @@ import CalenderPic from "@/assets/landing/course/calender.svg";
 import FavoritePic from "@/assets/landing/course/favorite.png";
 import FavotiteTruePic from "@/assets/landing/course/favorite-true.png";
 import { DateConvert } from "@/core/services/utils/date";
-import { AddCourseFavoriteApi } from "@/core/services/api/landing";
+import { AddCourseFavoriteApi} from "@/core/services/api/landing";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
+import { disLiked, liked } from "@/core/services/api/course";
+import { getItem } from "@/core/services/common/storage.services";
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 
 interface TopCourseProps {
   tumbImageAddress: string;
@@ -33,6 +36,9 @@ interface TopCourseProps {
   statusName: string;
   typeName: string;
   isUserFavorite: boolean;
+  userLikeId: string;
+  userIsLiked: boolean;
+  userIsDissLiked: boolean
 }
 
 export const Course: React.FC<TopCourseProps> = ({
@@ -50,30 +56,90 @@ export const Course: React.FC<TopCourseProps> = ({
   describe,
   statusName,
   typeName,
-  isUserFavorite
+  isUserFavorite,
+  userLikeId,
+  userIsLiked,
+  userIsDissLiked
 }) => {
   const navigate = useNavigate();
-  const [clickCount, setClickCount] = useState(0);
+  const [localIsUserFavorite, setLocalIsUserFavorite] = useState(isUserFavorite);
+  const [localLikeCount, setLocalLikeCount] = useState(likeCount);
+  const [localDislikeCount, setLocalDislikeCount] = useState(dissLikeCount);
 
   const placeholderImage = DefualtPic;
   const imageSrc = (tumbImageAddress && (tumbImageAddress.startsWith('/') || tumbImageAddress.startsWith('http')))
     ? tumbImageAddress
     : placeholderImage;
-  const totalVotes = likeCount + dissLikeCount;
-  const likeRatio = totalVotes > 0 ? likeCount / totalVotes : 0;
+  const totalVotes = localLikeCount + localDislikeCount;
+  const likeRatio = totalVotes > 0 ? localLikeCount / totalVotes : 0;
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
   const formattedCost = (parseFloat(cost) / 10000).toFixed(0);
 
   const AddCoursefavorite = async () => {
-    const CourseId = id;
-    const res = await AddCourseFavoriteApi(CourseId);
-    toast.success("Course added to favorites!");
+    const data = { courseId: id };
+    if(getItem("token")){
+    try {
+      const loadingToast = toast.loading("Adding course to favorites...");
+      const res = await AddCourseFavoriteApi(data);
+      setLocalIsUserFavorite(true);
+      toast.success("Course added to favorites!");
+      toast.dismiss(loadingToast);
+    } catch (error) {
+      toast.error("Failed to add to favorites.");
+    }
+  }
+  else{
+    toast.error("لطفا ابتدا وارد سایت شوید")
+  }
   };
 
   const handleDoubleClick = () => {
     navigate(`/CourseDetail/${id}`);
   };
 
+  const handleLike = async () => {
+    if(getItem("token")){
+      try {
+        const loadingToast = toast.loading("Liking course...");
+        const res = await liked(id);
+        if(res.success){
+          setLocalLikeCount(localLikeCount + 1);
+          toast.success(res.message);
+        }
+        else{
+          toast.error(res.ErrorMessage)
+        }
+        toast.dismiss(loadingToast);
+      } catch (error) {
+        toast.error("Failed to like the course.");
+      }
+    }
+    else{
+      toast.error("لطفا ابتدا وارد سایت شوید")
+    }
+  };
+
+  const handleDislike = async () => {
+    if(getItem("token")){
+    try {
+      const loadingToast = toast.loading("Disliking course...");
+      const res = await disLiked(id);
+      if(res.success){
+        setLocalDislikeCount(localDislikeCount + 1);
+        toast.success(res.message);
+      }
+      else{
+        toast.error(res.ErrorMessage)
+      }
+      toast.dismiss(loadingToast);
+    } catch (error) {
+      toast.error("Failed to dislike the course.");
+    }
+  }
+  else{
+    toast.error("لطفا ابتدا وارد سایت شوید")
+  }
+  };
 
   return (
     <div
@@ -88,7 +154,7 @@ export const Course: React.FC<TopCourseProps> = ({
         className="rounded-xl h-[190px] w-[300px]"
       />
       <div className="absolute z-20 w-9 h-9 flex justify-center items-center cursor-pointer bg-white left-9 top-10 rounded-md dark:bg-[#2C2C2C]" onClick={AddCoursefavorite}>
-        <Image src={isUserFavorite ? FavotiteTruePic : FavoritePic} alt="" />
+        <Image src={localIsUserFavorite ? FavotiteTruePic : FavoritePic} alt="" />
       </div>
       <div className="p-4 w-[95%]">
         <h2 className="text-xl font-semibold mt-4 text-black dark:text-white">{title}</h2>
@@ -97,7 +163,7 @@ export const Course: React.FC<TopCourseProps> = ({
             {NumerOfLessons}
           </p>
           <p className="text-sm flex gap-2 text-black dark:text-white">
-            {score.toFixed(1)} <Image src={StarPic} alt="StartPic" />
+            {score.toFixed(1)} <Image src={StarPic} alt="StarPic" />
           </p>
         </div>
         <div className="w-full h-auto mt-4 flex justify-between">
@@ -116,11 +182,27 @@ export const Course: React.FC<TopCourseProps> = ({
             </p>
           </div>
           <div className="w-auto flex gap-1 h-auto font-medium">
-            <button className="bg-[#EFEFF1] min-w-16 rounded-full flex items-center justify-center dark:bg-[#333333] dark:text-white">
-              <Image src={DisLikePic} className="w-6 h-6" alt="" /> {dissLikeCount}
+          <button
+              onClick={handleDislike}
+              className="bg-[#EFEFF1] min-w-16 rounded-full flex items-center justify-center dark:bg-[#333333] dark:text-white"
+            >
+              {userIsDissLiked ? (
+                <FaThumbsDown className="w-4 h-4 text-red-500" />
+              ) : (
+                <FaThumbsDown className="w-4 h-4 text-gray-600" />
+              )}
+              {localDislikeCount}
             </button>
-            <button className="bg-[#EFEFF1] min-w-16 rounded-full flex items-center justify-center dark:bg-[#333333] dark:text-white">
-              <Image src={LikePic} className="w-6 h-6" alt="" /> {likeCount}
+            <button
+              onClick={handleLike}
+              className="bg-[#EFEFF1] min-w-16 rounded-full flex items-center justify-center dark:bg-[#333333] dark:text-white"
+            >
+              {userIsLiked ? (
+                <FaThumbsUp className="w-4 h-4 text-blue-500" />
+              ) : (
+                <FaThumbsUp className="w-4 h-4 text-gray-600" />
+              )}
+              {localLikeCount}
             </button>
           </div>
         </div>

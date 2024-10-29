@@ -23,7 +23,8 @@ export const GetTopCoursesApi = async () => {
 
 export const AddCourseFavoriteApi = async (CouseId : string) => {
     try {
-        await http.post('/Course/AddCourseFavorite' , CouseId)
+       const res = await http.post('/Course/AddCourseFavorite' , CouseId)
+       return res
     } catch (error) {
         console.log(error , "error")
     }

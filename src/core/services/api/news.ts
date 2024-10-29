@@ -160,3 +160,23 @@ export const getFavoriteNews = async () => {
     return [];
   }
 };
+
+export const AddLikeNews = async (newsId: string) => {
+  try {
+    const res = await http.post(`/News/NewsLike/${newsId}`); 
+    return res;
+  } catch (error) {
+    console.log(error, "Error");
+    return [];
+  }
+}
+
+export const AddDisLikeNews = async (newsId: string) => {
+  try {
+    const res = await http.post(`/News/NewsDissLike/${newsId}`);
+    return res; 
+  } catch (error) {
+    console.log(error, "Error");
+    return [];
+  }
+}

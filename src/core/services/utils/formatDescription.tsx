@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const formatDescription = (text: string) => {
   if (!text) return "";
 
@@ -5,23 +7,30 @@ export const formatDescription = (text: string) => {
     return <div>دیسکرپشنی برای این دوره موجود نیست.</div>;
   }
 
-  const cleanedText = text.replace(/[\/\\|!#\$%\^&\*\(\)]+/g, "");
-
-  const formattedText = cleanedText
-    .split(',')
-    .map(sentence => sentence.trim())
-    .join(' , ');
+  const htmlPattern = /<[^>]+>(.*?)<\/[^>]+>/g;
+  const cleanedText = text.replace(/[\/\\|!#\$%\^&\*\(\)]+/g, ""); 
+  
+  const repeatedWordPattern = /(.)\1{3,}/g;
+  const formattedText = cleanedText.replace(repeatedWordPattern, match => match[0]);
 
   const sentences = formattedText
-    .split(".")
-    .filter(Boolean)
-    .map((sentence) => sentence.trim());
+    .split(',')
+    .map(sentence => sentence.trim())
+    .filter(Boolean);
+
+  const htmlMatches = [...formattedText.matchAll(htmlPattern)];
+  const elements = htmlMatches.map((match, index) => (
+    <div key={index}>{match[1]}</div>
+  ));
 
   return (
-    <ul>
-      {sentences.map((sentence, index) => (
-        <li key={index}>{sentence.trim()}.</li>
-      ))}
-    </ul>
+    <div>
+      {elements}
+      <ul>
+        {sentences.map((sentence, index) => (
+          <li key={index}>{sentence.trim()}.</li>
+        ))}
+      </ul>
+    </div>
   );
 };

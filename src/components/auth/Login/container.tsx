@@ -6,7 +6,7 @@ import { LoginValidation } from "@/core/validation/Auth";
 import toast from "react-hot-toast";
 import { setItem } from "@/core/services/common/storage.services";
 import { LoginApi } from "@/core/services/api/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContent } from "../authDefualt";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -19,6 +19,7 @@ import {
 import { loadSlim } from "@tsparticles/slim"; 
 
 export const LoginContainer = () => {
+  const navigate = useNavigate();
   const [init, setInit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
@@ -123,6 +124,7 @@ export const LoginContainer = () => {
         setItem("token", send.token);
         setItem("id", send.id);
         setItem("apiKey", send.apiKey);
+        navigate("/StudentPanel/dashboard")
         toast.success("با موفقیت لاگین کردید");
       } else {
         toast.error(send.message);
@@ -131,7 +133,7 @@ export const LoginContainer = () => {
       toast.error("An error occurred while logging in.");
     } finally {
       setIsLoading(false); 
-      toast.dismiss(toastId); 
+      toast.dismiss(toastId);
     }
   };
 
@@ -182,7 +184,7 @@ export const LoginContainer = () => {
                   className="ml-2 text-gray-900 dark:text-white"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showPassword ? <FaEye className="text-[#5751E1]"/> : <FaEyeSlash className="text-[#5751E1]"/>}
                 </button>
               </div>
               <ErrorMessage

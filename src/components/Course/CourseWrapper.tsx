@@ -19,6 +19,9 @@ interface CourseType {
     courseId: number;
     typeName: string;
     isUserFavorite: boolean;
+    userLikeId: string;
+    userIsLiked: boolean;
+    userIsDissLiked: boolean;
 }
 
 interface CourseWrapperProps {
@@ -46,6 +49,9 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) 
                         cost={item.cost}
                         id={item.courseId}
                         isUserFavorite={item.isUserFavorite}
+                        userLikeId={item.userLikeId}
+                        userIsLiked={item.userIsLiked}
+                        userIsDissLiked={item.userIsDissLiked}
                     />
                 ))
             ) : (

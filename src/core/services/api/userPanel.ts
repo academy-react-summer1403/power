@@ -72,7 +72,7 @@ export const getMyCourse = async () => {
   try {
     const response = await http.get("/SharePanel/GetMyCourses");
 
-    return response.data;
+    return response;
   } catch (error) {
     return false;
   }

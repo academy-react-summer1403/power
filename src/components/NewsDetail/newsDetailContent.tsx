@@ -33,6 +33,7 @@ interface NewsDetailContentProps {
 
 export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, OnSubmit, handleSortChange , sortOption ,  comment }) => {
   const [readingTime, setReadingTime] = useState<string>("");
+  const [showAllComments, setShowAllComments] = useState(false);
 
   useEffect(() => {
     if (detail) {
@@ -43,6 +44,12 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, On
       setReadingTime(`${minutes} دقیقه`);
     }
   }, [detail]);
+
+  const handleToggleComments = () => {
+    setShowAllComments(!showAllComments);
+  };
+
+  const commentsToShow = showAllComments ? comment : comment.slice(0, 4);
 
   return (
     <>
@@ -121,8 +128,14 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ detail, On
           </select>
         </div>
         <div className="w-full h-auto min-h-[400px] max-h-[650px] overflow-y-auto flex flex-wrap justify-center">
-          <NewsCommentWrapper Comment={comment} />
+          <NewsCommentWrapper Comment={commentsToShow} /> 
         </div>
+        <button 
+          onClick={handleToggleComments} 
+          className="mt-4 text-blue-500 hover:underline"
+        >
+          {showAllComments ? "مشاهده کمتر" : "مشاهده بیشتر"}
+        </button>
       </div>
     </>
   );

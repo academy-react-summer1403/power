@@ -15,6 +15,9 @@ import {
 } from "@/core/services/api/userPanel";
 import AccountPic from "@/assets/StudentPanel/4a2ffe27f124d61856d4e3f78bc5a961.png";
 import { UserLocationMap } from "./components/userLocationMap";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 interface UserProfileData {
   fName: string;
@@ -104,7 +107,7 @@ const UserInfo = () => {
 
   const validateImageSrc = (src: string) => {
     return (
-      src && 
+      src &&
       src !== AccountPic &&
       (src.startsWith("http") || src.startsWith("https") || src.startsWith("/"))
     );
@@ -125,7 +128,7 @@ const UserInfo = () => {
         fName: profileData ? profileData.fName : "",
         lName: profileData ? profileData.lName : "",
         nationalCode: profileData ? profileData.nationalCode : "",
-        birthDay: profileData ? profileData.birthDay.slice(0, 10) : "",
+        birthDay: profileData ? profileData.birthDay : "",
         gender: profileData ? profileData.gender : true,
         userAbout: profileData ? profileData.userAbout : "",
         telegramLink: profileData ? profileData.telegramLink : "",
@@ -143,245 +146,251 @@ const UserInfo = () => {
       validationSchema={EditeProfileVal}
       onSubmit={handleSubmit}
     >
-      <Form>
-        <div className="flex w-[90%] items-center gap-2 mb-4">
-          <div className="w-[50px] h-[50px] rounded-xl bg-[#5751E1] overflow-hidden flex justify-center items-center">
-            <Image src={EditeProfPic} className="w-full h-full" alt="" />
+      {({ setFieldValue }) => (
+        <Form>
+          <div className="flex w-[90%] items-center gap-2 mb-4">
+            <div className="w-[50px] h-[50px] rounded-xl bg-[#5751E1] overflow-hidden flex justify-center items-center">
+              <Image src={EditeProfPic} className="w-full h-full" alt="" />
+            </div>
+            <div className="flex w-[150px] text-center font-semibold text-[20px] text-[#161439]">
+              ویرایش پروفایل
+            </div>
+            <div className="w-[90%] border-b border-[#F2F2F2]"></div>
           </div>
-          <div className="flex w-[150px] text-center font-semibold text-[20px] text-[#161439]">
-            ویرایش پروفایل
-          </div>
-          <div className="w-[90%] border-b border-[#F2F2F2]"></div>
-        </div>
-        <div className=" w-full flex  justify-between items-center ">
-          <div className="w-1/2">
-            {" "}
-            <div className="grid grid-cols-2 gap-2 mb-4">
-              <div className="flex flex-col">
-                <label htmlFor="lName" className="mb-1 font-medium">
-                  نام:
-                </label>
-                <Field
-                  name="lName"
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <ErrorMessage
-                  name="lName"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
+          <div className=" w-full flex  justify-between items-center ">
+            <div className="w-1/2">
+              {" "}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="flex flex-col">
+                  <label htmlFor="lName" className="mb-1 font-medium">
+                    نام:
+                  </label>
+                  <Field
+                    name="lName"
+                    type="text"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                  />
+                  <ErrorMessage
+                    name="lName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="fName" className="mb-1 font-medium">
-                  نام خانوادگی:
-                </label>
-                <Field
-                  name="fName"
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <ErrorMessage
-                  name="fName"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-              </div>
+                <div className="flex flex-col">
+                  <label htmlFor="fName" className="mb-1 font-medium">
+                    نام خانوادگی:
+                  </label>
+                  <Field
+                    name="fName"
+                    type="text"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                  />
+                  <ErrorMessage
+                    name="fName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="nationalCode" className="mb-1 font-medium">
-                  کد ملی:
-                </label>
-                <Field
-                  name="nationalCode"
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <ErrorMessage name="nationalCode" component="div" />
-              </div>
+                <div className="flex flex-col">
+                  <label htmlFor="nationalCode" className="mb-1 font-medium">
+                    کد ملی:
+                  </label>
+                  <Field
+                    name="nationalCode"
+                    type="text"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                  />
+                  <ErrorMessage name="nationalCode" component="div" />
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="birthDay" className="mb-1 font-medium">
-                  تاریخ تولد:
-                </label>
-                <Field
-                  name="birthDay"
-                  type="date"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <ErrorMessage name="birthDay" component="div" />
-              </div>
+                <div className="flex flex-col">
+                  <label htmlFor="birthDay" className="mb-1 font-medium">
+                    تاریخ تولد:
+                  </label>
+                  <DatePicker
+                    className="p-2 border border-gray-300 rounded-md"
+                    value={
+                      profileData?.birthDay
+                        ? new Date(profileData.birthDay)
+                        : null
+                    }
+                    onChange={(date) => {
+                      setFieldValue("birthDay", date.format());
+                    }}
+                    calendar={persian}
+                    locale={persian_fa}
+                    calendarPosition="bottom-right"
+                  />
+                  <ErrorMessage name="birthDay" component="div" />
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="gender" className="mb-1 font-medium">
-                  جنسیت:
-                </label>
-                <Field
-                  name="gender"
-                  as="select"
-                  className="p-2 border border-gray-300 rounded-md"
-                >
-                  <option value={true}>مرد</option>
-                  <option value={false}>زن</option>
-                </Field>
-              </div>
+                <div className="flex flex-col">
+                  <label htmlFor="gender" className="mb-1 font-medium">
+                    جنسیت:
+                  </label>
+                  <Field
+                    name="gender"
+                    as="select"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                  >
+                    <option value={true}>مرد</option>
+                    <option value={false}>زن</option>
+                  </Field>
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="telegramLink" className="mb-1 font-medium">
-                  لینک تلگرام:
-                </label>
-                <Field
-                  name="telegramLink"
-                  className="p-2 border border-gray-300 rounded-md"
-                  type="text"
-                />
-                <ErrorMessage name="telegramLink" component="div" />
-              </div>
+                <div className="flex flex-col">
+                  <label htmlFor="telegramLink" className="mb-1 font-medium">
+                    لینک تلگرام:
+                  </label>
+                  <Field
+                    name="telegramLink"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                    type="text"
+                  />
+                  <ErrorMessage name="telegramLink" component="div" />
+                </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="linkdinProfile" className="mb-1 font-medium">
-                  لینک لینکدین:
-                </label>
-                <Field
-                  name="linkdinProfile"
-                  className="p-2 border border-gray-300 rounded-md"
-                  type="text"
-                />
-                <ErrorMessage name="linkdinProfile" component="div" />
+                <div className="flex flex-col">
+                  <label htmlFor="linkdinProfile" className="mb-1 font-medium">
+                    لینک لینکدین:
+                  </label>
+                  <Field
+                    name="linkdinProfile"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                    type="text"
+                  />
+                  <ErrorMessage name="linkdinProfile" component="div" />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-1/2 flex justify-center flex-wrap">
-            {" "}
-            <div className="flex flex-col mb-4">
-              <div className="flex items-center">
-                <div onClick={() => setIsModalOpen(true)}>
-                  <Image
-                    width={128}
-                    height={128}
-                    className="rounded-full w-32 h-32"
-                    src={
-                      validateImageSrc(selectedImage)
-                        ? selectedImage
-                        : "/default-image.png"
-                    }
-                    alt="Profile Picture"
+            <div className="w-1/2 flex justify-center flex-wrap">
+              {" "}
+              <div className="flex flex-col mb-4">
+                <div className="flex items-center">
+                  <div onClick={() => setIsModalOpen(true)}>
+                    <Image
+                      width={128}
+                      height={128}
+                      className="rounded-full border border-[#F2F2F2] w-32 h-32"
+                      src={
+                        validateImageSrc(selectedImage)
+                          ? selectedImage
+                          : AccountPic
+                      }
+                      alt="Profile Picture"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col mt-4">
+                  <label htmlFor="userAbout" className="mb-1 font-medium">
+                    درباره من:
+                  </label>
+                  <Field
+                    name="userAbout"
+                    as="textarea"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
                   />
                 </div>
               </div>
-
-              <div className="flex flex-col mt-4">
-                <label htmlFor="userAbout" className="mb-1 font-medium">
-                  درباره من:
-                </label>
-                <Field
-                  name="userAbout"
-                  as="textarea"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-              </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="w-1/2">
-            {" "}
-            <div className="grid grid-cols-1 gap-4 mb-4">
-              <div className="flex flex-col w-full">
-                <label htmlFor="HomeAdderess" className="mb-1 font-medium">
-                  آدرس:
-                </label>
-                <Field
-                  name="HomeAdderess"
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-md"
-                />
-                <ErrorMessage name="HomeAdderess" component="div" />
-              </div>
-            </div>
-          </div>
-          <div className="w-1/2 flex justify-center items-center">
-            {" "}
-            <div className="w-24 h-24 overflow-hidden border border-gray-300 rounded-full mb-4">
-              <UserLocationMap
-                latitude={profileData?.latitude || 0}
-                longitude={profileData?.longitude || 0}
-                // onLocationChange={handleLocationChange}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full flex justify-between items-center">
-        <button
-          type="submit"
-          className="bg-[#FFC224] rounded-[20px] w-[40%] h-10"
-        >
-          ارسال
-        </button>
-        <button 
-          type="button"
-          onClick={() => setShowEdit(false)}
-          className="bg-[#F5F5F5] text-black rounded-[20px] w-[40%] h-10 mt-2"
-        >
-          انصراف
-        </button>
-        </div>
-
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div>
-            <h2 className="text-xl mb-4">تصاویر پروفایل</h2>
-            {imageList.length > 0 ? (
-              imageList.map((image) => (
-                <div
-                  key={image.id}
-                  className="flex items-center justify-between mb-2"
-                >
-                  {validateImageSrc(image.pictureAddress) ? (
-                    <Image
-                      src={image.pictureAddress}
-                      width={50}
-                      height={50}
-                      alt={image.pictureName}
-                    />
-                  ) : (
-                    <span>No Image Available</span>
-                  )}
-                  <div>
-                    <button
-                      onClick={() => handleSelectImage(image.id)}
-                      className="text-blue-500 mr-2"
-                    >
-                      انتخاب
-                    </button>
-                    <button
-                      onClick={() => handleDeleteImage(image.id)}
-                      className="text-red-500"
-                    >
-                      حذف
-                    </button>
-                  </div>
+          <div className="flex items-center justify-between">
+            <div className="w-1/2">
+              {" "}
+              <div className="grid grid-cols-1 gap-4 mb-4">
+                <div className="flex flex-col w-full">
+                  <label htmlFor="HomeAdderess" className="mb-1 font-medium">
+                    آدرس:
+                  </label>
+                  <Field
+                    name="HomeAdderess"
+                    type="text"
+                    className="p-2 border border-gray-300 rounded-md text-[#5751E1] outline-none"
+                  />
+                  <ErrorMessage name="HomeAdderess" component="div" />
                 </div>
-              ))
-            ) : (
-              <span>هیچ عکسی بارگذاری نشده است.</span>
-            )}
-            <input
-              type="file"
-              onChange={handleAddImage}
-              className="mt-4"
-              accept="image/*"
-            />
+              </div>
+            </div>
+            <div className="w-1/2 flex justify-center items-center">
+              {" "}
+              <div className="w-24 h-24 overflow-hidden border border-gray-300 rounded-full mb-4">
+                <UserLocationMap
+                  latitude={profileData?.latitude || 0}
+                  longitude={profileData?.longitude || 0}
+                  // onLocationChange={handleLocationChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full flex justify-between items-center">
             <button
-              onClick={() => setIsModalOpen(false)}
-              className="mt-4 bg-[#FFC224] rounded-lg p-2"
+              type="submit"
+              className="bg-[#FFC224] rounded-[20px] w-[40%] h-10"
             >
-              بستن
+              ارسال
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowEdit(false)}
+              className="bg-[#F5F5F5] text-black rounded-[20px] w-[40%] h-10 mt-2"
+            >
+              انصراف
             </button>
           </div>
-        </Modal>
-      </Form>
+
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <div>
+              <h2 className="text-xl mb-4">تصاویر پروفایل</h2>
+              {imageList.length > 0 ? (
+                imageList.map((image) => (
+                  <div
+                    key={image.id}
+                    className="flex items-center justify-between mb-2"
+                  >
+                    {validateImageSrc(image.pictureAddress) ? (
+                      <Image
+                        src={image.pictureAddress}
+                        width={50}
+                        height={50}
+                        alt={image.pictureName}
+                      />
+                    ) : (
+                      <span>No Image Available</span>
+                    )}
+                    <div>
+                      <button
+                        onClick={() => handleSelectImage(image.id)}
+                        className="text-blue-500 mr-2"
+                      >
+                        انتخاب
+                      </button>
+                      <button
+                        onClick={() => handleDeleteImage(image.id)}
+                        className="text-red-500"
+                      >
+                        حذف
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <span>هیچ عکسی بارگذاری نشده است.</span>
+              )}
+              <input type="file" onChange={handleAddImage} className="mt-4" />
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="mt-4 bg-[#FFC224] rounded-lg p-2"
+              >
+                بستن
+              </button>
+            </div>
+          </Modal>
+        </Form>
+      )}
     </Formik>
   ) : (
     <div className="w-full h-full flex justify-center items-center">

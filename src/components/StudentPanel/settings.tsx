@@ -78,7 +78,7 @@ const Settings = () => {
                   className="ml-2"
                   onClick={() => setShowOldPassword(!showOldPassword)}
                 >
-                  {showOldPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showOldPassword ? <FaEye  className="text-[#5751E1]"/> : <FaEyeSlash className="text-[#5751E1]"/>}
                 </button>
               </div>
               <ErrorMessage name="oldPassword" component="div" className="text-red-500 text-sm mt-1" />
@@ -97,7 +97,7 @@ const Settings = () => {
                   className="ml-2"
                   onClick={() => setShowNewPassword(!showNewPassword)}
                 >
-                  {showNewPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showNewPassword ? <FaEye className="text-[#5751E1]"/> : <FaEyeSlash className="text-[#5751E1]"/>}
                 </button>
               </div>
               <ErrorMessage name="newPassword" component="div" className="text-red-500 text-sm mt-1" />
@@ -116,18 +116,20 @@ const Settings = () => {
                   className="ml-2"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showConfirmPassword ? <FaEye className="text-[#5751E1]"/> : <FaEyeSlash className="text-[#5751E1]"/>}
                 </button>
               </div>
               <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
             </div>
 
+            <div className="w-full flex justify-center">
             <button
               type="submit"
-              className="bg-[#FFC224] text-white rounded-[25px]  w-[135px] h-[30px] "
+              className="bg-[#FFC224] text-white shadow-[4px_4px_0_0] shadow-[#3D3D3D] rounded-[25px]  w-[135px] h-[30px] "
             >
               تغییر رمز عبور
             </button>
+            </div>
           </Form>
         )}
       </Formik>
