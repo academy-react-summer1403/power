@@ -77,7 +77,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
   return (
     <div
       onDoubleClick={handleDoubleClick}
-      className="w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]"
+      className="card w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]"
       data-aos="fade-up"
     >
       <Image
@@ -85,10 +85,10 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
         alt={title}
         width={295}
         height={225}
-        className="w-[295px] h-[225px] object-cover rounded-[15px]"
+        className="w-[295px] h-[225px] object-cover rounded-[15px] cover-image"
       />
-      <div className="p-5 w-full">
-        <h3 className=" w-[290px] overflow-hidden h-[30px] text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="p-5 w-full wrapper">
+        <h3 className="title w-[290px] overflow-hidden h-[30px] text-lg font-semibold text-gray-900 dark:text-white">
           {title}
         </h3>
         <div className="mt-2 w-[90%] h-auto flex items-center justify-between">

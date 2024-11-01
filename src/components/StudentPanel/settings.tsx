@@ -122,10 +122,10 @@ const Settings = () => {
               <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
             </div>
 
-            <div className="w-full flex justify-center">
+            <div className="w-full flex flex-col justify-center">
             <button
               type="submit"
-              className="bg-[#FFC224] text-white shadow-[4px_4px_0_0] shadow-[#3D3D3D] rounded-[25px]  w-[135px] h-[30px] "
+              className="bg-[#FFC224]  shadow-[4px_4px_0_0] shadow-[#3D3D3D] rounded-[25px]  w-[135px] h-[30px] "
             >
               تغییر رمز عبور
             </button>

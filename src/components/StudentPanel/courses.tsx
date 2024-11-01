@@ -96,17 +96,17 @@ const Courses: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white p-4">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-        <div className="flex items-center border border-gray-400 rounded-full mb-2 md:mb-0">
+      <div className="flex border-b border-[#EBEBEB] flex-col md:flex-row justify-between items-center mb-4">
+        <div className="w-[535px] h-[50px] flex items-center justify-center border border-[#D3D2DF] rounded-full">
           <input
             type="text"
             placeholder="جستجو برای دوره . ."
-            className="w-full h-10 p-2 text-sm text-gray-500 bg-transparent"
+            className="w-[90%] outline-none h-full p-3 text-[14px] text-[#8D9DB5] dark:bg-[#333] dark:text-white"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="flex items-center justify-center w-10 h-10 bg-blue-600 rounded-full">
-            <Image src={SearchIcon} alt="Search" />
+          <div className="w-11 h-11 rounded-full bg-[#5751E1] flex justify-center items-center">
+            <Image className="w-6 h-6" src={SearchIcon} alt="Search" />
           </div>
         </div>
         <select
@@ -120,7 +120,7 @@ const Courses: React.FC = () => {
         </select>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center font-semibold text-lg">
           <div>نام دوره</div>
           <div>تاریخ شروع</div>
@@ -131,43 +131,49 @@ const Courses: React.FC = () => {
 
         <div className="after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
 
-        {sortedCourses.length > 0 ? (
-          sortedCourses.map((course) => (
-            <div
-              key={course.reserveId}
-              className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center border-b border-gray-300 py-2"
-            >
-              <div>{course.courseName}</div>
-              <div>{DateConvert(course.reserverDate)}</div>
-              <div>{coursePrices[course.courseId] || "قیمت مشخص نشده"}</div>
-              <div>
-                <span
-                  className={course.accept ? "text-green-500" : "text-red-500"}
-                >
-                  {course.accept ? "تأیید شده" : "در حال بررسی"}
-                </span>
+        <div className="max-h-[700px] min-h-[200px] h-[250px] flex flex-wrap items-start w-full gap-2 justify-center overflow-auto">
+          {sortedCourses.length > 0 ? (
+            sortedCourses.map((course, index) => (
+              <div
+                key={index}
+                className={`grid grid-cols-1 md:grid-cols-5 h-10  items-center w-full rounded-md  shadow-[0_1px_2px_0] shadow-black/15 ${
+                  index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
+                }`}
+              >
+                <div>{course.courseName}</div>
+                <div>{DateConvert(course.reserverDate)}</div>
+                <div>{coursePrices[course.courseId] || "قیمت مشخص نشده"}</div>
+                <div>
+                  <span
+                    className={
+                      course.accept ? "text-green-500" : "text-red-500"
+                    }
+                  >
+                    {course.accept ? "تأیید شده" : "در حال بررسی"}
+                  </span>
+                </div>
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={() => handleViewDetail(course.courseId)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    <FaEye />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteReservation(course.reserveId)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-center gap-2">
-                <button
-                  onClick={() => handleViewDetail(course.courseId)}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  <FaEye />
-                </button>
-                <button
-                  onClick={() => handleDeleteReservation(course.reserveId)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <FaTrash />
-                </button>
-              </div>
+            ))
+          ) : (
+            <div className="w-full text-center col-span-6">
+              دوره ای وجود ندارد
             </div>
-          ))
-        ) : (
-          <div className="w-full text-center col-span-6">
-            دوره ای وجود ندارد
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

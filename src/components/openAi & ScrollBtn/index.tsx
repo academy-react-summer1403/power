@@ -27,11 +27,11 @@ const date = currentDate.getDate().toLocaleString("fa-IR");
 const month = currentDate.toLocaleString("fa-IR", { month: "long" }); // ماه به زبان فارسی
 
 const responses: { [key: string]: string | string[] } = {
-  سلام: "سلام! چطور می‌توانم به شما کمک کنم؟",
+  "سلام": "سلام! چطور می‌توانم به شما کمک کنم؟",
   "خوبی؟": "من یک هوش مصنوعی هستم و احساس ندارم",
   "چطوری؟": "من یک هوش مصنوعی هستم و احساس ندارم",
-  چطوری: "من یک هوش مصنوعی هستم و احساس ندارم",
-  خوبی: "من یک هوش مصنوعی هستم و احساس ندارم",
+  "چطوری": "من یک هوش مصنوعی هستم و احساس ندارم",
+  "خوبی": "من یک هوش مصنوعی هستم و احساس ندارم",
   "حالت چطوره": "من یک هوش مصنوعی هستم و حالت خاصی ندارم",
   "امروز چند شنبه است": `امروز ${dayOfWeek} است.`,
   "امروز چندم ماهه": `امروز ${date} ${month} است.`,
@@ -58,20 +58,20 @@ const responses: { [key: string]: string | string[] } = {
     "من می‌توانم به شما راه‌های عمومی را معرفی کنم، اما برای مشکلات خاص باید به یک متخصص مراجعه کنید.",
     "برای حل مشکلات عاطفی و روانی بهتر است از مشاوران حرفه‌ای کمک بگیرید.",
   ],
-  برو: "اگر نمی‌خواهید صحبت کنید، می‌توانید هر زمان که خواستید برگردید.",
+  "برو": "اگر نمی‌خواهید صحبت کنید، می‌توانید هر زمان که خواستید برگردید.",
   "کجا هستی؟": "من در دنیای دیجیتال هستم و فقط به سوالات شما پاسخ می‌دهم!",
   "دربارهٔ خودت بگو":
     "من یک چت‌بات هستم و برای پاسخ به سوالات شما و کمک به شما طراحی شده‌ام.",
   "من غمگینم":
     "متوجه‌ام. مهم است که در این شرایط به خودتان توجه کنید و با کسی که قابل اعتماد است صحبت کنید.",
-  خسته‌ام: "استراحت کنید! کمی وقت بگذارید و به خودتان استراحت دهید.",
+  "خسته‌ام": "استراحت کنید! کمی وقت بگذارید و به خودتان استراحت دهید.",
   "با من صحبت کن":
     "من اینجا هستم تا با شما صحبت کنم، احساس خود را با من در میان بگذارید.",
-  گزارش:
+  "گزارش":
     "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  مشکل: "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  خطا: "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  ایراد:
+  "مشکل": "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  "خطا": "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  "ایراد":
     "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
   "تو انسان زنده‌ای؟": "خیر! من یک هوش مصنوعی هستم.",
   "میتونی به من چیزی یاد بدی؟":
@@ -100,6 +100,8 @@ const responses: { [key: string]: string | string[] } = {
     "اخبار جدید در اینجا در حال به روز رسانی است. آیا سوال خاصی دارید؟",
   "چه خبر": "اخبار جدید در اینجا در حال به روز رسانی است. آیا سوال خاصی دارید؟",
   "این سایت برای چی هست؟":
+    "این سایت به شما کمک می‌کند تا به سوالات خود پاسخ دهید و دوره‌های آموزشی را پیدا کنید.",
+  "این سایت برای چی اصلا":
     "این سایت به شما کمک می‌کند تا به سوالات خود پاسخ دهید و دوره‌های آموزشی را پیدا کنید.",
   "چرا این سایت طراحی شده است؟":
     "این سایت برای ارائه مشاوره و دوره‌های آموزشی به شما طراحی شده است.",
@@ -305,7 +307,7 @@ export const ChatBot: React.FC = () => {
       <button 
         title={darkMode ? 'لایت مد' : 'دارک مد'}
         onClick={toggleDarkMode} 
-        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-8 right-40' : 'bottom-8 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
+        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-10 md:bottom-8 right-40' : 'bottom-10 md:bottom-8 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
       >
         {darkMode ? <FaSun /> : <FaMoon />} 
       </button>
@@ -313,7 +315,7 @@ export const ChatBot: React.FC = () => {
         <div
           title="باته پشتیبان"
           onClick={toggleChat}
-          className="hover:scale-105 fixed z-50 bottom-6 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
+          className="hover:scale-105 fixed z-50 bottom-10 md:bottom-6 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
         >
           <span
             role="img"
@@ -324,7 +326,7 @@ export const ChatBot: React.FC = () => {
           </span>
         </div>
       ) : (
-        <div className="fixed z-50 bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
+        <div className="fixed z-50 bottom-10 md:bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
           <div className="overflow-y-auto max-h-60">
             {messages.map((msg, index) => (
               <div
@@ -380,7 +382,7 @@ export const ChatBot: React.FC = () => {
         title="رفتن به بالا"
         onClick={scrollToTop}
         className={`fixed z-40 w-9 h-9 justify-center flex items-center right-24 bg-[#514dad] shadow-[4px_4px_0_0] text-white p-2 rounded-lg shadow-[#3D3D3D] transition-all transform ${
-          showScrollBtn ? " bottom-8 " : "  bottom-[-50px]"
+          showScrollBtn ? " bottom-10 md:bottom-8 " : "  bottom-[-50px]"
         } `}
       >
         <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt='' />

@@ -65,6 +65,8 @@ export const Course: React.FC<TopCourseProps> = ({
   const [localIsUserFavorite, setLocalIsUserFavorite] = useState(isUserFavorite);
   const [localLikeCount, setLocalLikeCount] = useState(likeCount);
   const [localDislikeCount, setLocalDislikeCount] = useState(dissLikeCount);
+  const [likedByUser, setLikedByUser] = useState(userIsLiked);
+  const [dislikedByUser, setDislikedByUser] = useState(userIsDissLiked);
 
   const placeholderImage = DefualtPic;
   const imageSrc = (tumbImageAddress && (tumbImageAddress.startsWith('/') || tumbImageAddress.startsWith('http')))
@@ -98,52 +100,54 @@ export const Course: React.FC<TopCourseProps> = ({
   };
 
   const handleLike = async () => {
-    if(getItem("token")){
-      try {
-        const loadingToast = toast.loading("Liking course...");
-        const res = await liked(id);
-        if(res.success){
-          setLocalLikeCount(localLikeCount + 1);
-          toast.success(res.message);
+    if (!getItem("token")) return toast.error("لطفا ابتدا وارد سایت شوید");
+    
+    try {
+      const loadingToast = toast.loading("Liking course...");
+      const res = await liked(id);
+      if (res.success) {
+        setLocalLikeCount(prev => likedByUser ? prev - 1 : prev + 1);
+        if (dislikedByUser) {
+          setLocalDislikeCount(prev => prev - 1);
+          setDislikedByUser(false);
         }
-        else{
-          toast.error(res.ErrorMessage)
-        }
-        toast.dismiss(loadingToast);
-      } catch (error) {
-        toast.error("Failed to like the course.");
+        setLikedByUser(!likedByUser);
+        toast.success(res.message);
+      } else {
+        toast.error(res.ErrorMessage);
       }
-    }
-    else{
-      toast.error("لطفا ابتدا وارد سایت شوید")
+      toast.dismiss(loadingToast);
+    } catch {
+      toast.error("Failed to like the course.");
     }
   };
 
   const handleDislike = async () => {
-    if(getItem("token")){
+    if (!getItem("token")) return toast.error("لطفا ابتدا وارد سایت شوید");
+
     try {
       const loadingToast = toast.loading("Disliking course...");
       const res = await disLiked(id);
-      if(res.success){
-        setLocalDislikeCount(localDislikeCount + 1);
+      if (res.success) {
+        setLocalDislikeCount(prev => dislikedByUser ? prev - 1 : prev + 1);
+        if (likedByUser) {
+          setLocalLikeCount(prev => prev - 1);
+          setLikedByUser(false);
+        }
+        setDislikedByUser(!dislikedByUser);
         toast.success(res.message);
-      }
-      else{
-        toast.error(res.ErrorMessage)
+      } else {
+        toast.error(res.ErrorMessage);
       }
       toast.dismiss(loadingToast);
-    } catch (error) {
+    } catch {
       toast.error("Failed to dislike the course.");
     }
-  }
-  else{
-    toast.error("لطفا ابتدا وارد سایت شوید")
-  }
   };
 
   return (
     <div
-      className="w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]"
+      className="card w-[350px] h-[470px] relative p-6 flex justify-center flex-wrap rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]"
       onDoubleClick={handleDoubleClick}
     >
       <Image
@@ -151,13 +155,13 @@ export const Course: React.FC<TopCourseProps> = ({
         alt={title}
         width={300}
         height={190}
-        className="rounded-xl h-[190px] w-[300px]"
+        className="rounded-xl h-[190px] w-[300px] cover-image"
       />
       <div className="absolute z-20 w-9 h-9 flex justify-center items-center cursor-pointer bg-white left-9 top-10 rounded-md dark:bg-[#2C2C2C]" onClick={AddCoursefavorite}>
         <Image src={localIsUserFavorite ? FavotiteTruePic : FavoritePic} alt="" />
       </div>
-      <div className="p-4 w-[95%]">
-        <h2 className="text-xl font-semibold mt-4 text-black dark:text-white">{title}</h2>
+      <div className="p-4 w-[95%] wrapper">
+        <h2 className="title text-xl font-semibold mt-4 text-black dark:text-white">{title}</h2>
         <div className="w-full h-auto flex justify-between items-center">
           <p className="text-sm w-[70px] bg-[#EFEFF1] mt-2 rounded-full text-center dark:bg-[#333333] dark:text-white">
             {NumerOfLessons}
@@ -212,5 +216,6 @@ export const Course: React.FC<TopCourseProps> = ({
         </div>
       </div>
     </div>
+
   );
 };

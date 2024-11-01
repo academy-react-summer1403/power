@@ -140,7 +140,7 @@ const handleCategoryChange = (categoryId: string) => {
       <Header />
       <div className="w-full h-auto flex flex-wrap justify-center">
         <Breadcrumb path={path} title={title} />
-        <div className="w-[1115px] h-auto mt-32 mb-32 flex flex-wrap">
+        <div className="w-[90%] h-auto mt-32 mb-32 flex flex-wrap lg:flex-nowrap">
         <FilterSection
             filter={filter}
             categories={categories}
@@ -152,9 +152,9 @@ const handleCategoryChange = (categoryId: string) => {
             handleCourseTypeChange={handleCourseTypeChange}
             handleCourseLevelChange={handleCourseLevelChange}
           />
-          <div className="h-auto w-[80%] flex flex-wrap gap-4">
+          <div className="h-auto w-[100%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
-              <div className="flex items-center justify-center">
+              <div className=" hidden lg:flex items-center justify-center">
                 {`${totalCount} دوره در دسترس است`}
               </div>
               <div className="flex items-center gap-3"> 

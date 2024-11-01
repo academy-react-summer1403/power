@@ -93,13 +93,15 @@ const Comments: React.FC = () => {
         <div className="w-[200px] text-center">وضعیت</div>
         <div className="w-[150px] text-center">عملیات</div>
       </div>
-        <div className="w-full mt-5 after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
-      <div className="max-h-[280px] h-[200px] flex flex-wrap justify-center overflow-auto">
+      <div className="w-full mt-5 after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
+      <div className="max-h-[700px] min-h-[200px] h-[250px] flex flex-wrap gap-2 justify-center overflow-auto">
         {filteredComments.length > 0 ? (
-          filteredComments.map((comment) => (
+          filteredComments.map((comment, index) => (
             <div
-              key={comment.commentId}
-              className="flex justify-between w-full items-center py-2 border-b border-[#EBEBEB] dark:border-[#444]"
+              key={index}
+              className={`flex justify-between w-full items-center rounded-md h-10  dark:border-[#444] ${
+                index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
+              }`}
             >
               <div className="text-center w-[200px]">{comment.title}</div>
               <div className="w-[200px] text-center">

@@ -122,12 +122,14 @@ const Favorites: React.FC = () => {
 
       <div className="after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
 
-      <div className="max-h-[280px] overflow-y-auto">
+      <div className="max-h-[700px] min-h-[200px] h-[250px] flex flex-wrap justify-center gap-2 overflow-y-auto">
         {filteredFavorites.length > 0 ? (
-          filteredFavorites.map((favorite) => (
+          filteredFavorites.map((favorite , index) => (
             <div
-              key={favorite.identifier}
-              className="flex justify-between items-center py-2 border-b border-[#EBEBEB] dark:border-[#444]"
+              key={index}
+              className={`flex justify-between items-center rounded-md h-10 dark:border-[#444]${
+                  index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
+                }`}
             >
               <div className="text-center w-[200px]">
                 {favorite.displayTitle}

@@ -90,7 +90,7 @@ export const Header = () => {
           <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
         </div>
-        <Link to="/StudentPanel/favorites" title="علاقه مندی ها" className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative">
+        <Link to="/StudentPanel/favorites" title="علاقه مندی ها" className="w-10 h-10 hidden xl:flex rounded-[20px]  justify-center items-center border border-[#7F7E97] relative">
           <Image src={FavoritePic} alt="Favorite" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">0</div>
         </Link>

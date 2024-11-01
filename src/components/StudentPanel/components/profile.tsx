@@ -12,7 +12,7 @@ export const Profile: React.FC<ProfileProps> = ({ profileSrc, name }) => {
       <Image
         width={128}
         height={128}
-        className="rounded-full w-32 h-32"
+        className="rounded-full  w-32 h-32"
         src={profileSrc}
         alt="Profile Picture"
       />

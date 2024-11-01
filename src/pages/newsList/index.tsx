@@ -85,7 +85,7 @@ export const NewsListPage: React.FC = () => {
       <Header />
       <div className="w-full h-auto flex flex-wrap justify-center">
         <Breadcrumb path={path} title={title} />
-        <div className="w-[1115px] h-auto mt-32 mb-32 flex flex-wrap">
+        <div className="w-[90%] h-auto mt-32 mb-32 flex flex-wrap lg:flex-nowrap">
           <NewsFilterSection
             filter={filter}
             categories={categoriesState}
@@ -95,7 +95,7 @@ export const NewsListPage: React.FC = () => {
           />
           <div className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
-              <div className="flex items-center justify-center">
+              <div className="lg:flex hidden items-center justify-center">
                 {`${totalCount} خبر در دسترس است`}
               </div>
               <div className="flex items-center gap-3">

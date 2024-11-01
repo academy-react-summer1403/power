@@ -14,7 +14,7 @@ export const formatDescription = (text: string) => {
   const formattedText = cleanedText.replace(repeatedWordPattern, match => match[0]);
 
   const sentences = formattedText
-    .split(',')
+    .split(' , ')
     .map(sentence => sentence.trim())
     .filter(Boolean);
 
