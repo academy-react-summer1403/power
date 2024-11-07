@@ -13,11 +13,21 @@ export const FooterContactUs: React.FC = () => (
     <h1 className="text-white w-[170px] font-semibold text-2xl border-b-4 p-1 border-[#5751E1]">در تماس باشید</h1>
     <p className="mt-5">هنگامی که یک چاپگر ناشناس گرفت نوع گالی و درهم</p>
     <div className="flex gap-4 mt-5">
-      <Image src={YoutubIcon} alt="YouTube" />
-      <Image src={InstagramIcon} alt="Instagram" />
-      <Image src={WhatsApp} alt="WhatsApp" />
-      <Image src={TwiterIcon} alt="Twitter" />
-      <Image src={FaceBookIcon} alt="Facebook" />
+      <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+        <Image className=" hover:bg-white/20" src={YoutubIcon} alt="YouTube" />
+      </a>
+      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+        <Image className=" hover:bg-white/20" src={InstagramIcon} alt="Instagram" />
+      </a>
+      <a href="https://www.whatsapp.com" target="_blank" rel="noopener noreferrer">
+        <Image className=" hover:bg-white/20" src={WhatsApp} alt="WhatsApp" />
+      </a>
+      <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+        <Image className=" hover:bg-white/20" src={TwiterIcon} alt="Twitter" />
+      </a>
+      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+        <Image className=" hover:bg-white/20" src={FaceBookIcon} alt="Facebook" />
+      </a>
     </div>
     <div className="flex gap-2 w-full mt-10">
       <AppDownloadButton

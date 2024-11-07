@@ -1,4 +1,3 @@
-import { toast } from "react-hot-toast";
 import axios from "axios";
 import { BaseUrl } from "@/config";
 import http from "../interceptor"
@@ -128,11 +127,9 @@ export const getCommentById = async (id : string) => {
     return [];
   }
 };
-export const getRepCommentById = async (a : string, b : string) => {
+export const getRepCommentById = async ( id : string , CourseId : string) => {
   try {
-    //console.log("Fetching started...");
-
-    const result = await axios.get(`${BaseUrl}/Course/GetCourseReplyCommnets/${a}/${b}`);
+    const result = await axios.get(`${BaseUrl}/Course/GetCourseReplyCommnets/${CourseId}/${id}`);
     return result;
   } catch (error) {
     console.log(error);
@@ -318,3 +315,5 @@ export const AddCourseRate = async (id : String ,RateNumber : number ) => {
     return []
   }
 }
+
+

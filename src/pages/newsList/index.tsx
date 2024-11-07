@@ -6,6 +6,7 @@ import { NewsWrapper } from "@/components/News/NewsWrapper";
 import { NewsPagination } from "@/components/News/newsPagination";
 import { getNews, getPaperCat } from "@/core/services/api/news";
 import { NewsFilterSection } from "@/components/News/newsFilterSection";
+import { useLocation } from "react-router-dom";
 
 type Filter = {
   search: string;
@@ -21,8 +22,9 @@ export const NewsListPage: React.FC = () => {
   const [categoriesState, setCategories] = useState<Array<any>>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const location = useLocation();
   const [filter, setFilter] = useState<Filter>({
-    search: "",
+    search: new URLSearchParams(location.search).get("search") || "",
     sort: "",
     category: [],
   });

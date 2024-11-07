@@ -59,7 +59,6 @@ export const CategorySection: React.FC<CategoryProp> = ({ catList }) => {
                   <Image width={150} height={150} src={iconSrc} alt={item.techName} className="rounded-full" />
                 </div>
                 <h1 className='text-[#161439] dark:text-white text-[18px] text-center'>{item.techName}</h1>
-                <p className='text-[#6D6C80] dark:text-white text-center mt-1'>{`(${item.parentId})`}</p>
               </motion.div>
             );
           })}

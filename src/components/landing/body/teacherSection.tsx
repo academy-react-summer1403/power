@@ -23,11 +23,17 @@ interface StatsSectionProps {
   teacherList: Teacher[];
 }
 
-export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teacherList }) => {
+export const TeacherSection: React.FC<StatsSectionProps> = ({
+  landingApi,
+  teacherList,
+}) => {
   return (
     <div className=" h-auto min-h-[1105px] w-full flex flex-wrap justify-center items-center">
       <div className=" h-auto lg:h-[425px] w-full flex flex-wrap lg:flex-none">
-        <div className="w-[450px] min-h-[425px] lg:h-full flex flex-wrap justify-center items-center" data-aos="fade-up-left">
+        <div
+          className="w-[450px] min-h-[425px] lg:h-full flex flex-wrap justify-center items-center"
+          data-aos="fade-up-left"
+        >
           <div className="w-[160px] h-[30px] bg-[#EFEEFE] dark:bg-[#5751E1] rounded-[30px] text-[#5751E1] dark:text-white text-center content-center font-medium">
             معلم های ماهر
           </div>
@@ -35,7 +41,8 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teache
             کلاس برتر ما و مربیان خبره در یک مکان
           </h1>
           <p className="w-[320px] text-[#6D6C80] dark:text-gray-300">
-            هنگامی که یک چاپگر ناشناس یک گالری از نوع و کتاب نمونه درهم درست شده باقی نمانده است فقط پنج قرن
+            هنگامی که یک چاپگر ناشناس یک گالری از نوع و کتاب نمونه درهم درست شده
+            باقی نمانده است فقط پنج قرن
           </p>
           <button className="bg-[#5751E1] dark:bg-[#6D6C80] flex justify-around text-white w-[230px] h-12 items-center rounded-[50px] shadow-[4px_6px_0_0] shadow-[#050071]">
             همه مربیان را ببینید
@@ -46,7 +53,11 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teache
           {teacherList ? (
             teacherList.slice(0, 4).map((item, index) => {
               return (
-                <div className="w-[390px] h-[185px] items-center flex justify-center gap-6" data-aos="fade-up-right" key={index}>
+                <div
+                  className="w-[390px] h-[185px] items-center flex justify-center gap-6"
+                  data-aos="fade-up-right"
+                  key={index}
+                >
                   <div className="w-[180px] h-[120px] flex justify-center items-center overflow-hidden rounded-full bg-gradient-to-r from-[#F7F6F9] to-[#E9F5F5]">
                     <Image
                       className="rounded-full"
@@ -61,18 +72,38 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teache
                       {item.fullName}
                     </div>
                     <div className="w-full flex gap-2">
-                      <button className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center">
+                      <a
+                        href="https://instagram.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
+                      >
                         <Image src={InstagramPic} alt="Instagram" />
-                      </button>
-                      <button className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center">
+                      </a>
+                      <a
+                        href="https://wa.me/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
+                      >
                         <Image src={WhatsAppPic} alt="WhatsApp" />
-                      </button>
-                      <button className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center">
+                      </a>
+                      <a
+                        href="https://twitter.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
+                      >
                         <Image src={TwitterPic} alt="Twitter" />
-                      </button>
-                      <button className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center">
+                      </a>
+                      <a
+                        href="https://facebook.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
+                      >
                         <Image src={FacebookPic} alt="Facebook" />
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -87,15 +118,23 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({ landingApi, teache
         <StatItem label="وبلاگ ها" count={landingApi?.newsCount ?? 0} />
         <StatItem label="بهترین اساتید" count={landingApi?.teacherCount ?? 0} />
         <StatItem label="دروس دانشکده" count={landingApi?.courseCount ?? 0} />
-        <StatItem label="دانشجویان فعال" count={landingApi?.studentCount ?? 0} />
+        <StatItem
+          label="دانشجویان فعال"
+          count={landingApi?.studentCount ?? 0}
+        />
       </div>
     </div>
   );
 };
 
-const StatItem: React.FC<{ label: string; count: number }> = ({ label, count }) => (
+const StatItem: React.FC<{ label: string; count: number }> = ({
+  label,
+  count,
+}) => (
   <div className="border-l-2 border-white/50 h-[90%] w-1/4 flex flex-col items-center justify-center">
-    <div className="text-white text-[56px] font-bold"  data-aos="zoom-out">{count}</div>
+    <div className="text-white text-[56px] font-bold" data-aos="zoom-out">
+      {count}
+    </div>
     <div className="text-white text-[18px]">{label}</div>
   </div>
 );

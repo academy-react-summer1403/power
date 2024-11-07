@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { LandingNews } from ".";
+import { News } from ".";
 
 interface News {
   id: string;
@@ -28,7 +28,7 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
     <>
       {newsList ? (
         newsList.map((item) => (
-          <LandingNews
+          <News
             key={item.id}
             Id={item.id}
             title={item.title}

@@ -1,6 +1,7 @@
 import React from 'react';
 import BackPic from '@/assets/backPic.png';
 import { TypeAnimation } from 'react-type-animation';
+import { Link } from 'react-router-dom'; // یا از 'next/link' استفاده کنید اگر پروژه با Next.js نوشته شده است
 
 interface BreadcrumbProps {
     path: string[];
@@ -31,8 +32,14 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, title }) => {
             )}
             <ul className='relative list-none p-0 mt-2'>
                 {fullPath.map((segment, index) => (
-                    <li className='inline w-full text-[20px] text-gray-800 dark:text-gray-300' key={index}>
-                        {segment}
+                    <li className='inline w-full text-[20px] dark:text-gray-300' key={index}>
+                        {index === 0 ? (
+                            <Link to="/" className="text-gray-800 hover:underline">
+                                {segment}
+                            </Link>
+                        ) : (
+                            <span className='text-[#5751E1] dark:text-gray-300'>{segment}</span>
+                        )}
                         {index < fullPath.length - 1 && ' > '}
                     </li>
                 ))}

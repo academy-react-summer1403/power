@@ -24,7 +24,7 @@ interface LandingNewsProps {
   currentUserIsLike: boolean;
 }
 
-export const LandingNews: React.FC<LandingNewsProps> = ({
+export const News: React.FC<LandingNewsProps> = ({
   Id,
   title,
   Img,

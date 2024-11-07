@@ -80,11 +80,11 @@ export const CourseDetail = () => {
     fetchData();
   }, [params.id]);
 
-  const handleSortChange = (option) => {
+  const handleSortChange = (option:string) => {
     setSortedComments(sortComments(comment, option));
   };
 
-  const sortComments = (comments, option) => {
+  const sortComments = (comments: string, option : string) => {
     switch (option) {
       case "newest":
         return [...comments].sort((a, b) => new Date(b.insertDate) - new Date(a.insertDate));

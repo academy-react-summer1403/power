@@ -1,5 +1,6 @@
 import { BaseUrl } from "@/config";
 import axios from "axios";
+import http from "../interceptor"
 
 interface User {
     phoneOrGmail: string;
@@ -9,8 +10,8 @@ interface User {
 
 export const LoginApi = async (user : any) => {
     try {
-        const response = await axios.post(`${BaseUrl}/Sign/Login`, user);
-        return response.data; 
+        const response = await http.post(`/Sign/Login`, user);
+        return response; 
     } catch (error) {
         console.error(error, "Error");
         throw error; 

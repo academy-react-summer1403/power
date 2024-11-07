@@ -14,10 +14,10 @@ import {
   updateProfile,
 } from "@/core/services/api/userPanel";
 import AccountPic from "@/assets/StudentPanel/4a2ffe27f124d61856d4e3f78bc5a961.png";
-import {UserLocationMap} from "./components/userLocationMap";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import UserLocationMap from "./components/userLocationMap";
 
 interface UserProfileData {
   fName: string;

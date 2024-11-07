@@ -16,6 +16,7 @@ import {
 import { CourseWrapper } from "@/components/Course/CourseWrapper";
 import Pagination from "@/components/Course/Pagination";
 import { FilterSection } from "@/components/Course/FilterSection";
+import { useLocation } from "react-router-dom";
 
 type Filter = {
   search: string;
@@ -38,9 +39,11 @@ export const CourseList: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const location = useLocation();
+
   // State for filters
   const [filter, setFilter] = useState<Filter>({
-    search: "",
+    search: new URLSearchParams(location.search).get("search") || "",
     sort: "",
     category: [],
     courseType: "",

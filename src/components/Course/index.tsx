@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { disLiked, liked } from "@/core/services/api/course";
 import { getItem } from "@/core/services/common/storage.services";
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
+import { formatCostWithUnit } from "@/core/services/utils/formatCostWithUnit";
 
 interface TopCourseProps {
   tumbImageAddress: string;
@@ -75,7 +76,7 @@ export const Course: React.FC<TopCourseProps> = ({
   const totalVotes = localLikeCount + localDislikeCount;
   const likeRatio = totalVotes > 0 ? localLikeCount / totalVotes : 0;
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
-  const formattedCost = (parseFloat(cost) / 10000).toFixed(0);
+
 
   const AddCoursefavorite = async () => {
     const data = { courseId: id };
@@ -212,7 +213,7 @@ export const Course: React.FC<TopCourseProps> = ({
         </div>
         <div className="w-full h-auto flex border-t border-[#E3E3F0] mt-6 justify-between dark:border-[#444444]">
           <p className="font-bold text-[#888888] flex dark:text-gray-400"><Image src={CalenderPic} alt=""/> {DateConvert(date)}</p>
-          <p className="text-[#5F5F66] dark:text-white"><span className="text-[#5751E1] font-bold">{formattedCost}</span> تومان</p>
+          <p className="text-[#5F5F66] dark:text-white flex items-center gap-1"><span className="text-[#5751E1] font-bold text-xl flex">{formatCostWithUnit(cost)}</span> تومان</p>
         </div>
       </div>
     </div>

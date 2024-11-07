@@ -8,6 +8,13 @@ const instance = axios.create({
   baseURL: baseURL,
 });
 
+const clearStorageWithTimeout = () => {
+  const twoHoursInSeconds = 2 * 60 * 60; 
+  setTimeout(() => {
+    clearStorage();
+  }, twoHoursInSeconds * 1000); 
+};
+
 const onSuccess = (response: AxiosResponse) => {
   return response.data;
 };
@@ -26,16 +33,14 @@ const onError = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-// Interceptors
+
 instance.interceptors.response.use(onSuccess, onError);
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = getItem("token");
-
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
   return config;
 });
-
+clearStorageWithTimeout();
 export default instance;

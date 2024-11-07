@@ -16,6 +16,7 @@ import lessonPic from "@/assets/CourseDetail/lesson.png";
 import StudentPic from "@/assets/CourseDetail/student.png";
 import Image from "next/image";
 import { DateConvert } from "@/core/services/utils/date";
+import { formatCostWithUnit } from "@/core/services/utils/formatCostWithUnit";
 
 interface CourseInfoProps {
     course: any;
@@ -23,19 +24,28 @@ interface CourseInfoProps {
   }
 
 export const CourseInfo: React.FC<CourseInfoProps> = ({ course, AddCourseReserve }) => {
-    const formattedCost = (course.cost / 10000).toFixed(0);
     const duration = `${DateConvert(course.startTime)} - ${DateConvert(
         course.endTime
       )}`;
       const hasExams = false;
       const hasCertificate = true;
-      const graduationDate = new Date(course.endTime).toLocaleDateString();
+
+      const shareLink = () => {
+        if (navigator.share) {
+          navigator.share({
+            title: `ثبت نام در دوره ${course.title}`,
+            text: "به این دوره بپیوندید!",
+            url: window.location.href,
+          });
+        }
+      };
+
     return(
         <div className="w-[310px] h-[845px] flex justify-center flex-wrap bg-white dark:bg-gray-800 border border-[#DFDFDF] dark:border-gray-600 shadow-[0_0_14px_0] shadow-black rounded-xl items-center dark:text-white">
         <div className="bg-[#5751E1] h-[95px] text-white w-[250px] rounded-lg flex flex-wrap justify-center items-center">
           <h3 className="w-[90%]"> هزینه این دوره </h3>
           <h1 className="text-2xl w-full text-center">
-            {formattedCost} تومان{" "}
+            {formatCostWithUnit(course.cost)} تومان{" "}
           </h1>
         </div>
         <div className="w-[90%] h-[350px] flex flex-wrap justify-center ">
@@ -86,7 +96,7 @@ export const CourseInfo: React.FC<CourseInfoProps> = ({ course, AddCourseReserve
               {" "}
               <Image src={StudentPic} alt="" /> فارغ التحصیلی{" "}
             </p>
-            <h5 className="text-[#7F7E97]"> {graduationDate} </h5>
+            <h5 className="text-[#7F7E97]"> {DateConvert(course.endTime)} </h5>
           </div>
         </div>
         <div className="w-[90%] h-[100px] border-b border-[#D9D9D9] flex justify-center flex-wrap">
@@ -96,21 +106,36 @@ export const CourseInfo: React.FC<CourseInfoProps> = ({ course, AddCourseReserve
         <div className="w-[90%] h-[105px] border-b flex flex-wrap justify-center border-[#D9D9D9]">
           <h1 className="w-full"> این دوره را به اشتراک بگذارید: </h1>
           <div className="w-full h-auto flex gap-3">
-            <div className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center">
+          <a
+            href={`https://www.youtube.com/share?url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"  className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center social-icon">
               <Image src={YoutubePic} alt="" />
-            </div>
-            <div className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center">
+            </a>
+            <a
+            href={`https://instagram.com/?url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer" className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center social-icon" >
               <Image src={InstagramPic} alt="" />
-            </div>
-            <div className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center">
+            </a>
+            <a
+            href={`https://wa.me/?text=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer" className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center social-icon">
               <Image src={WhatsappPic} alt="" />
-            </div>
-            <div className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center">
+            </a>
+            <a
+            href={`https://twitter.com/share?url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer" className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center social-icon">
               <Image src={TwiterPic} alt="" />
-            </div>
-            <div className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center">
+            </a>
+            <a
+            href={`https://www.facebook.com/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer" className="w-11 h-11 bg-[#E6E9EF] rounded-full flex justify-center items-center social-icon">
               <Image src={FacebookPic} alt="" />
-            </div>
+            </a>
           </div>
         </div>
         <button
