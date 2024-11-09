@@ -1,7 +1,7 @@
 import React from 'react';
 import BackPic from '@/assets/backPic.png';
 import { TypeAnimation } from 'react-type-animation';
-import { Link } from 'react-router-dom'; // یا از 'next/link' استفاده کنید اگر پروژه با Next.js نوشته شده است
+import { Link } from 'react-router-dom'; 
 
 interface BreadcrumbProps {
     path: string[];

@@ -8,8 +8,9 @@ import FavoritePic from "@/assets/landing/header/favorite.png";
 import SearchPic from "@/assets/landing/header/search.png";
 import CategoryPic from "@/assets/landing/header/category.png";
 import Image from "next/image";
-import { getfave } from "@/core/services/api/userPanel";
+import { getfave, getMyCourse } from "@/core/services/api/userPanel";
 import { getFavoriteNews } from "@/core/services/api/news";
+import { toast } from "react-hot-toast";
 
 export const Header = () => {
   const location = useLocation();
@@ -20,6 +21,8 @@ export const Header = () => {
   const [studentPanelLink, setStudentPanelLink] = useState("/StudentPanel");
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("دوره ها");
+  const [MyCourse, setMyCourse] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
@@ -63,30 +66,44 @@ export const Header = () => {
     };
   }, [lastScrollY]);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const favoriteCourses = await getfave();
-        const favoriteNews = await getFavoriteNews();
+  const fetchFavorites = async () => {
+    try {
+      const favoriteCourses = await getfave();
+      const favoriteNews = await getFavoriteNews();
 
-        const courseCount = favoriteCourses?.totalCount;
-        const newsCount = favoriteNews?.totalCount ;
+      const courseCount = favoriteCourses?.totalCount;
+      const newsCount = favoriteNews?.totalCount;
 
-        setFavoriteCount(courseCount + newsCount);
-      } catch (error) {
-        console.error("Error fetching favorite counts:", error);
+      setFavoriteCount(courseCount + newsCount);
+    } catch (error) {
+      console.error("Error fetching favorite counts:", error);
+    }
+  };
+
+  const fetchCoursesCount = async () => {
+    const res = await getMyCourse();
+    try {
+      if(res && typeof res.totalCount === "number") {
+        setMyCourse(res.totalCount);
       }
-    };
-
+    } catch (error) {
+      toast.error("مشکلی در دریافت اطلاعات پیش امده");
+    }
+  };
+  useEffect(() => {
+    fetchCoursesCount();
     fetchFavorites();
   }, []);
 
-  const handleSearch = (searchQuery: string) => {
-    if (selectedCategory === "دوره ها") {
-      navigate(`/CourseList?search=${searchQuery}`);
-    }
-    else if (selectedCategory === "خبر ها"){
-      navigate(`/NewsList?search=${searchQuery}`)
+  const handleSearch = () => {
+    if (!searchQuery.trim()) {
+      toast.error("لطفا برای جستجو یک کلمه وارد کنید!");
+    } else {
+      if (selectedCategory === "دوره ها") {
+        navigate(`/CourseList?search=${searchQuery}`);
+      } else if (selectedCategory === "خبر ها") {
+        navigate(`/NewsList?search=${searchQuery}`);
+      }
     }
   };
 
@@ -136,6 +153,7 @@ export const Header = () => {
               type="text"
               className="w-[85%] outline-none h-5 dark:text-white"
               placeholder="جستجو برای دوره ..."
+              onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) =>
                 e.key === "Enter" && handleSearch(e.target.value)
               }
@@ -143,7 +161,7 @@ export const Header = () => {
             <button
               title="جستجو.."
               className="w-10 h-10 rounded-3xl flex justify-center items-center bg-[#5751E1]"
-              onClick={() => handleSearch("جستجو برای دوره...")}
+              onClick={handleSearch}
             >
               <Image src={SearchPic} className="w-7 h-[26px]" alt="Search" />
             </button>
@@ -155,7 +173,7 @@ export const Header = () => {
         >
           <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-            0
+            {MyCourse}
           </div>
         </div>
         <Link
@@ -235,6 +253,7 @@ export const Header = () => {
                 type="text"
                 className="w-[85%] outline-none h-5 dark:text-white"
                 placeholder="جستجو برای دوره ..."
+                onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) =>
                   e.key === "Enter" && handleSearch(e.target.value)
                 }
@@ -242,7 +261,7 @@ export const Header = () => {
               <button
                 title="جستجو.."
                 className="w-10 h-10 rounded-3xl flex justify-center items-center bg-[#5751E1]"
-                onClick={() => handleSearch("جستجو برای دوره...")}
+                onClick={handleSearch}
               >
                 <Image src={SearchPic} className="w-7 h-[26px]" alt="Search" />
               </button>
@@ -256,7 +275,7 @@ export const Header = () => {
             >
               <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
               <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-                0
+              {MyCourse}
               </div>
             </div>
 
