@@ -11,6 +11,8 @@ import Image from "next/image";
 import { getfave, getMyCourse } from "@/core/services/api/userPanel";
 import { getFavoriteNews } from "@/core/services/api/news";
 import { toast } from "react-hot-toast";
+import CountUp from 'react-countup'
+import { getItem } from "@/core/services/common/storage.services";
 
 export const Header = () => {
   const location = useLocation();
@@ -51,13 +53,13 @@ export const Header = () => {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getItem("token");
     if (token) {
       setStudentPanelLink("/StudentPanel/dashboard");
     } else {
       setStudentPanelLink("/Login");
     }
-  }, []);
+  }, [getItem("token")]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -83,7 +85,7 @@ export const Header = () => {
   const fetchCoursesCount = async () => {
     const res = await getMyCourse();
     try {
-      if(res && typeof res.totalCount === "number") {
+      if (res && typeof res.totalCount === "number") {
         setMyCourse(res.totalCount);
       }
     } catch (error) {
@@ -167,15 +169,16 @@ export const Header = () => {
             </button>
           </div>
         </div>
-        <div
+        <Link
+          to="Payment"
           title="سبد خرید"
           className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative"
         >
           <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-            {MyCourse}
+            <CountUp end={MyCourse} duration={20} />
           </div>
-        </div>
+        </Link>
         <Link
           to="/StudentPanel/favorites"
           title="علاقه مندی ها"
@@ -183,7 +186,7 @@ export const Header = () => {
         >
           <Image src={FavoritePic} alt="Favorite" className="h-5 w-5" />
           <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-            {favoriteCount}
+            <CountUp end={favoriteCount} duration={20} />
           </div>
         </Link>
         <Link
@@ -269,15 +272,16 @@ export const Header = () => {
           </div>
 
           <div className="flex justify-between">
-            <div
+            <Link
+              to="Payment"
               title="سبد خرید"
               className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative"
             >
               <Image src={BasketPic} alt="Basket" className="h-5 w-5" />
               <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-              {MyCourse}
+                <CountUp end={MyCourse} duration={20} />
               </div>
-            </div>
+            </Link>
 
             <div
               title="علاقه مندی ها"
@@ -285,7 +289,7 @@ export const Header = () => {
             >
               <Image src={FavoritePic} alt="Favorite" className="h-5 w-5" />
               <div className="absolute top-0 right-[-5px] w-[22px] h-[22px] rounded-[11px] bg-[#FFC224] text-center">
-                {favoriteCount}
+                <CountUp end={favoriteCount} duration={20} />
               </div>
             </div>
 

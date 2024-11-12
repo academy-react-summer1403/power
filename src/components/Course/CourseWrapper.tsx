@@ -32,9 +32,9 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) 
     return (
         <>
             {stateTopCourse && stateTopCourse.length > 0 ? (
-                stateTopCourse.map(item => (
+                stateTopCourse.map((item , index) => (
                     <Course
-                        key={item.courseId} 
+                        key={index} 
                         tumbImageAddress={item.tumbImageAddress}
                         title={item.title}
                         date={item.lastUpdate}

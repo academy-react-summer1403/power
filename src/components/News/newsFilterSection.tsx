@@ -33,7 +33,7 @@ export const NewsFilterSection: React.FC<NewsFilterSectionProps> = ({
         placeholder="جستجوی اخبار"
         value={filter.query}
         onChange={handleFilterChange}
-        className="p-2 border dark:bg-gray-700 outline-none dark:border-gray-600 rounded"
+        className="p-2 border w-full h-[50px] rounded bg-[#F7F7F9] dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white"
       />
       <div className="w-full bg-[#F7F7F9] dark:bg-gray-700 rounded-xl p-1">
         <p className="text-[#161439] dark:text-white text-[20px]">دسته بندی:</p>

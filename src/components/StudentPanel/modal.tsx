@@ -11,7 +11,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-gray-100 dark:bg-[#1F1F1F] shadow-black rounded-lg shadow-lg p-6 w-11/12 max-w-md">
+      <div className="bg-gray-100 dark:bg-[#1F1F1F] relative shadow-black rounded-lg shadow-lg p-6 w-11/12 max-w-md">
         <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">خروج از حساب</h2>
         <p className="text-gray-700 dark:text-gray-300">آیا از خروج از حساب خود مطمئن هستید؟</p>
         <div className="mt-4 gap-5 flex justify-end">

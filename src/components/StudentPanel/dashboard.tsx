@@ -97,7 +97,7 @@ const Dashboard = () => {
         </p>
         <Doughnut data={data} />
       </div>
-      <div className="w-full md:w-[800px] mt-8 relative flex flex-wrap justify-center items-center h-[185px] bg-[#C8C1ED66] dark:bg-[#494BFF66] rounded-xl">
+      <div className="w-full md:w-[800px] mt-8 relative z-0 flex flex-wrap justify-center items-center h-[185px] bg-[#C8C1ED66] dark:bg-[#494BFF66] rounded-xl">
         <div className="absolute -top-8 left-[5%] rounded-xl w-12 h-12 bg-[#5751E1] shadow-md flex justify-center items-center overflow-hidden"><Image src={BellPic} className="w-[22px] h-[24px]" alt="" /></div>
         <div className="w-[90%] text-[#161439] dark:text-white text-xl">
           جدید ترین اخبار و مقالات

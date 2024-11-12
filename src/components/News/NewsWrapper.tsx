@@ -27,9 +27,9 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
   return (
     <>
       {newsList ? (
-        newsList.map((item) => (
+        newsList.map((item , index) => (
           <News
-            key={item.id}
+            key={index}
             Id={item.id}
             title={item.title}
             Img={item.currentImageAddressTumb}
