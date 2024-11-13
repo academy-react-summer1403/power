@@ -22,7 +22,7 @@ const onSuccess = (response: AxiosResponse) => {
 const onError = (error: AxiosError) => {
   if (error.response) {
     if (error.response.status === 401) {
-      clearStorage()
+      clearStorage();
     }
 
     if (error.response.status >= 404 && error.response.status < 500) {

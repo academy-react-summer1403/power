@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BaseUrl } from "@/config";
-import http from "../interceptor"
+import http from "../interceptor";
 
 export const getallCourseList = async () => {
   try {
@@ -14,17 +14,16 @@ export const getallCourseList = async () => {
   }
 };
 export const getallbypgCourseList = async (
-  sort  : string,
-  search  : string,
-  cat  : string,
-  type  : string,
-  level  : string,
-  costDown  : string,
-  costUp  : string,
-  page : string
+  sort: string,
+  search: string,
+  cat: string,
+  type: string,
+  level: string,
+  costDown: string,
+  costUp: string,
+  page: string
 ) => {
   try {
-
     const queryParams = [];
     if (page) queryParams.push(`PageNumber=${page}`);
     if (search) queryParams.push(`Query=${search}`);
@@ -58,7 +57,25 @@ export const getallbypgCourseList = async (
     return [];
   }
 };
-export const getallbypgCourseListt = async (search : string) => {
+
+export const GetPayCourse = async (search: string, page: string) => {
+  try {
+    const queryParams = [];
+    if (page) queryParams.push(`PageNumber=${page}`);
+    if (search) queryParams.push(`Query=${search}`);
+
+    const url = `/SharePanel/GetMyCourses?RowsOfPage=12&${queryParams.join(
+      "&"
+    )}`;
+    const result = await http.get(`${url}`);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const getallbypgCourseListt = async (search: string) => {
   try {
     //console.log("Fetching started...");
 
@@ -104,19 +121,21 @@ export const getCourseLevel = async () => {
     return [];
   }
 };
-export const getCourseById = async (id : string) => {
+export const getCourseById = async (id: string) => {
   //console.log(id);
   try {
     //console.log("Fetching started...");
 
-    const result = await axios.get(`${BaseUrl}/Home/GetCourseDetails?CourseId=${id}`);
+    const result = await axios.get(
+      `${BaseUrl}/Home/GetCourseDetails?CourseId=${id}`
+    );
     return result.data;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const getCommentById = async (id : string) => {
+export const getCommentById = async (id: string) => {
   try {
     //console.log("Fetching started...");
 
@@ -127,16 +146,18 @@ export const getCommentById = async (id : string) => {
     return [];
   }
 };
-export const getRepCommentById = async ( id : string , CourseId : string) => {
+export const getRepCommentById = async (id: string, CourseId: string) => {
   try {
-    const result = await axios.get(`${BaseUrl}/Course/GetCourseReplyCommnets/${CourseId}/${id}`);
+    const result = await axios.get(
+      `${BaseUrl}/Course/GetCourseReplyCommnets/${CourseId}/${id}`
+    );
     return result;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
-export const addReserve = async (id : string) => {
+export const addReserve = async (id: string) => {
   try {
     //console.log("Fetching started...");
     const objj = { courseId: id };
@@ -148,19 +169,19 @@ export const addReserve = async (id : string) => {
   }
 };
 export const reserved = async () => {
-    try {
-      const res = await http.get("/SharePanel/GetMyCoursesReserve");
-      if (res) {
-          return res; 
-      } else {
-          throw new Error("No data returned");
-      }
-    } catch (error) {
-      console.log(error , "error")
-      return null 
+  try {
+    const res = await http.get("/SharePanel/GetMyCoursesReserve");
+    if (res) {
+      return res;
+    } else {
+      throw new Error("No data returned");
     }
+  } catch (error) {
+    console.log(error, "error");
+    return null;
+  }
 };
-export const liked = async (id : string) => {
+export const liked = async (id: string) => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/Course/AddCourseLike?CourseId=${id}`);
@@ -172,7 +193,7 @@ export const liked = async (id : string) => {
     return [];
   }
 };
-export const disLiked = async (id : string) => {
+export const disLiked = async (id: string) => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/Course/AddCourseDissLike?CourseId=${id}`);
@@ -184,7 +205,7 @@ export const disLiked = async (id : string) => {
     return [];
   }
 };
-export const deletliked = async (data : string) => {
+export const deletliked = async (data: string) => {
   try {
     console.log("Fetching started...");
     const result = await http.delete(`/Course/DeleteCourseLike`, {
@@ -197,7 +218,7 @@ export const deletliked = async (data : string) => {
     return [];
   }
 };
-export const favorite = async (a : string) => {
+export const favorite = async (a: string) => {
   try {
     console.log("Fetching started...");
     const result = await axios.post(`${BaseUrl}/Course/AddCourseFavorite`, a);
@@ -208,7 +229,7 @@ export const favorite = async (a : string) => {
     return [];
   }
 };
-export const addcomment = async (data : string) => {
+export const addcomment = async (data: string) => {
   try {
     const result = await http.post(`/Course/AddCommentCourse`, data);
 
@@ -221,7 +242,10 @@ export const addcomment = async (data : string) => {
 export const repcomment = async (rc: string) => {
   try {
     console.log("Fetching started...");
-    const result = await axios.post(`${BaseUrl}/Course/AddReplyCourseComment`, rc);
+    const result = await axios.post(
+      `${BaseUrl}/Course/AddReplyCourseComment`,
+      rc
+    );
 
     return result;
   } catch (error) {
@@ -230,7 +254,7 @@ export const repcomment = async (rc: string) => {
   }
 };
 
-export const likedCourseCmnt = async (id : string) => {
+export const likedCourseCmnt = async (id: string) => {
   try {
     const result = await http.post(
       `${BaseUrl}/Course/AddCourseCommentLike?CourseCommandId=${id}`
@@ -241,7 +265,7 @@ export const likedCourseCmnt = async (id : string) => {
     return [];
   }
 };
-export const disLikedCourseCmnt = async (id : string) => {
+export const disLikedCourseCmnt = async (id: string) => {
   try {
     console.log("Fetching started...");
     const result = await axios.post(
@@ -256,12 +280,12 @@ export const disLikedCourseCmnt = async (id : string) => {
 };
 export const deleteCourseComment = async (id = String) => {
   try {
-    await http.delete(`/Course/DeleteCourseComment?CourseCommandId=${id}`)
+    await http.delete(`/Course/DeleteCourseComment?CourseCommandId=${id}`);
   } catch (error) {
-    console.log(error , "error")
+    console.log(error, "error");
   }
-}
-export const deleteLikedCourseCmnt = async (id : string) => {
+};
+export const deleteLikedCourseCmnt = async (id: string) => {
   try {
     console.log("Fetching started...");
     const result = await axios.delete(
@@ -275,45 +299,45 @@ export const deleteLikedCourseCmnt = async (id : string) => {
   }
 };
 // GetTeacherDetailForCourseDetail
-export const GetTeacherDetailById = async (id : string) => {
-    try {
-      const res =await axios.get(`${BaseUrl}/Home/GetTeacherDetails?TeacherId=${id}`);
-      res.data;
-    } catch (error) {
-      console.log(error , "Error")
-    }
-}
-
-export const GetMyCourseComment = async () => { 
+export const GetTeacherDetailById = async (id: string) => {
   try {
-    const res =await http.get("/SharePanel/GetMyCoursesComments")
-    return res
+    const res = await axios.get(
+      `${BaseUrl}/Home/GetTeacherDetails?TeacherId=${id}`
+    );
+    res.data;
   } catch (error) {
-    console.log(error , "Error")
-    return null
+    console.log(error, "Error");
   }
-}
+};
 
-
-export const GetMyNewsComment = async () => { 
+export const GetMyCourseComment = async () => {
   try {
-    const res =await http.get("/SharePanel/GetMyNewsComments")
-    return res
-  } catch (error) {
-    console.log(error , "Error")
-    return null
-  }
-}
-
-
-export const AddCourseRate = async (id : String ,RateNumber : number ) => {
-  try {
-    const res =await http.post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${RateNumber}`)
+    const res = await http.get("/SharePanel/GetMyCoursesComments");
     return res;
   } catch (error) {
-    console.log(error , "Error")
-    return []
+    console.log(error, "Error");
+    return null;
   }
-}
+};
 
+export const GetMyNewsComment = async () => {
+  try {
+    const res = await http.get("/SharePanel/GetMyNewsComments");
+    return res;
+  } catch (error) {
+    console.log(error, "Error");
+    return null;
+  }
+};
 
+export const AddCourseRate = async (id: String, RateNumber: number) => {
+  try {
+    const res = await http.post(
+      `/Course/SetCourseRating?CourseId=${id}&RateNumber=${RateNumber}`
+    );
+    return res;
+  } catch (error) {
+    console.log(error, "Error");
+    return [];
+  }
+};

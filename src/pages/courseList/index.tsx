@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Footer } from "@/components/landing/footer";
 import { Header } from "@/components/landing/header";
-import FlexListPic from "@/assets/CourseList/flex.png"
-import GridListPic from "@/assets/CourseList/grid.svg"
+import FlexListPic from "@/assets/CourseList/flex.png";
+import GridListPic from "@/assets/CourseList/grid.svg";
 import Image from "next/image";
 import Breadcrumb from "@/components/path";
 import {
@@ -17,6 +17,7 @@ import { CourseWrapper } from "@/components/Course/CourseWrapper";
 import Pagination from "@/components/Course/Pagination";
 import { FilterSection } from "@/components/Course/FilterSection";
 import { useLocation } from "react-router-dom";
+import CountUp from 'react-countup'
 
 type Filter = {
   search: string;
@@ -61,7 +62,7 @@ export const CourseList: React.FC = () => {
       filter.courseLevel,
       filter.costRange[1],
       filter.costRange[0],
-      currentPage,
+      currentPage
     );
     setCourses(courseFilterDtos || []);
     setTotalCount(totalCount);
@@ -82,60 +83,73 @@ export const CourseList: React.FC = () => {
     }
   };
 
-useEffect(() => {
-  fetchFilterOptions();
-  fetchCourses(); 
-}, [filter, currentPage]);
+  useEffect(() => {
+    fetchFilterOptions();
+    fetchCourses();
+  }, [filter, currentPage]);
 
   // Handle Filter Change
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilter({ ...filter, [name]: value });
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const values = e.target.value.split(",");
-    setFilter({ ...filter, costRange: [parseInt(values[0]), parseInt(values[1])] });
+    setFilter({
+      ...filter,
+      costRange: [parseInt(values[0]), parseInt(values[1])],
+    });
   };
 
-// Handle Sorting
-const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  const value = e.target.value;
-  if (value) {
-    setFilter({ ...filter, sort: value });
-    setCurrentPage(1); 
-  } else {
-    setFilter(prev => ({ ...prev, sort: "" }));
-  }
-  setCurrentPage(1)
-};
+  // Handle Sorting
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (value) {
+      setFilter({ ...filter, sort: value });
+      setCurrentPage(1);
+    } else {
+      setFilter((prev) => ({ ...prev, sort: "" }));
+    }
+    setCurrentPage(1);
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-// Handle category change
-const handleCategoryChange = (categoryId: string) => {
-  setFilter((prev) => {
-    const newCategories = prev.category.includes(categoryId)
-      ? prev.category.filter((id) => id !== categoryId) 
-      : [...prev.category, categoryId]; 
-    return { ...prev, category: newCategories };
-  });
-  setCurrentPage(1);
-};
+  // Handle category change
+  const handleCategoryChange = (categoryId: string) => {
+    setFilter((prev) => {
+      const newCategories = prev.category.includes(categoryId)
+        ? prev.category.filter((id) => id !== categoryId)
+        : [...prev.category, categoryId];
+      return { ...prev, category: newCategories };
+    });
+    setCurrentPage(1);
+  };
 
   // Handle course type selection
   const handleCourseTypeChange = (typeId: string) => {
-    setFilter({ ...filter, courseType: filter.courseType === typeId ? "" : typeId });
-    setCurrentPage(1); 
+    setFilter({
+      ...filter,
+      courseType: filter.courseType === typeId ? "" : typeId,
+    });
+    setCurrentPage(1);
   };
 
   // Handle course level selection
   const handleCourseLevelChange = (levelId: string) => {
-    setFilter({ ...filter, courseLevel: filter.courseLevel === levelId ? "" : levelId });
-    setCurrentPage(1); 
+    setFilter({
+      ...filter,
+      courseLevel: filter.courseLevel === levelId ? "" : levelId,
+    });
+    setCurrentPage(1);
   };
 
   return (
@@ -144,7 +158,7 @@ const handleCategoryChange = (categoryId: string) => {
       <div className="w-full h-auto flex flex-wrap justify-center">
         <Breadcrumb path={path} title={title} />
         <div className="w-[90%] h-auto mt-32 mb-32 flex flex-wrap lg:flex-nowrap">
-        <FilterSection
+          <FilterSection
             filter={filter}
             categories={categories}
             courseTypes={courseTypes}
@@ -157,10 +171,11 @@ const handleCategoryChange = (categoryId: string) => {
           />
           <div className="h-auto w-[100%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
-              <div className=" hidden lg:flex items-center justify-center">
-                {`${totalCount} دوره در دسترس است`}
+              <div className=" hidden lg:flex items-center gap-2 justify-center">
+                <CountUp end={totalCount} duration={15} />
+                 دوره در دسترس است
               </div>
-              <div className="flex items-center gap-3"> 
+              <div className="flex items-center gap-3">
                 <p> مرتب سازی بر اساس: </p>
                 <select
                   name="sort"
@@ -181,10 +196,10 @@ const handleCategoryChange = (categoryId: string) => {
                 </select>
 
                 <button className="w-10 h-10 flex justify-center items-center bg-[#5751E1]  rounded">
-                          <Image src={FlexListPic} alt=""/>
+                  <Image src={FlexListPic} alt="" />
                 </button>
                 <button className="w-10 h-10 flex justify-center items-center border border-[#6196EA] rounded">
-                          <Image src={GridListPic} alt=""/>
+                  <Image src={GridListPic} alt="" />
                 </button>
               </div>
             </div>

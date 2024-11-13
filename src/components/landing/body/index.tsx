@@ -23,10 +23,30 @@ import { Loading } from "@/components/loading";
 
 export const Body = () => {
   const [LandingApi, setLandingApi] = useState([]);
-  const [topCourseState, setTopCourseState] = useState([]);
-  const [newsList, setNewsList] = useState([]);
-  const [teacherList, setTeacherList] = useState([]);
-  const [catList, setCatList] = useState([]);
+  const [topCourseState, setTopCourseState] = useState([
+    { title: "Course" },
+    { title: "Course" },
+    { title: "Course" },
+    { title: "Course" },
+  ]);
+  const [newsList, setNewsList] = useState([
+    { title: "news" },
+    { title: "news" },
+    { title: "news" },
+    { title: "news" },
+  ]);
+  const [teacherList, setTeacherList] = useState([
+    { fullName: "teacher" },
+    { fullName: "teacher" },
+    { fullName: "teacher" },
+    { fullName: "teacher" },
+  ]);
+  const [catList, setCatList] = useState([
+    { techName: "tech" },
+    { techName: "tech" },
+    { techName: "tech" },
+    { techName: "tech" },
+  ]);
 
   // GetLandingReportApi
   useEffect(() => {
@@ -38,8 +58,8 @@ export const Body = () => {
 
     const fetchCategory = async () => {
       const result = await getCat();
-      setCatList(result ? result.slice(0,4) : result.slice(0,4))
-    }
+      setCatList(result ? result.slice(0, 4) : result.slice(0, 4));
+    };
 
     const fetchTopCourseData = async () => {
       const result = await GetTopCoursesApi();
@@ -52,19 +72,19 @@ export const Body = () => {
     };
 
     const fetchLandingTeachers = async () => {
-        const result = await GetTeacherForLanding()
-        setTeacherList(result)
-    }
-    
-    fetchCategory()
-    fetchLandingTeachers()
+      const result = await GetTeacherForLanding();
+      setTeacherList(result);
+    };
+
+    fetchCategory();
+    fetchLandingTeachers();
     fetchNews();
     fetchTopCourseData();
     fetchData();
   }, []);
 
-  if(!catList && !newsList && !teacherList && !topCourseState){
-    <Loading/>
+  if (!catList && !newsList && !teacherList && !topCourseState) {
+    <Loading />;
   }
 
   return (

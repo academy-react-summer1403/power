@@ -5,6 +5,7 @@ import InstagramPic from "@/assets/landing/body/Symbol.png";
 import WhatsAppPic from "@/assets/landing/body/Symbol (1).png";
 import TwitterPic from "@/assets/landing/body/Symbol (2).png";
 import FacebookPic from "@/assets/landing/body/Symbol (3).png";
+import CountUp from 'react-countup'
 
 interface Teacher {
   fullName: string;
@@ -133,7 +134,7 @@ const StatItem: React.FC<{ label: string; count: number }> = ({
 }) => (
   <div className="border-l-2 border-white/50 h-[90%] w-1/4 flex flex-col items-center justify-center">
     <div className="text-white text-[56px] font-bold" data-aos="zoom-out">
-      {count}
+      <CountUp end={count} duration={30} />
     </div>
     <div className="text-white text-[18px]">{label}</div>
   </div>

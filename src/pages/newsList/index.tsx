@@ -7,6 +7,7 @@ import { NewsPagination } from "@/components/News/newsPagination";
 import { getNews, getPaperCat } from "@/core/services/api/news";
 import { NewsFilterSection } from "@/components/News/newsFilterSection";
 import { useLocation } from "react-router-dom";
+import CountUp from 'react-countup'
 
 type Filter = {
   search: string;
@@ -80,6 +81,10 @@ export const NewsListPage: React.FC = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -97,8 +102,9 @@ export const NewsListPage: React.FC = () => {
           />
           <div className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
-              <div className="lg:flex hidden items-center justify-center">
-                {`${totalCount} خبر در دسترس است`}
+            <div className=" hidden lg:flex items-center gap-2 justify-center">
+                <CountUp end={totalCount} duration={15} />
+                خبر در دسترس است
               </div>
               <div className="flex items-center gap-3">
                 <p>مرتب سازی بر اساس:</p>

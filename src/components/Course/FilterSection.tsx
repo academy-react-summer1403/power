@@ -54,7 +54,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         placeholder="جستجوی دوره"
         value={filter.search}
         onChange={handleFilterChange}
-        className="p-2 border rounded dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white"
+        className="p-2 border w-full h-[50px] rounded bg-[#F7F7F9] dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white"
       />
       <div className="bg-[#F7F7F9] dark:bg-gray-700 h-auto w-full p-4 rounded-xl">
         <p className="text-[20px] font-semibold text-black dark:text-white">
