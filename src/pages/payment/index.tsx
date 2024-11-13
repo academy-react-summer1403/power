@@ -96,8 +96,7 @@ export const Payment = () => {
               <div className="w-[90%] flex flex-wrap justify-center items-center text-white h-[100px] rounded-lg bg-[#5751E1] shadow-[#0D096342] shadow-[0_3px_15px_0]">
                 <h3 className="w-[90%]"> جمع کل :</h3>
                 <h1 className="text-2xl w-full text-center">
-                  {" "}
-                  {formatCostWithUnit(totalPrice)}{" "}
+                  {formatCostWithUnit(totalPrice)} تومان
                 </h1>
               </div>
               <div className="h-[80px] w-full items-center flex justify-center flex-wrap">
