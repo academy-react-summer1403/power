@@ -13,7 +13,6 @@ import { getMyCourse } from "@/core/services/api/userPanel";
 import { formatCostWithUnit } from "@/core/services/utils/formatCostWithUnit";
 import CountUp from 'react-countup'
 
-
 type Filter = {
   search: string;
   PageNumber: number;
@@ -25,8 +24,8 @@ export const Payment = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [noFilterTotalCount, setNoFilterTotalCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [sortOption, setSortOption] = useState("");
 
-  // State for filters
   const [filter, setFilter] = useState<Filter>({
     search: "",
     PageNumber: 1,
@@ -42,15 +41,12 @@ export const Payment = () => {
     );
     setCourses(listOfMyCourses || []);
     setTotalCount(totalCount || 0);
-  
-    let priceSum = 0;
 
-    listOfMyCourses?.map((course: any) => {
-      priceSum += Number(course.cost) || 0; 
+    let priceSum = 0;
+    listOfMyCourses?.forEach((course: any) => {
+      priceSum += Number(course.cost) || 0;
     });
-    
-    setTotalPrice(priceSum); 
-    
+    setTotalPrice(priceSum);
   };
 
   const fetchNoFilterCourses = async () => {
@@ -65,10 +61,7 @@ export const Payment = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +69,23 @@ export const Payment = () => {
     setFilter({ ...filter, [name]: value });
     setCurrentPage(1);
   };
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(e.target.value);
+  };
+
+  const sortedCourses = [...courses].sort((a, b) => {
+    if (sortOption === "newest") {
+      return new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime();
+    }
+    if (sortOption === "lowest") {
+      return (a.cost || 0) - (b.cost || 0);
+    }
+    if (sortOption === "highest") {
+      return (b.cost || 0) - (a.cost || 0);
+    }
+    return 0;
+  });
 
   return (
     <>
@@ -124,16 +134,21 @@ export const Payment = () => {
           </div>
           <div className="w-full lg:w-[75%] mb-36 h-auto flex items-start justify-center flex-wrap">
             <div className="w-[90%] flex items-center justify-between">
-            <div className=" hidden lg:flex items-center gap-2 justify-center">
-                <CountUp end={totalCount} duration={15} />
-                 دوره در دسترس است
+              <div className="hidden lg:flex items-center gap-2 justify-center">
+                <CountUp end={totalCount} duration={15} /> دوره در دسترس است
               </div>
-              <button className="bg-[#5751E1] shadow-[#050071] text-white w-[205px] h-[50px] shadow-[4px_6px_0_0] rounded-[50px]">
-                خالی کردن سبد
-              </button>
+              <select
+          className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700 text-center mt-2 md:mt-0"
+                value={sortOption}
+                onChange={handleSortChange}
+              >
+                <option value="newest">جدیدترین</option>
+                <option value="lowest">ارزان ترین</option>
+                <option value="highest">گران ترین</option>
+              </select>
             </div>
             <div className="w-full h-auto flex flex-wrap mt-7 mb-16 justify-center gap-6">
-              <PayCourseWrapper stateCourse={courses} />
+              <PayCourseWrapper stateCourse={sortedCourses} />
             </div>
             <Pagination
               totalCount={totalCount}
