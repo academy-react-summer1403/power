@@ -153,13 +153,13 @@ export const Course: React.FC<TopCourseProps> = ({
     >
       <Image
         src={imageSrc}
-        alt={title}
+        alt={"Pictures"}
         width={300}
         height={190}
         className="rounded-xl h-[190px] w-[300px] cover-image"
       />
       <div className="absolute z-20 w-9 h-9 flex justify-center items-center cursor-pointer bg-white left-9 top-10 rounded-md dark:bg-[#2C2C2C]" onClick={AddCoursefavorite}>
-        <Image src={localIsUserFavorite ? FavotiteTruePic : FavoritePic} alt="" />
+        <Image src={localIsUserFavorite ? FavotiteTruePic : FavoritePic} alt="Pic" />
       </div>
       <div className="p-4 w-[95%] wrapper">
         <h2 className="title text-xl font-semibold mt-4 text-black dark:text-white">{title}</h2>

@@ -6,6 +6,7 @@ import ArowPic from "@/assets/CourseDetail/arow.png";
 import React from "react";
 import { AddCommentValidation } from "@/core/validation/AddCourseComment";
 import { addcomment } from "@/core/services/api/course";
+import { handleInputChange } from "@/core/validation/forbiddenWords";
 
 interface AddNewsCommentProp {
   onSubmit: (values: { Title: string; Describe: string }) => Promise<void>;
@@ -18,7 +19,7 @@ export const NewsAddComment: React.FC<AddNewsCommentProp> = ({ onSubmit }) => {
       onSubmit={onSubmit}
       initialValues={{ Title: "", Describe: "" }}
     >
-      {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue, setFieldError }) => (
         <Form className="w-full h-auto flex flex-wrap items-center justify-center bg-[#F7F7FA] dark:bg-[#1F1F1F] rounded-xl mt-5 p-5">
           <h1 className="w-[90%] text-[30px] text-[#161439] dark:text-[#F7F7FA] font-semibold">
             ارسال نظر
@@ -26,8 +27,15 @@ export const NewsAddComment: React.FC<AddNewsCommentProp> = ({ onSubmit }) => {
           <div className="w-full max-w-[90%]">
             <h4 className="w-full text-[#6D6C80] dark:text-[#D1D1D1]">عنوان پیام</h4>
             <Field
-              className="w-full h-[50px] border rounded-md bg-white dark:bg-[#2C2C2C] dark:border-gray-600"
+              className="p-3 w-full h-[50px] border rounded-md bg-white dark:bg-[#2C2C2C] dark:border-gray-600"
               name="Title"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const value = e.target.value;
+                handleInputChange(value, 
+                  (sanitizedValue) => setFieldValue("Title", sanitizedValue),
+                  (errorMessage) => setFieldError("Title", errorMessage)
+                );
+              }}
             />
             <ErrorMessage name="Title" component="p" className="text-red-500 mt-1" />
           </div>
@@ -35,8 +43,15 @@ export const NewsAddComment: React.FC<AddNewsCommentProp> = ({ onSubmit }) => {
             <h4 className="w-full text-[#6D6C80] dark:text-[#D1D1D1]">توضیحات بیشتر</h4>
             <Field
               as="textarea"
-              className="w-full h-[100px] border rounded-md dark:bg-[#2C2C2C] dark:border-gray-600 resize-none"
+              className="p-3 w-full h-[100px] border rounded-md dark:bg-[#2C2C2C] dark:border-gray-600 resize-none"
               name="Describe"
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                const value = e.target.value;
+                handleInputChange(value, 
+                  (sanitizedValue) => setFieldValue("Describe", sanitizedValue),
+                  (errorMessage) => setFieldError("Describe", errorMessage)
+                );
+              }}
             />
             <ErrorMessage name="Describe" component="p" className="text-red-500 mt-1" />
           </div>
