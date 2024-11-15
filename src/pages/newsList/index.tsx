@@ -118,7 +118,7 @@ export const NewsListPage: React.FC = () => {
                 </select>
               </div>
             </div>
-            <div className="flex h-auto lg:h-[1475px] items-start flex-wrap justify-center gap-4">
+            <div className="flex h-auto mb-[450px] lg:h-[1475px] items-start flex-wrap justify-center gap-4">
               <NewsWrapper newsList={news} />
             </div>
               <NewsPagination

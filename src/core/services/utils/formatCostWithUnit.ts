@@ -6,7 +6,7 @@ export const formatCostWithUnit = (cost: string): string => {
     } else if (numericCost >= 1000000) {
       return `${(numericCost / 1000000).toFixed(0)} میلیون`;
     } else {
-      return `${(numericCost / 1000).toLocaleString("fa-IR")} هزار`;
+      return `${(numericCost / 1000)} هزار`;
     }
   };
   
