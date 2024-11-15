@@ -77,7 +77,7 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
                         href="https://instagram.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="border w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
+                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
                       >
                         <Image src={InstagramPic} alt="Instagram" />
                       </a>
