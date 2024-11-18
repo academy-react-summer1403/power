@@ -341,3 +341,12 @@ export const AddCourseRate = async (id: String, RateNumber: number) => {
     return [];
   }
 };
+
+export const StudentAddPeyment = async (data : string) => {
+    try {
+      const res = await http.post("CoursePayment/StudentAddPeyment" , data)
+      return res;
+    } catch (error) {
+      console.log(error , "Error")
+    }
+}

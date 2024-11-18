@@ -11,11 +11,13 @@ import Pagination from "@/components/Course/Pagination";
 import { PayCourseWrapper } from "@/components/Course/Payment/payCourseWrapper";
 import { getMyCourse } from "@/core/services/api/userPanel";
 import { formatCostWithUnit } from "@/core/services/utils/formatCostWithUnit";
-import CountUp from 'react-countup'
+import CountUp from "react-countup";
+import { useNavigate } from "react-router-dom";
 
 type Filter = {
   search: string;
   PageNumber: number;
+  paymentStatus: string; 
 };
 
 export const Payment = () => {
@@ -25,10 +27,12 @@ export const Payment = () => {
   const [noFilterTotalCount, setNoFilterTotalCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [sortOption, setSortOption] = useState("");
+  const navigate = useNavigate();
 
   const [filter, setFilter] = useState<Filter>({
     search: "",
     PageNumber: 1,
+    paymentStatus: "پرداخت نشده", 
   });
 
   const title = "سبد خرید";
@@ -42,12 +46,36 @@ export const Payment = () => {
     setCourses(listOfMyCourses || []);
     setTotalCount(totalCount || 0);
 
+    const unpaidCourses = listOfMyCourses?.filter(
+      (course: any) => course.paymentStatus === "پرداخت نشده"
+    );
+
     let priceSum = 0;
-    listOfMyCourses?.forEach((course: any) => {
+    unpaidCourses?.forEach((course: any) => {
       priceSum += Number(course.cost) || 0;
     });
     setTotalPrice(priceSum);
   };
+
+  const handlePayment = () => {
+    const unpaidCourses = courses.filter(
+      (course: any) => course.paymentStatus === "پرداخت نشده"
+    );
+  
+    const courseIds = unpaidCourses.map((course: any) => course.courseId).join(",");
+  
+    console.log(courseIds);
+  
+    const queryString = new URLSearchParams({
+      totalPrice: totalPrice.toString(),
+      courses: JSON.stringify(unpaidCourses),
+      courseId: courseIds, 
+      paymentId: Math.random().toString().slice(2, 18),
+    }).toString();
+  
+    navigate(`/invoice?${queryString}`);
+  };
+  
 
   const fetchNoFilterCourses = async () => {
     const res = await getMyCourse();
@@ -74,9 +102,17 @@ export const Payment = () => {
     setSortOption(e.target.value);
   };
 
+  const handleStatusFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setFilter({ ...filter, paymentStatus: e.target.value });
+  };
+
   const sortedCourses = [...courses].sort((a, b) => {
     if (sortOption === "newest") {
-      return new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime();
+      return (
+        new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime()
+      );
     }
     if (sortOption === "lowest") {
       return (a.cost || 0) - (b.cost || 0);
@@ -86,6 +122,10 @@ export const Payment = () => {
     }
     return 0;
   });
+
+  const filteredCourses = sortedCourses.filter(
+    (course) => course.paymentStatus === filter.paymentStatus
+  );
 
   return (
     <>
@@ -118,16 +158,13 @@ export const Payment = () => {
                   <div> {noFilterTotalCount} </div>
                 </div>
               </div>
-              <div className="w-[90%] h-[100px] flex justify-center items-center flex-wrap border-b border-[#D9D9D9]">
-                <div className="text-[#161439] font-medium w-[90%]">
-                  پرداخت امن:
-                </div>
-                <div className="w-[250px] h-9"></div>
-              </div>
               <div className="w-full h-auto flex justify-center">
-                <button className=" flex w-[205px] h-12 rounded-[50px] text-white items-center content-center justify-around bg-[#5751E1] shadow-[#050071] shadow-[4px_6px_0_0]">
-                  اقدام به پرداخت{" "}
-                  <Image className="w-4 h-4" src={ArowPic} alt="" />{" "}
+                <button
+                  onClick={handlePayment}
+                  className=" flex w-[205px] h-12 rounded-[50px] text-white items-center content-center justify-around bg-[#5751E1] shadow-[#050071] shadow-[4px_6px_0_0]"
+                >
+                  اقدام به پرداخت
+                  <Image className="w-4 h-4" src={ArowPic} alt="" />
                 </button>
               </div>
             </div>
@@ -137,18 +174,29 @@ export const Payment = () => {
               <div className="hidden lg:flex items-center gap-2 justify-center">
                 <CountUp end={totalCount} duration={15} /> دوره در دسترس است
               </div>
-              <select
-          className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700 text-center mt-2 md:mt-0"
-                value={sortOption}
-                onChange={handleSortChange}
-              >
-                <option value="newest">جدیدترین</option>
-                <option value="lowest">ارزان ترین</option>
-                <option value="highest">گران ترین</option>
-              </select>
+              <div className=" flex gap-4">
+                <select
+                  className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700 text-center mt-2 md:mt-0"
+                  value={sortOption}
+                  onChange={handleSortChange}
+                >
+                  <option value="newest">جدیدترین</option>
+                  <option value="lowest">ارزان ترین</option>
+                  <option value="highest">گران ترین</option>
+                </select>
+                <select
+                  name="paymentStatus"
+                  value={filter.paymentStatus}
+                  onChange={handleStatusFilterChange}
+                  className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700 text-center mt-2 md:mt-0"
+                >
+                  <option value="پرداخت نشده">پرداخت نشده</option>
+                  <option value="پرداخت شده">پرداخت شده</option>
+                </select>
+              </div>
             </div>
             <div className="w-full h-auto flex flex-wrap mt-7 mb-16 justify-center gap-6">
-              <PayCourseWrapper stateCourse={sortedCourses} />
+              <PayCourseWrapper stateCourse={filteredCourses} />
             </div>
             <Pagination
               totalCount={totalCount}

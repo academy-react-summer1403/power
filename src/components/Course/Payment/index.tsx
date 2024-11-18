@@ -51,10 +51,10 @@ export const PayCourse: React.FC<TopCourseProps> = ({
             {" "}
             {courseTitle}{" "}
           </h1>
-          <p className="h-11 w-[330px] overflow-auto text-[#6D6C80] text-[13px]">
+          <div className="h-11 w-[330px] overflow-auto text-[#6D6C80] text-[13px]">
             {" "}
             {formatDescription(describe)}{" "}
-          </p>
+          </div>
         </div>
         <div className="w-[200px] flex flex-wrap h-full items-center ">
           <div className="font-medium text-[#5F5F66] flex gap-2 items-center">

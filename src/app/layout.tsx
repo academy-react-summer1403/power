@@ -16,7 +16,13 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         {children}
-        <Toaster position="top-center" />
+        <Toaster
+          toastOptions={{ duration: 3000 }}
+          reverseOrder={true}
+          containerClassName="toaster"
+          containerStyle={{ direction: "rtl"}}
+          position="top-center"
+        />
       </body>
     </html>
   );

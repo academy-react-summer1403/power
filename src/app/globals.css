@@ -17,7 +17,7 @@ input::selection {
   background-color: skyblue;
 }
 
-body {
+body , html  {
   font-family: IRANSans !important;
   font-weight: 500;
   direction: rtl;
