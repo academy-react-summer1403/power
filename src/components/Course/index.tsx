@@ -70,9 +70,10 @@ export const Course: React.FC<TopCourseProps> = ({
   const [dislikedByUser, setDislikedByUser] = useState(userIsDissLiked);
 
   const placeholderImage = DefualtPic;
-  const imageSrc = (tumbImageAddress && (tumbImageAddress.startsWith('/') || tumbImageAddress.startsWith('http')))
-    ? tumbImageAddress
-    : placeholderImage;
+  const imageSrc = (tumbImageAddress && 
+    (tumbImageAddress.startsWith('/') || tumbImageAddress.startsWith('http'))) ? 
+    tumbImageAddress : 
+    (placeholderImage ? placeholderImage.src : '');
   const totalVotes = localLikeCount + localDislikeCount;
   const likeRatio = totalVotes > 0 ? localLikeCount / totalVotes : 0;
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;

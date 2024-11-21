@@ -5,7 +5,7 @@ import InstagramPic from "@/assets/landing/body/Symbol.png";
 import WhatsAppPic from "@/assets/landing/body/Symbol (1).png";
 import TwitterPic from "@/assets/landing/body/Symbol (2).png";
 import FacebookPic from "@/assets/landing/body/Symbol (3).png";
-import CountUp from 'react-countup'
+import CountUp from "react-countup";
 
 interface Teacher {
   fullName: string;
@@ -53,6 +53,12 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
         <div className="w-[850px] h-full flex flex-wrap gap-14">
           {teacherList ? (
             teacherList.slice(0, 4).map((item, index) => {
+              const ImgSrc =
+                item.pictureAddress &&
+                (item.pictureAddress.startsWith("/") ||
+                  item.pictureAddress.startsWith("http"))
+                  ? item.pictureAddress
+                  : TeacherDefualtPic;
               return (
                 <div
                   className="w-[390px] h-[185px] items-center flex justify-center gap-6"
@@ -62,7 +68,7 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
                   <div className="w-[180px] h-[120px] flex justify-center items-center overflow-hidden rounded-full bg-gradient-to-r from-[#F7F6F9] to-[#E9F5F5]">
                     <Image
                       className="rounded-full"
-                      src={item.pictureAddress || TeacherDefualtPic}
+                      src={ImgSrc}
                       alt={item.fullName}
                       width={180}
                       height={180}

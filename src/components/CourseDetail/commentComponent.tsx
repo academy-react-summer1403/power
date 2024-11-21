@@ -35,15 +35,17 @@ export const CommentComponent: React.FC<CourseDetailsProps> = ({
         نظر {detail.commentCount}{" "}
       </h1>
       <div className="flex mt-5 mb-5 w-[90%]">
-        <select
-          value={sortOption}
-          onChange={handleChange}
-          className="rounded-xl border p-2 border-gray-500 w-52 h-auto"
-        >
-          <option value="newest">جدیدترین</option>
-          <option value="mostLiked">محبوب‌ترین</option>
-          <option value="leastLiked">کمترین لایک</option>
-        </select>
+        {Comment.length > 1 && (
+          <select
+            value={sortOption}
+            onChange={handleChange}
+            className="rounded-xl border p-2 border-gray-500 w-52 h-auto"
+          >
+            <option value="newest">جدیدترین</option>
+            <option value="mostLiked">محبوب‌ترین</option>
+            <option value="leastLiked">کمترین لایک</option>
+          </select>
+        )}
       </div>
       <div className="w-full h-auto overflow-y-scroll">
         <CourseCommentWrapper Comment={displayedComments} />

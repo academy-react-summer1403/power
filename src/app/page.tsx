@@ -1,5 +1,3 @@
-// src/pages/Home.js
-
 "use client";
 
 import { Login } from "@/pages/auth/login";
@@ -28,6 +26,19 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const currentTime = new Date().getTime();
+
+    const lastClearTime = localStorage.getItem("lastClearTime");
+    if (lastClearTime) {
+      const hoursSinceLastClear = (currentTime - parseInt(lastClearTime)) / (1000 * 60 * 60);
+      if (hoursSinceLastClear >= 2) {
+        localStorage.clear();
+      }
+    } else {
+      localStorage.setItem("lastClearTime", currentTime.toString());
+    }
+    localStorage.setItem("lastClearTime", currentTime.toString());
+
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -38,7 +49,7 @@ export default function Home() {
   if (loading) {
     return <Loading />;
   }
-  
+
 
   return (
     <Router>

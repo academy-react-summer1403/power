@@ -42,37 +42,39 @@ export const News: React.FC<LandingNewsProps> = ({
   const [dislikesCount, setDislikesCount] = useState(DisLikeCount);
 
   const handleLike = async () => {
-    if(getItem("token")){
+    if (getItem("token")) {
       if (userLiked) {
         const res = await AddDisLikeNews(Id);
-        if(res.success == true){
+        if (res.success == true) {
           toast.success(res.message);
-        }
-        else{
-          toast.error(res.ErrorMessage)
+        } else {
+          toast.error(res.ErrorMessage);
         }
         setUserLiked(false);
         setLikesCount((prevCount) => prevCount - 1);
       } else {
         const res = await AddLikeNews(Id);
-        if(res.success == true){
+        if (res.success == true) {
           toast.success(res.message);
-        }
-        else{
-          toast.error(res.ErrorMessage)
+        } else {
+          toast.error(res.ErrorMessage);
         }
         setUserLiked(true);
         setLikesCount((prevCount) => prevCount + 1);
       }
-    }
-    else{
-      toast.error("لطفا ابتدا وارد شوید")
+    } else {
+      toast.error("لطفا ابتدا وارد شوید");
     }
   };
 
   const handleDoubleClick = () => {
     navigate(`/NewsDetail/${Id}`);
   };
+
+  const ImgSrc =
+    Img && (Img.startsWith("/") || Img.startsWith("http"))
+      ? Img
+      : NewsDefaultPic;
 
   return (
     <div
@@ -81,7 +83,7 @@ export const News: React.FC<LandingNewsProps> = ({
       data-aos="fade-up"
     >
       <Image
-        src={Img || NewsDefaultPic}
+        src={ImgSrc}
         alt={title}
         width={295}
         height={225}
@@ -121,7 +123,7 @@ export const News: React.FC<LandingNewsProps> = ({
               {likesCount}
             </button>
             <button
-              onClick={handleLike} 
+              onClick={handleLike}
               className={`w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center ${
                 !userLiked ? "bg-red-200" : ""
               }`}

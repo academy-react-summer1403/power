@@ -16,7 +16,7 @@ interface SidebarNavProps {
 const SidebarNav: React.FC<SidebarNavProps> = ({ getLinkClassName }) => {
   return (
     <>
-      <nav className="hidden lg:flex mt-4 w-1/2 lg:w-full flex-col gap-4">
+      <nav className="hidden h-full lg:flex mt-4 w-1/2 lg:w-full flex-col gap-4">
         <Link
           title="داشبورد"
           to="dashboard"

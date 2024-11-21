@@ -1,18 +1,17 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import {MapContainer , TileLayer, Marker, useMapEvents } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-const customIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
-  shadowSize: [41, 41],
-});
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
+
+const center = {
+  lat: 0,
+  lng: 0,
+};
 
 interface UserLocationMapProps {
   latitude: number;
@@ -25,48 +24,42 @@ const UserLocationMap: React.FC<UserLocationMapProps> = ({
   longitude,
   onLocationChange,
 }) => {
-  const [position, setPosition] = useState<[number, number]>([latitude, longitude]);
-
-  const MapEvents = () => {
-    useMapEvents({
-      dragend: (event) => {
-        const { lat, lng } = event.target.getLatLng();
-        setPosition([lat, lng]);
-        onLocationChange(lat, lng);
-      },
-    });
-    return null;
-  };
+  const [position, setPosition] = useState<{ lat: number; lng: number }>({
+    lat: latitude,
+    lng: longitude,
+  });
 
   useEffect(() => {
-    setPosition([latitude, longitude]);
+    setPosition({ lat: latitude, lng: longitude });
   }, [latitude, longitude]);
 
+  const onMarkerDragEnd = (event: google.maps.MouseEvent) => {
+    const lat = event.latLng!.lat();
+    const lng = event.latLng!.lng();
+    setPosition({ lat, lng });
+    onLocationChange(lat, lng);
+  };
+
   return (
-    <MapContainer
-      center={position}
-      zoom={13}
-      scrollWheelZoom={false}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-      />
-      <Marker
-        position={position}
-        icon={customIcon}
-        draggable={true}
-        eventHandlers={{
-          dragend: (e) => {
-            const latLng = e.target.getLatLng();
-            setPosition([latLng.lat, latLng.lng]);
-            onLocationChange(latLng.lat, latLng.lng);
-          },
+    <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={position}
+        zoom={13}
+        onDragEnd={(event) => {
+          const lat = event.getCenter().lat();
+          const lng = event.getCenter().lng();
+          setPosition({ lat, lng });
+          onLocationChange(lat, lng);
         }}
-      />
-      <MapEvents />
-    </MapContainer>
+      >
+        <Marker
+          position={position}
+          draggable={true}
+          onDragEnd={onMarkerDragEnd}
+        />
+      </GoogleMap>
+    </LoadScript>
   );
 };
 

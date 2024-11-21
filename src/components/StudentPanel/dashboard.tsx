@@ -67,7 +67,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-wrap justify-around p-4 bg-white dark:bg-[#1a1a1a] transition-colors duration-300">
+    <div className="w-full h-full flex items-center flex-wrap justify-around p-4 transition-colors duration-300">
       <div className="w-[425px] mt-8 h-[105px] flex justify-center gap-11">
         <div className="w-[190px] relative h-[75px] bg-[#F9F9F9] justify-center shadow-[9px_10px_2px_0] flex flex-wrap rounded shadow-black/50">
           <div className="absolute -top-8 left-5 w-14 h-14 rounded-full bg-[#5751E1] flex justify-center items-center overflow-hidden"> <Image className=" w-10 h-10" src={CoursePic} alt="" /> </div>
@@ -97,7 +97,7 @@ const Dashboard = () => {
         </p>
         <Doughnut data={data} />
       </div>
-      <div className="w-full md:w-[800px] mt-8 relative z-0 flex flex-wrap justify-center items-center h-[185px] bg-[#C8C1ED66] dark:bg-[#494BFF66] rounded-xl">
+      <div className="w-full md:w-[800px] mt-10 relative z-0 flex flex-wrap justify-center items-center h-[185px] bg-[#C8C1ED66] dark:bg-[#494BFF66] rounded-xl">
         <div className="absolute -top-8 left-[5%] rounded-xl w-12 h-12 bg-[#5751E1] shadow-md flex justify-center items-center overflow-hidden"><Image src={BellPic} className="w-[22px] h-[24px]" alt="" /></div>
         <div className="w-[90%] text-[#161439] dark:text-white text-xl">
           جدید ترین اخبار و مقالات
@@ -118,14 +118,6 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      <div className="w-full md:w-[750px] mt-8 flex justify-between flex-wrap">
-                <div className="w-1/2">
-                <h1 className="w-full text-[18px] text-[#777777] dark:text-[#B0B0B0]"> دوره های در حال برگزاری: </h1>
-                </div>
-                <div className="w-1/2">  
-                <h1 className="w-full text-[18px] text-[#777777] dark:text-[#B0B0B0]"> دوره های پیشنهادی: </h1>
-                </div>
-        </div>
     </div>
   );
 };

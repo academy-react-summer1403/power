@@ -53,13 +53,13 @@ export const StudentPanel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] dark:bg-[#1a1a1a] flex justify-center items-center">
-      <div className="w-full max-w-[1250px] bg-white dark:bg-[#222222] rounded-2xl shadow-lg overflow-hidden flex h-[95%]">
-        <aside className=" hidden md:w-[162.5px] min-w-[160px] lg:min-w-[310px] lg:w-[315px] h-full bg-[#5751E1] dark:bg-[#3e3e3e] lg:flex flex-col items-center p-4">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="w-full  bg-white dark:bg-[#222222] rounded-2xl shadow-lg overflow-hidden flex h-full">
+        <aside className=" hidden md:w-[20%] min-w-[160px] lg:min-w-[310px] lg:w-[315px] h-full bg-[#5751E1] dark:bg-[#3e3e3e] lg:flex flex-col items-center p-4">
           <Profile profileSrc={getProfilePictureSrc()} name={name} />
           <SidebarNav getLinkClassName={getLinkClassName} />
           <button
-            className="text-gray-300 flex gap-2 justify-center hover:text-white w-full mt-8 p-5 text-center"
+            className="text-gray-300 flex gap-2 justify-center relative z-[200px] hover:text-white w-full mt-8 p-5 text-center"
             onClick={() => setIsModalOpen(true)} 
           >
             <Image src={SignOutPic} alt="Sign Out" />
@@ -67,7 +67,7 @@ export const StudentPanel = () => {
           </button>
         </aside>
         <ResponsiveNav/>
-        <main className="flex-grow w-full p-4">
+        <main className="flex-grow w-full p-4 h-full">
           <div dir="ltr" className="h-[50px] w-full flex gap-5 items-center">
             <Link to="/">
               <Image className="w-7 h-7" src={HomePic} alt="Home" />

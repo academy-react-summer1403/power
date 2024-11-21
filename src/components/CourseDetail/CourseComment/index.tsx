@@ -14,7 +14,9 @@ import {
 import toast from "react-hot-toast";
 import { getItem } from "@/core/services/common/storage.services";
 import { useParams } from "next/navigation";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaSpinner } from "react-icons/fa";
+import axios from "axios";
+import { ReportComment } from "@/core/services/api/more";
 
 interface CourseCommentProps {
   Img: string;
@@ -39,17 +41,56 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
 }) => {
   const [ReplayComment, setReplayComment] = useState<any[]>([]);
   const [showReplies, setShowReplies] = useState(false);
+  const [showReportForm, setShowReportForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [reportData, setReportData] = useState({
+    CommentTitle: Explanation,
+    ReasonForReport: "",
+    CommentId: id,
+    Accept: false,
+    Date,
+  });
+
   const Params = useParams<{ id: string }>();
 
   const toggleReplies = () => {
     setShowReplies((prevShowReplies) => !prevShowReplies);
   };
 
+  const toggleReportForm = () => {
+    setShowReportForm((prevShow) => !prevShow);
+  };
+
+  const handleReportSubmit = async () => {
+    if (!reportData.ReasonForReport) {
+      toast.error("لطفاً دلیل گزارش را وارد کنید.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const res = await ReportComment(reportData);
+      if (res) {
+        toast.success("گزارش با موفقیت ارسال شد.");
+        setShowReportForm(false);
+      } else {
+        toast.error("خطایی در ارسال گزارش رخ داد.");
+      }
+    } catch (error) {
+      toast.error("خطا در ارسال گزارش");
+    } finally {
+      setIsLoading(false); // توقف لودینگ
+    }
+  };
+
   const AddCommentLike = async () => {
     if (getItem("token")) {
       try {
         const res = await likedCourseCmnt(id);
-        res ? toast.success(res.message) : toast.error(res.ErrorMessage + " خطا ");
+        res
+          ? toast.success(res.message)
+          : toast.error(res.ErrorMessage + " خطا ");
       } catch (error) {
         toast.error("خطا: " + error);
       }
@@ -109,7 +150,13 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
           <div className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-[#5751E1] flex justify-center items-center cursor-pointer">
             پاسخ
           </div>
-          {ReplayComment && (
+          <div
+            className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-red-500 flex justify-center items-center cursor-pointer"
+            onClick={toggleReportForm}
+          >
+            گزارش
+          </div>
+          {ReplayComment.length > 0 && (
             <div className="flex gap-3">
               <div
                 onClick={toggleReplies}
@@ -153,49 +200,32 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
             </span>
           </div>
         </div>
-        {showReplies && (
-          <div className="mt-4 ml-10 flex flex-col gap-4">
-            {ReplayComment?.length > 0 ? (
-              ReplayComment.map((reply, index) => (
-                <div
-                  key={index}
-                  className="flex border-b border-gray-200 dark:border-gray-600 pb-2"
-                >
-                  <div className="w-[10%] flex items-center">
-                    <Image
-                      src={
-                        reply.pictureAddress
-                          ? reply.pictureAddress
-                          : placeholderImage
-                      }
-                      alt=""
-                      width={80}
-                      height={80}
-                      className="w-20 h-20 rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col w-[90%] px-3">
-                    <div className="flex justify-between">
-                      <h4 className="font-medium text-gray-700 dark:text-gray-200">
-                        {reply?.author}
-                      </h4>
-                      <span className="text-gray-400 dark:text-gray-500">
-                        {DateConvert(reply?.insertDate)}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {reply?.describe}
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-600 dark:text-gray-300">کامنتی وجود ندارد</p>
-            )}
+        {showReportForm && (
+          <div className="mt-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
+            <textarea
+              className="w-full h-20 p-2 border border-gray-300 dark:border-gray-700 rounded-md"
+              placeholder="دلیل گزارش را وارد کنید"
+              value={reportData.ReasonForReport}
+              onChange={(e) =>
+                setReportData({
+                  ...reportData,
+                  ReasonForReport: e.target.value,
+                })
+              }
+            />
+            <button
+              className={`mt-2 py-2 px-4 rounded-md flex items-center justify-center ${
+                isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500"
+              } text-white`}
+              onClick={handleReportSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? <FaSpinner className="animate-spin mr-2" /> : null}
+              {isLoading ? "در حال ارسال..." : "ارسال گزارش"}
+            </button>
           </div>
         )}
       </div>
     </div>
   );
 };
-
