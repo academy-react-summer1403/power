@@ -6,6 +6,8 @@ import WhatsAppPic from "@/assets/landing/body/Symbol (1).png";
 import TwitterPic from "@/assets/landing/body/Symbol (2).png";
 import FacebookPic from "@/assets/landing/body/Symbol (3).png";
 import CountUp from "react-countup";
+import { TeacherCard } from "@/components/teacher";
+import { Link } from "react-router-dom";
 
 interface Teacher {
   fullName: string;
@@ -45,77 +47,17 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
             هنگامی که یک چاپگر ناشناس یک گالری از نوع و کتاب نمونه درهم درست شده
             باقی نمانده است فقط پنج قرن
           </p>
-          <button className="bg-[#5751E1] dark:bg-[#6D6C80] flex justify-around text-white w-[230px] h-12 items-center rounded-[50px] shadow-[4px_6px_0_0] shadow-[#050071]">
+          <Link to="/TeacherList"  className="bg-[#5751E1] dark:bg-[#6D6C80] flex justify-around text-white w-[230px] h-12 items-center rounded-[50px] shadow-[4px_6px_0_0] shadow-[#050071]">
             همه مربیان را ببینید
             <Image src={ArowPic} alt="" width={24} height={24} />
-          </button>
+          </Link>
         </div>
         <div className="w-[850px] h-full flex flex-wrap gap-14">
           {teacherList ? (
-            teacherList.slice(0, 4).map((item, index) => {
-              const ImgSrc =
-                item.pictureAddress &&
-                (item.pictureAddress.startsWith("/") ||
-                  item.pictureAddress.startsWith("http"))
-                  ? item.pictureAddress
-                  : TeacherDefualtPic;
-              return (
-                <div
-                  className="w-[390px] h-[185px] items-center flex justify-center gap-6"
-                  data-aos="fade-up-right"
-                  key={index}
-                >
-                  <div className="w-[180px] h-[120px] flex justify-center items-center overflow-hidden rounded-full bg-gradient-to-r from-[#F7F6F9] to-[#E9F5F5]">
-                    <Image
-                      className="rounded-full"
-                      src={ImgSrc}
-                      alt={item.fullName}
-                      width={180}
-                      height={180}
-                    />
-                  </div>
-                  <div className="h-full w-full flex flex-wrap items-end">
-                    <div className="text-[#161439] dark:text-white font-semibold w-[160px] text-[20px]">
-                      {item.fullName}
-                    </div>
-                    <div className="w-full flex gap-2">
-                      <a
-                        href="https://instagram.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
-                      >
-                        <Image src={InstagramPic} alt="Instagram" />
-                      </a>
-                      <a
-                        href="https://wa.me/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
-                      >
-                        <Image src={WhatsAppPic} alt="WhatsApp" />
-                      </a>
-                      <a
-                        href="https://twitter.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
-                      >
-                        <Image src={TwitterPic} alt="Twitter" />
-                      </a>
-                      <a
-                        href="https://facebook.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-2 w-9 h-9 border-[#9292B4] dark:border-gray-600 rounded-full flex justify-center items-center social-icon"
-                      >
-                        <Image src={FacebookPic} alt="Facebook" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
+            teacherList.slice(0, 4).map((item, index) =>  (
+                  <TeacherCard teacher={item} key={index} />
+              )
+            )
           ) : (
             <div>منتظر بمانبد</div>
           )}

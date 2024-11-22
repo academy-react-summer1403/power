@@ -88,9 +88,9 @@ const Comments: React.FC = () => {
       </div>
       <div className="mt-7 w-full h-[32px] flex justify-between flex-wrap text-[#161439] font-semibold text-[18px] ">
         <div className="w-[200px] text-center">عنوان دیدگاه</div>
-        <div className="w-[200px] text-center">دوره / خبر</div>
-        <div className="w-[130px] text-center">تاریخ</div>
-        <div className="w-[200px] text-center">وضعیت</div>
+        <div className="w-[200px] text-center hidden md:flex">دوره / خبر</div>
+        <div className="w-[130px] text-center hidden lg:flex">تاریخ</div>
+        <div className="w-[200px] text-center hidden lg:flex">وضعیت</div>
         <div className="w-[150px] text-center">عملیات</div>
       </div>
       <div className="w-full mt-5 after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#FFC224] after:to-transparent"></div>
@@ -104,20 +104,20 @@ const Comments: React.FC = () => {
               }`}
             >
               <div className="text-center w-[200px]">{comment.title}</div>
-              <div className="w-[200px] text-center">
+              <div className="w-[200px] text-center hidden md:flex">
                 {comment.courseTitle || "دیدگاه برای خبر"}
               </div>
-              <div className="w-[130px] text-center">
+              <div className="w-[130px] text-center hidden lg:flex">
                 {DateConvert(comment.insertDate)}
               </div>
-              <div className="w-[200px] text-center">
+              <div className="w-[200px] text-center hidden lg:flex">
                 <span
                   className={comment.accept ? "text-green-500" : "text-red-500"}
                 >
                   {comment.accept ? "تأیید شده" : "منتظر بررسی"}
                 </span>
               </div>
-              <div className="w-[150px] text-center flex gap-2">
+              <div className="w-[150px] text-center flex gap-2 ">
                 <button
                   onClick={() => handleViewDetail(comment)}
                   className="text-blue-500 hover:text-blue-700"

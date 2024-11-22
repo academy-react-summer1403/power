@@ -21,6 +21,8 @@ import UserInfo from "@/components/StudentPanel/userInfo";
 import Dashboard from "@/components/StudentPanel/dashboard";
 import { Payment } from "@/pages/payment";
 import { Invoice } from "@/pages/invoice";
+import { TeacherList } from "@/pages/teacherList";
+import { StartCourseNotifier } from "@/components/CourseNotif";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -50,9 +52,12 @@ export default function Home() {
     return <Loading />;
   }
 
+  
+
 
   return (
     <Router>
+      <StartCourseNotifier/>
       <ChatBot />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -60,6 +65,7 @@ export default function Home() {
         <Route path="/SignUp" element={<SignUpContainer />} />
         <Route path="/CourseList" element={<CourseList />} />
         <Route path="/NewsList" element={<NewsListPage />} />
+        <Route path="/TeacherList" element={<TeacherList/>} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="/Invoice" element={<Invoice/>}  />
         <Route path="/CourseDetail/:id" element={<CourseDetail />} />

@@ -39,7 +39,7 @@ export const GetNewsForLanding = async () => {
   };
 
 
-export const GetTeacherForLanding = async () => { 
+export const GetTeacher = async () => { 
     try {
         const res = await axios.get(`${BaseUrl}/Home/GetTeachers`); 
         return res.data;

@@ -54,17 +54,17 @@ const Dashboard = () => {
     fetchCoursesCount();
     fetchProfileCompletion();
   }, []);
-
-  const data = {
-    labels: ["تکمیل شده", "عدم تکمیل"],
-    datasets: [
-      {
-        data: [profileCompletion, 100 - profileCompletion],
-        backgroundColor: ["#FFC224", "#E0E0E0"],
-        borderWidth: 0,
-      },
-    ],
-  };
+  
+    const data = {
+      labels: ["تکمیل شده", "عدم تکمیل"],
+      datasets: [
+        {
+          data: [profileCompletion, 100 - profileCompletion],
+          backgroundColor: ["#FFC224", "#E0E0E0"],
+          borderWidth: 0,
+        },
+      ],
+    };
 
   return (
     <div className="w-full h-full flex items-center flex-wrap justify-around p-4 transition-colors duration-300">

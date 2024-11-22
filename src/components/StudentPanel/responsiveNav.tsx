@@ -14,7 +14,7 @@ export const ResponsiveNav = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-800 lg:hidden flex justify-around items-center p-2 text-white">
+    <div className="fixed z-50 bottom-0 left-0 w-full bg-gray-800 lg:hidden flex justify-around items-center p-2 text-white">
       <Link to="dashboard" className="flex flex-col items-center">
         <FaTachometerAlt />
         <span className="text-xs">داشبورد</span>

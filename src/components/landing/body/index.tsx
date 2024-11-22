@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 import {
   GetLandingApi,
   GetNewsForLanding,
-  GetTeacherForLanding,
+  GetTeacher,
   GetTopCoursesApi,
 } from "@/core/services/api/landing";
 import { HeroSection } from "./heroSection";
@@ -72,7 +72,7 @@ export const Body = () => {
     };
 
     const fetchLandingTeachers = async () => {
-      const result = await GetTeacherForLanding();
+      const result = await GetTeacher();
       setTeacherList(result);
     };
 

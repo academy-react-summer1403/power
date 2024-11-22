@@ -112,11 +112,11 @@ const Favorites: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-7 w-full flex flex-wrap text-[#161439] font-semibold text-[18px] ">
+      <div className="mt-7 w-full h-[32px] flex justify-between flex-wrap text-[#161439] font-semibold text-[18px] ">
         <div className="w-[200px] text-center">عنوان</div>
-        <div className="w-[200px] text-center">نوع</div>
-        <div className="w-[130px] text-center">تاریخ</div>
-        <div className="w-[150px] text-center">نویسنده</div>
+        <div className="w-[200px] text-center hidden lg:flex" >نوع</div>
+        <div className="w-[130px] text-center hidden lg:flex">تاریخ</div>
+        <div className="w-[150px] text-center hidden lg:flex">نویسنده</div>
         <div className="w-[150px] text-center">عملیات</div>
       </div>
 
@@ -127,24 +127,24 @@ const Favorites: React.FC = () => {
           filteredFavorites.map((favorite , index) => (
             <div
               key={index}
-              className={`flex justify-between items-center rounded-md h-10 dark:border-[#444]${
+              className={`flex justify-between w-full items-center rounded-md h-10  dark:border-[#444]${
                   index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
                 }`}
             >
               <div className="text-center w-[200px]">
                 {favorite.displayTitle}
               </div>
-              <div className="w-[200px] text-center">
+              <div className="w-[200px] text-center hidden lg:flex">
                 {favorite.type === "course" ? "دوره" : "خبر"}
               </div>
-              <div className="w-[130px] text-center">
+              <div className="w-[130px] text-center hidden lg:flex">
                 {DateConvert(
                   favorite.type === "course"
                     ? favorite.reservedDate
                     : favorite.lastUpdate
                 )}
               </div>
-              <div className="w-[150px] text-center">{favorite.teacheName}</div>
+              <div className="w-[150px] text-center hidden lg:flex">{favorite.teacheName}</div>
               <div className="w-[150px] text-center flex gap-5 space-x-2">
                 <button
                   onClick={() =>

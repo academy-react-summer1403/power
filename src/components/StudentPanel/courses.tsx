@@ -121,10 +121,10 @@ const Courses: React.FC = () => {
       </div>
 
       <div className="overflow-x-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center font-semibold text-lg">
+        <div className="grid grid-cols-3 md:grid-cols-5 gap-4 text-center font-semibold text-lg">
           <div>نام دوره</div>
-          <div>تاریخ شروع</div>
-          <div>قیمت (تومان)</div>
+          <div className="hidden lg:flex">تاریخ شروع</div>
+          <div className="hidden lg:flex">قیمت (تومان)</div>
           <div>وضعیت</div>
           <div>عملیات</div>
         </div>
@@ -136,13 +136,13 @@ const Courses: React.FC = () => {
             sortedCourses.map((course, index) => (
               <div
                 key={index}
-                className={`grid grid-cols-1 md:grid-cols-5 h-10  items-center w-full rounded-md  shadow-[0_1px_2px_0] shadow-black/15 ${
+                className={`grid  grid-cols-3 md:grid-cols-5 h-10  items-center w-full rounded-md  shadow-[0_1px_2px_0] shadow-black/15 ${
                   index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
                 }`}
               >
                 <div>{course.courseName}</div>
-                <div>{DateConvert(course.reserverDate)}</div>
-                <div>{coursePrices[course.courseId] || "قیمت مشخص نشده"}</div>
+                <div className="hidden lg:flex">{DateConvert(course.reserverDate)}</div>
+                <div className="hidden lg:flex">{coursePrices[course.courseId] || "قیمت مشخص نشده"}</div>
                 <div>
                   <span
                     className={
