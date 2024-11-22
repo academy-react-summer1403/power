@@ -24,6 +24,7 @@
     "html-to-image": "^1.11.11",
     "leaflet": "^1.9.4",
     "next": "^15.0.0-canary.203",
+    "notificationapi-node-server-sdk": "^2.2.1",
     "qrcode": "^1.5.4",
     "qrcode.react": "^4.1.0",
     "react": "^18.3.1",
