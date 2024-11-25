@@ -47,5 +47,5 @@ const checkAndNotifyCourses = async () => {
 
 export const StartCourseNotifier = () => {
   checkAndNotifyCourses(); 
-  setInterval(checkAndNotifyCourses, 10 * 10 * 1000); 
+  setInterval(checkAndNotifyCourses, 60 * 60 * 1000); 
 };

@@ -122,10 +122,7 @@ export const getCourseLevel = async () => {
   }
 };
 export const getCourseById = async (id: string) => {
-  //console.log(id);
   try {
-    //console.log("Fetching started...");
-
     const result = await axios.get(
       `${BaseUrl}/Home/GetCourseDetails?CourseId=${id}`
     );
@@ -350,3 +347,15 @@ export const StudentAddPeyment = async (data : string) => {
       console.log(error , "Error")
     }
 }
+
+
+export const GetTeacherCourses = async (id : string) => {
+  try {
+    const res = await http.get(`/Home/GetCoursesWithPagination?TeacherId=${id}`)
+    return res
+  } catch (error) {
+    console.log(error ,"Error")
+    return null
+  }
+}
+

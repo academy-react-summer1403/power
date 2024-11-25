@@ -126,9 +126,6 @@ export const Header = () => {
           <Link to="/contact" className={getLinkClassName("/contact")}>
             درباره ما
           </Link>
-          <Link to="/Basket" className={getLinkClassName("/Basket")}>
-            فروشگاه
-          </Link>
           <Link to="/NewsList" className={getLinkClassName("/NewsList")}>
             وبلاگ
           </Link>
@@ -170,7 +167,7 @@ export const Header = () => {
           </div>
         </div>
         <Link
-          to="Payment"
+          to="/Payment"
           title="سبد خرید"
           className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative"
         >
@@ -232,9 +229,6 @@ export const Header = () => {
           <Link to="/contact" className={getLinkClassName("/contact")}>
             درباره ما
           </Link>
-          <Link to="/Basket" className={getLinkClassName("/Basket")}>
-            فروشگاه
-          </Link>
           <Link to="/NewsList" className={getLinkClassName("/NewsList")}>
             وبلاگ
           </Link>
@@ -273,7 +267,7 @@ export const Header = () => {
 
           <div className="flex justify-between">
             <Link
-              to="Payment"
+              to="/Payment"
               title="سبد خرید"
               className="w-10 h-10 rounded-[20px] flex justify-center items-center border border-[#7F7E97] relative"
             >
