@@ -10,6 +10,7 @@ import {
   disLikedCourseCmnt,
   getRepCommentById,
   likedCourseCmnt,
+  repcomment,
 } from "@/core/services/api/course";
 import toast from "react-hot-toast";
 import { getItem } from "@/core/services/common/storage.services";
@@ -43,6 +44,8 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
   const [showReplies, setShowReplies] = useState(false);
   const [showReportForm, setShowReportForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showReplyForm, setShowReplyForm] = useState(false);
+  const [replyText, setReplyText] = useState("");
   const [reportData, setReportData] = useState({
     CommentTitle: Explanation,
     ReasonForReport: "",
@@ -80,7 +83,7 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
     } catch (error) {
       toast.error("خطا در ارسال گزارش");
     } finally {
-      setIsLoading(false); // توقف لودینگ
+      setIsLoading(false);
     }
   };
 
@@ -112,6 +115,44 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
       setReplayComment(Array.isArray(res) ? res : []);
     } catch (error) {
       toast.error("خطا در دریافت پاسخ‌ها");
+    }
+  };
+
+  const handleReplySubmit = async () => {
+    if (!replyText.trim()) {
+      toast.error("لطفاً متن پاسخ را وارد کنید.");
+      return;
+    }
+
+    const replyData = {
+      Title: "ریپلای کامنت",
+      Describe: replyText,
+      CourseId: courseId,
+      CommentId: id,
+    };
+
+    const data = new FormData();
+
+    data.append("Title", replyData.Title);
+    data.append("Describe", replyData);
+    data.append("CourseId", replyData.CourseId);
+    data.append("CommentId", replyData.CommentId);
+
+    try {
+      setIsLoading(true);
+      const res = await repcomment(data);
+      if (res) {
+        toast.success("پاسخ با موفقیت ارسال شد.");
+        setShowReplyForm(false);
+        setReplyText("");
+        fetchReplay();
+      } else {
+        toast.error("خطا در ارسال پاسخ.");
+      }
+    } catch (error) {
+      toast.error("خطا در ارسال پاسخ: " + error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -147,8 +188,11 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
           {Explanation}
         </p>
         <div className="flex justify-between w-full text-sm text-gray-500 dark:text-gray-400">
-          <div className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-[#5751E1] flex justify-center items-center cursor-pointer">
-            پاسخ
+          <div
+            className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-[#5751E1] flex justify-center items-center cursor-pointer"
+            onClick={() => setShowReplyForm(!showReplyForm)}
+          >
+            {showReplyForm ? "لغو" : "پاسخ"}
           </div>
           <div
             className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-red-500 flex justify-center items-center cursor-pointer"
@@ -200,6 +244,34 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
             </span>
           </div>
         </div>
+        {showReplyForm && (
+          <div className="mt-4 flex flex-col gap-2 w-full">
+            <textarea
+              className="w-full h-20 p-2 border border-gray-300 dark:border-gray-700 rounded-md"
+              placeholder="پاسخ خود را وارد کنید"
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="py-2 px-4 bg-gray-300 dark:bg-gray-700 text-white rounded-md"
+                onClick={() => setShowReplyForm(false)}
+              >
+                لغو
+              </button>
+              <button
+                className={`py-2 px-4 ${
+                  isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500"
+                } text-white rounded-md flex items-center`}
+                onClick={handleReplySubmit}
+                disabled={isLoading}
+              >
+                {isLoading ? <FaSpinner className="animate-spin mr-2" /> : null}
+                ارسال
+              </button>
+            </div>
+          </div>
+        )}
         {showReportForm && (
           <div className="mt-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
             <textarea

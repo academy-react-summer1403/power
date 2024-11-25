@@ -236,12 +236,11 @@ export const addcomment = async (data: string) => {
     return [];
   }
 };
-export const repcomment = async (rc: string) => {
+export const repcomment = async (data: any) => {
   try {
-    console.log("Fetching started...");
-    const result = await axios.post(
-      `${BaseUrl}/Course/AddReplyCourseComment`,
-      rc
+    const result = await http.post(
+      `/Course/AddReplyCourseComment`,
+      data
     );
 
     return result;

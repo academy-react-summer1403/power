@@ -58,11 +58,16 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
 
   const commentsToShow = showAllComments ? comment : comment.slice(0, 4);
 
+  const ImgSrc =
+  detail?.currentImageAddressTumb  && (detail?.currentImageAddressTumb .startsWith("/") || detail?.currentImageAddressTumb .startsWith("http"))
+    ? detail?.currentImageAddressTumb 
+    : DefaultPic;
+
   return (
     <>
       <Image
         className="mt-5 h-[300px] object-cover contrast-75 rounded-xl"
-        src={detail?.currentImageAddressTumb || DefaultPic}
+        src={ImgSrc}
         alt={detail?.title || "News Default Image"}
         width={1050}
         height={200}
