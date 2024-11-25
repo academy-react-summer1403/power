@@ -50,15 +50,21 @@ export const LearningJourney = () => {
   );
 };
 
-const Card = ({ image, title, description }) => (
+interface CardProps {
+  image: string;
+  title: string;
+  description: string;
+}
+
+const Card: React.FC<CardProps> = ({ image, title, description }) => (
   <div
-    className="w-[100%] sm:w-[275px] h-auto flex flex-col items-center justify-center mb-6  dark:bg-gray-600 rounded-lg p-4"
+    className="w-full sm:w-72 lg:w-80 h-auto flex flex-col items-center justify-center mb-6 dark:bg-gray-600 rounded-lg p-4 transition-transform duration-200 hover:scale-105"
     data-aos="flip-right"
     data-aos-easing="ease-out-cubic"
     data-aos-duration="2000"
   >
-    <Image src={image} className="h-24 w-24" alt={title} />
-    <h1 className="w-full text-white font-semibold mt-6">{title}</h1>
-    <p className="text-gray-300 mt-4 text-center">{description}</p>
+    <Image src={image} className="h-24 w-24 mb-4" alt={title} />
+    <h1 className="w-full text-white font-semibold text-lg text-center">{title}</h1>
+    <p className="text-gray-300 mt-2 text-center text-sm lg:text-base">{description}</p>
   </div>
 );

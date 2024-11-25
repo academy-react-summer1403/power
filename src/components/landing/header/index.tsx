@@ -123,7 +123,7 @@ export const Header = () => {
           <Link to="/CourseList" className={getLinkClassName("/CourseList")}>
             دوره های آموزشی
           </Link>
-          <Link to="/contact" className={getLinkClassName("/contact")}>
+          <Link to="/Contact" className={getLinkClassName("/Contact")}>
             درباره ما
           </Link>
           <Link to="/NewsList" className={getLinkClassName("/NewsList")}>
@@ -226,7 +226,7 @@ export const Header = () => {
           <Link to="/CourseList" className={getLinkClassName("/CourseList")}>
             دوره های آموزشی
           </Link>
-          <Link to="/contact" className={getLinkClassName("/contact")}>
+          <Link to="/Contact" className={getLinkClassName("/Contact")}>
             درباره ما
           </Link>
           <Link to="/NewsList" className={getLinkClassName("/NewsList")}>

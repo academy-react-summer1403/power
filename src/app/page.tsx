@@ -24,6 +24,7 @@ import { Invoice } from "@/pages/invoice";
 import { TeacherList } from "@/pages/teacherList";
 import { StartCourseNotifier } from "@/components/CourseNotif";
 import { TeacherDetail } from "@/pages/teacherDetail";
+import { Contact } from "@/pages/contact";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -66,6 +67,7 @@ export default function Home() {
         <Route path="/SignUp" element={<SignUpContainer />} />
         <Route path="/CourseList" element={<CourseList />} />
         <Route path="/NewsList" element={<NewsListPage />} />
+        <Route path="/Contact" element={<Contact/>} />
         <Route path="/TeacherList" element={<TeacherList/>} />
         <Route path="/TeacherDetail/:id" element={<TeacherDetail/>} />
         <Route path="/Payment" element={<Payment />} />
