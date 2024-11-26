@@ -138,8 +138,6 @@ export const addNewsComment = async (comment : any) => {
 };
 export const addPaperReplyComment = async (reply : string) => {
   try {
-    console.log("Fetching started...");
-
     const result = await http.post("/News/CreateNewsReplyComment", reply);
 
     return result;

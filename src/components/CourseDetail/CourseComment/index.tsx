@@ -18,6 +18,7 @@ import { useParams } from "next/navigation";
 import { FaChevronDown, FaChevronUp, FaSpinner } from "react-icons/fa";
 import axios from "axios";
 import { ReportComment } from "@/core/services/api/more";
+import { RepalyWrapper } from "../CourseRepalyComment/RepalyWrapper";
 
 interface CourseCommentProps {
   Img: string;
@@ -119,40 +120,44 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
   };
 
   const handleReplySubmit = async () => {
-    if (!replyText.trim()) {
-      toast.error("لطفاً متن پاسخ را وارد کنید.");
-      return;
-    }
-
-    const replyData = {
-      Title: "ریپلای کامنت",
-      Describe: replyText,
-      CourseId: courseId,
-      CommentId: id,
-    };
-
-    const data = new FormData();
-
-    data.append("Title", replyData.Title);
-    data.append("Describe", replyData);
-    data.append("CourseId", replyData.CourseId);
-    data.append("CommentId", replyData.CommentId);
-
-    try {
-      setIsLoading(true);
-      const res = await repcomment(data);
-      if (res) {
-        toast.success("پاسخ با موفقیت ارسال شد.");
-        setShowReplyForm(false);
-        setReplyText("");
-        fetchReplay();
-      } else {
-        toast.error("خطا در ارسال پاسخ.");
+    if (getItem("token")) {
+      if (!replyText.trim()) {
+        toast.error("لطفاً متن پاسخ را وارد کنید.");
+        return;
       }
-    } catch (error) {
-      toast.error("خطا در ارسال پاسخ: " + error);
-    } finally {
-      setIsLoading(false);
+
+      const replyData = {
+        Title: "ریپلای کامنت",
+        Describe: replyText,
+        CourseId: courseId,
+        CommentId: id,
+      };
+
+      const data = new FormData();
+      data.append("Title", replyData.Title);
+      data.append("Describe", replyData.Describe);
+      data.append("CourseId", replyData.CourseId);
+      data.append("CommentId", replyData.CommentId);
+
+      try {
+        setIsLoading(true);
+        const res = await repcomment(data);
+        if (res) {
+          toast.success("پاسخ با موفقیت ارسال شد.");
+          setShowReplyForm(false);
+          setReplyText("");
+          fetchReplay();
+        } else {
+          toast.error("خطا در ارسال پاسخ.");
+        }
+      } catch (error) {
+        toast.error("خطا در ارسال پاسخ: " + error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    else{
+      toast.error("برای ارسال پاسخ باید وارد شده باید.");
     }
   };
 
@@ -168,7 +173,7 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
 
   return (
     <div className="flex w-full border-b border-gray-300 dark:border-gray-600 p-4">
-      <div className="flex h-full justify-center w-[10%] items-center">
+      <div className="lg:flex hidden h-full justify-center w-[10%] items-center">
         <Image
           src={imageSrc}
           alt=""
@@ -177,7 +182,7 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
           className="w-28 h-28 bg-cover rounded-full"
         />
       </div>
-      <div className="flex flex-col w-[90%] p-3 justify-center flex-wrap">
+      <div className="flex flex-col w-full lg:w-[90%] p-3 justify-center flex-wrap">
         <div className="flex justify-between w-full">
           <h3 className="text-lg font-semibold dark:text-white">{author}</h3>
           <span className="text-gray-500 dark:text-gray-400">
@@ -243,6 +248,9 @@ export const CourseComment: React.FC<CourseCommentProps> = ({
               {Like}
             </span>
           </div>
+        </div>
+        <div className="mt-4 flex flex-col gap-2 w-full">
+          {showReplies && <RepalyWrapper ReplayCommentState={ReplayComment} />}
         </div>
         {showReplyForm && (
           <div className="mt-4 flex flex-col gap-2 w-full">

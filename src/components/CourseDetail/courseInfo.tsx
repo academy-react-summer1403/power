@@ -41,8 +41,8 @@ export const CourseInfo: React.FC<CourseInfoProps> = ({ course, AddCourseReserve
       };
 
     return(
-        <div className="w-[310px] h-[845px] flex justify-center flex-wrap bg-white dark:bg-gray-800 border border-[#DFDFDF] dark:border-gray-600 shadow-[0_0_14px_0] shadow-black rounded-xl items-center dark:text-white">
-        <div className="bg-[#5751E1] h-[95px] text-white w-[250px] rounded-lg flex flex-wrap justify-center items-center">
+        <div className="w-full lg:w-[310px] h-[845px] flex justify-center flex-wrap bg-white dark:bg-gray-800 border border-[#DFDFDF] dark:border-gray-600 shadow-[0_0_14px_0] shadow-black rounded-xl items-center dark:text-white">
+        <div className="bg-[#5751E1] h-[95px] text-white w-full lg:w-[250px] rounded-lg flex flex-wrap justify-center items-center">
           <h3 className="w-[90%]"> هزینه این دوره </h3>
           <h1 className="text-2xl w-full text-center">
             {formatCostWithUnit(course.cost)} تومان{" "}

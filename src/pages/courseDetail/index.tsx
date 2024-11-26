@@ -11,9 +11,10 @@ import {
 } from "@/core/services/api/course";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GetTopCoursesApi } from "@/core/services/api/landing";
+import { GetTopCoursesForDetail } from "@/core/services/api/landing";
 import { CourseDetailContainer } from "@/components/CourseDetail/continer";
 import { Loading } from "@/components/loading";
+import { getItem } from "@/core/services/common/storage.services";
 
 interface CourseDetail {
   title: string;
@@ -52,16 +53,21 @@ export const CourseDetail = () => {
   const [sortedComments, setSortedComments] = useState<Array<any>>([]);
 
   const AddCourseReserve = async (courseId: number) => {
-    const loadingToast = toast.loading("در حال ثبت نام...");
-    try {
-      const res = await addReserve(courseId);
-      toast.dismiss(loadingToast);
-      res.success
-        ? toast.success("ثبت نام موفقیت آمیز بود!")
-        : toast.error(res.ErrorMessage);
-    } catch (error) {
-      toast.dismiss(loadingToast);
-      toast.error("یک خطا رخ داده است، لطفاً دوباره تلاش کنید.");
+    if(getItem("token")){
+      const loadingToast = toast.loading("در حال ثبت نام...");
+      try {
+        const res = await addReserve(courseId);
+        toast.dismiss(loadingToast);
+        res.success
+          ? toast.success("ثبت نام موفقیت آمیز بود!")
+          : toast.error(res.ErrorMessage);
+      } catch (error) {
+        toast.dismiss(loadingToast);
+        toast.error("یک خطا رخ داده است، لطفاً دوباره تلاش کنید.");
+      }
+    }
+    else{
+      toast.error("برای ثبت نام ابتدا وارد شودید")
     }
   };
 
@@ -70,7 +76,7 @@ export const CourseDetail = () => {
       const [courseDetail, courseComments, topCourse] = await Promise.all([
         getCourseById(params.id),
         getCommentById(params.id),
-        GetTopCoursesApi(),
+        GetTopCoursesForDetail(),
       ]);
       setTopCourseState(topCourse);
       setDetail(courseDetail);

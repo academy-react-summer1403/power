@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { AddCourseRate, liked, disLiked } from "@/core/services/api/course";
 import { AddCourseFavoriteApi } from "@/core/services/api/landing";
 import { formatDescription } from "@/core/services/utils/formatDescription";
+import { getItem } from "@/core/services/common/storage.services";
 
 interface CourseInfoProps {
   detail: any;
@@ -26,84 +27,105 @@ export const CourseTopInfo: React.FC<CourseInfoProps> = ({
   const [loading, setLoading] = useState(false);
 
   const handleLike = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const res = await liked(detail.courseId);
-      if (res.success) {
-        setLocalUserLike(localUserLike + 1);
-        setLocalUserDissLike(0);
-        toast.success(res.message);
-      } else {
-        toast.error(res.errorMessage);
+    if(getItem("token")){
+      if (loading) return;
+      setLoading(true);
+      try {
+        const res = await liked(detail.courseId);
+        if (res.success) {
+          setLocalUserLike(localUserLike + 1);
+          setLocalUserDissLike(0);
+          toast.success(res.message);
+        } else {
+          toast.error(res.errorMessage);
+        }
+      } catch (error) {
+        toast.error("Failed to like the course.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error("Failed to like the course.");
-    } finally {
-      setLoading(false);
+    }
+    else{
+      toast.error("برای لایک ابتدا وارد شوید")
     }
   };
 
   const handleDislike = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const res = await disLiked(detail.courseId);
-      if (res.success) {
-        setLocalUserDissLike(localUserDissLike + 1);
-        setLocalUserLike(0);
-        toast.success(res.message);
-      } else {
-        toast.error(res.errorMessage);
-      }
-    } catch (error) {
-      toast.error("Failed to dislike the course.");
-    } finally {
-      setLoading(false);
+    if(getItem("token")){
+      
+          if (loading) return;
+          setLoading(true);
+          try {
+            const res = await disLiked(detail.courseId);
+            if (res.success) {
+              setLocalUserDissLike(localUserDissLike + 1);
+              setLocalUserLike(0);
+              toast.success(res.message);
+            } else {
+              toast.error(res.errorMessage);
+            }
+          } catch (error) {
+            toast.error("Failed to dislike the course.");
+          } finally {
+            setLoading(false);
+          }
+    }
+    else{
+      toast.error("برای دیسلایک ابتدا وارد شوید")
     }
   };
 
   const handleRate = async (rate: number) => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const res = await AddCourseRate(detail.courseId, rate);
-      if (res.success) {
-        setLocalRate(rate);
-        toast.success("Rating submitted!");
-      } else {
-        toast.error(res.errorMessage);
+    if(getItem("token")){
+      if (loading) return;
+      setLoading(true);
+      try {
+        const res = await AddCourseRate(detail.courseId, rate);
+        if (res.success) {
+          setLocalRate(rate);
+          toast.success("Rating submitted!");
+        } else {
+          toast.error(res.errorMessage);
+        }
+      } catch (error) {
+        toast.error("Failed to submit rating.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error("Failed to submit rating.");
-    } finally {
-      setLoading(false);
+    }
+    else{
+      toast.error("برای نمره دادن ابتدا وارد شودید")
     }
   };
 
   const handleAddToFavorites = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const data = { courseId: detail.courseId };
-      const res = await AddCourseFavoriteApi(data);
-      if (res.success) {
-        setLocalIsUserFavorite(true);
-        toast.success(res.message);
-      } else {
-        toast.error(res.errorMessage);
+    if(getItem("token")){
+      if (loading) return;
+      setLoading(true);
+      try {
+        const data = { courseId: detail.courseId };
+        const res = await AddCourseFavoriteApi(data);
+        if (res.success) {
+          setLocalIsUserFavorite(true);
+          toast.success(res.message);
+        } else {
+          toast.error(res.errorMessage);
+        }
+      } catch (error) {
+        setLocalIsUserFavorite(false);
+        toast.error("Failed to add to favorites.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setLocalIsUserFavorite(false);
-      toast.error("Failed to add to favorites.");
-    } finally {
-      setLoading(false);
+    }
+    else{
+      toast.error("برای ثبت نام ابتدا وارد شودید")
     }
   };
 
   return (
     <>
-      <div className="w-[90%] justify-center md:justify-normal mt-8 flex gap-5 items-center">
+      <div className="w-full lg:w-[90%] justify-center md:justify-normal mt-8 flex gap-5 items-center">
         <div className="w-auto h-7 bg-[#EFEFF2] dark:bg-[#5751E1] text-center p-1 rounded-full content-center">
           {detail.courseLevelName}
         </div>

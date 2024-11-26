@@ -20,6 +20,14 @@ export const GetTopCoursesApi = async () => {
         console.log(error , "error")
     }
 }
+export const GetTopCoursesForDetail = async () => {
+    try {
+        const res = await axios.get(`${BaseUrl}/Home/GetCoursesTop/?Count=3`)
+        return res.data;
+    } catch (error) {
+        console.log(error , "error")
+    }
+}
 
 export const AddCourseFavoriteApi = async (CouseId : string) => {
     try {

@@ -148,7 +148,7 @@ export const getRepCommentById = async (id: string, CourseId: string) => {
     const result = await axios.get(
       `${BaseUrl}/Course/GetCourseReplyCommnets/${CourseId}/${id}`
     );
-    return result;
+    return result.data;
   } catch (error) {
     console.log(error);
     return [];

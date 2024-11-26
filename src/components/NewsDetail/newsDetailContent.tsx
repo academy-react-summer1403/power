@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { NewsAddComment } from "@/components/News/AddComment";
-import { NewsCommentWrapper } from "@/components/News/NewsComment/CommentWrapper";
+import { NewsAddComment } from "@/components/NewsDetail/AddComment";
+import { NewsCommentWrapper } from "@/components/NewsDetail/NewsComment/CommentWrapper";
 import { formatDescription } from "@/core/services/utils/formatDescription";
 import CommaPic from "@/assets/NewsDetail/comma.svg";
 import EyePic from "@/assets/NewsDetail/eye.png";
