@@ -112,10 +112,8 @@ export const delNewsFavorite = async (id : string) => {
     return [];
   }
 };
-export const getPaperCommentReplies = async (id : string) => {
+export const GetNewsCommentReplies = async (id : string) => {
   try {
-    console.log("Fetching started...");
-
     const result = await http.get(`/News/GetRepliesComments?Id=${id}`);
 
     return result;

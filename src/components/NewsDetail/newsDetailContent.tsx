@@ -147,11 +147,11 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
             <option value="leastLiked">کمترین لایک</option>
           </select>
         </div>
-        <div className="w-full h-auto min-h-[400px] max-h-[650px] overflow-y-auto flex flex-wrap justify-center">
+        <div className="w-full h-auto overflow-y-scroll">
           <NewsCommentWrapper Comment={commentsToShow} />
         </div>
         <div className="w-full flex justify-center items-center">
-          {Comment.length > 4 && (
+          {comment.length > 4 && (
             <button
               onClick={handleToggleComments}
               className="mt-4 bg-[#F7F7FB] text-[#5751E1] rounded-[40px] text-center content-center p-3"

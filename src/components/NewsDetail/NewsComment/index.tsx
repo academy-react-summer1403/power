@@ -4,7 +4,7 @@ import { DateConvert } from "@/core/services/utils/date";
 import LikePic from "@/assets/CourseDetail/like.png";
 import DisLikePic from "@/assets/CourseDetail/dislike.png";
 import AcountDefualtPic from "@/assets/CourseDetail/images.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   disLikedCourseCmnt,
@@ -12,10 +12,11 @@ import {
 } from "@/core/services/api/course";
 import toast from "react-hot-toast";
 import { ReportComment } from "@/core/services/api/more";
-import { FaSpinner } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaSpinner } from "react-icons/fa";
 import { getItem } from "@/core/services/common/storage.services";
 import { useParams } from "react-router-dom";
-import { addPaperReplyComment } from "@/core/services/api/news";
+import { addPaperReplyComment, GetNewsCommentReplies } from "@/core/services/api/news";
+import { NewsRepalyWrapper } from "../NewsRepalyComment/RepalyWrapper";
 
 interface NewsCommentProps {
   Img: string;
@@ -38,6 +39,8 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
   id,
   title,
 }) => {
+  const [ReplayComment, setReplayComment] = useState<any[]>([]);
+  const [showReplies, setShowReplies] = useState(false);
   const [showReportForm, setShowReportForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -50,6 +53,15 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
     Date,
   });
   const params = useParams();
+
+  const fetchReplay = async () => {
+    try {
+      const res = await GetNewsCommentReplies(id);
+      setReplayComment(Array.isArray(res) ? res : []);
+    } catch (error) {
+      toast.error("خطا در دریافت پاسخ‌ها");
+    }
+  };
 
   const AddCommentLike = async () => {
     try {
@@ -67,6 +79,10 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
     } catch (error) {
       toast.error("خطا: " + error);
     }
+  };
+
+  const toggleReplies = () => {
+    setShowReplies((prevShowReplies) => !prevShowReplies);
   };
 
   const toggleReportForm = () => {
@@ -129,9 +145,15 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
   };
 
   const ImgSrc =
-    Img && (Img.startsWith("/") || Img.startsWith("http"))
+  Img && (Img.startsWith("/") || Img.startsWith("http"))
       ? Img
       : AcountDefualtPic;
+
+
+      useEffect(() => {
+        fetchReplay()
+      }, [])
+      
 
   return (
     <div className="flex w-full border-b border-gray-300 dark:border-gray-600 p-4">
@@ -163,6 +185,21 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
             >
               {showReplyForm ? "لغو" : "پاسخ"}
           </div>
+          {ReplayComment.length > 0 && (
+            <div className="flex gap-3">
+              <div
+                onClick={toggleReplies}
+                className="bg-[#F7F7FB] dark:bg-gray-300 w-[130px] h-[35px] rounded-xl text-[#5751E1] flex justify-center items-center cursor-pointer"
+              >
+                {showReplies ? "بستن پاسخ‌ها" : "نمایش پاسخ‌ها"}
+                {showReplies ? (
+                  <FaChevronUp className="ml-1" />
+                ) : (
+                  <FaChevronDown className="ml-1" />
+                )}
+              </div>
+            </div>
+          )}
           <div
             className="bg-[#F7F7FB] dark:bg-gray-300 w-[80px] h-[35px] rounded-xl text-red-500 flex justify-center items-center cursor-pointer"
             onClick={toggleReportForm}
@@ -183,6 +220,9 @@ export const NewsComment: React.FC<NewsCommentProps> = ({
               <Image className="w-6 h-6" src={LikePic} alt="" /> {Like}
             </span>
           </div>
+        </div>
+        <div className="mt-4 flex flex-col gap-2 w-full">
+          {showReplies && <NewsRepalyWrapper ReplayCommentState={ReplayComment} />}
         </div>
         {showReplyForm && (
           <div className="mt-4 flex flex-col gap-2 w-full">
