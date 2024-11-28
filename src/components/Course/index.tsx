@@ -153,7 +153,7 @@ export const Course: React.FC<TopCourseProps> = ({
             ? "w-[350px] h-[470px] flex-wrap"
             : viewMode === "flex"
             ? "w-full h-[310px] items-center flex-row"
-            : "w-[350px] h-[470px] justify-center flex-wrap" 
+            : "w-full sm:w-[350px] h-[470px] justify-center flex-wrap" 
         } relative p-6 flex rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]`}
         onDoubleClick={handleDoubleClick}
       >
@@ -176,10 +176,10 @@ export const Course: React.FC<TopCourseProps> = ({
           />
         </div>
         <div className="p-4 w-[95%] wrapper">
-          <h2 className="title text-xl font-semibold mt-4 text-black dark:text-white">
+          <h2 className="title w-full text-center sm:text-right sm:w-auto text-xl font-semibold mt-4 text-black dark:text-white">
             {title}
           </h2>
-          <div className="w-full h-auto flex justify-between items-center">
+          <div className="w-full h-auto flex justify-center lg:justify-between items-center">
             <p className="text-sm w-[70px] bg-[#EFEFF1] mt-2 rounded-full text-center dark:bg-[#333333] dark:text-white">
               {NumerOfLessons}
             </p>
@@ -187,7 +187,7 @@ export const Course: React.FC<TopCourseProps> = ({
               {score.toFixed(1)} <Image src={StarPic} alt="StarPic" />
             </p>
           </div>
-          <div className="w-full h-auto mt-4 flex justify-between">
+          <div className="w-full h-auto mt-4 flex justify-center lg:justify-between">
             <div className="flex gap-1 items-center text-black dark:text-white">
               <Image className="w-4 h-4" src={StudentPic} alt="" /> {totalVotes}
             </div>
@@ -195,7 +195,7 @@ export const Course: React.FC<TopCourseProps> = ({
               <Image src={TypeCoursePic} alt="" /> {typeName}
             </div>
           </div>
-          <div className="w-full h-auto mt-4 flex justify-between">
+          <div className="w-full h-auto mt-4 flex justify-center lg:justify-between">
             <div className="flex gap-1 text-black dark:text-white">
               <Image src={TeacherPic} alt="Teacher" />
               <p className="text-sm w-16 overflow-hidden text-ellipsis whitespace-nowrap">
@@ -227,7 +227,7 @@ export const Course: React.FC<TopCourseProps> = ({
               </button>
             </div>
           </div>
-          <div className="w-full h-auto flex border-t border-[#E3E3F0] mt-6 justify-between dark:border-[#444444]">
+          <div className="w-full h-auto flex border-t border-[#E3E3F0] mt-6 justify-center lg:justify-between dark:border-[#444444]">
             <p className="font-bold text-[#888888] flex dark:text-gray-400">
               <Image src={CalenderPic} alt="" /> {DateConvert(date)}
             </p>

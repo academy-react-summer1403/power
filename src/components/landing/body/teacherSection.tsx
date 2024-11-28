@@ -47,23 +47,25 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
             هنگامی که یک چاپگر ناشناس یک گالری از نوع و کتاب نمونه درهم درست شده
             باقی نمانده است فقط پنج قرن
           </p>
-          <Link to="/TeacherList"  className="bg-[#5751E1] dark:bg-[#6D6C80] flex justify-around text-white w-[230px] h-12 items-center rounded-[50px] shadow-[4px_6px_0_0] shadow-[#050071]">
+          <Link
+            to="/TeacherList"
+            className="bg-[#5751E1] dark:bg-[#6D6C80] flex justify-around text-white w-[230px] h-12 items-center rounded-[50px] shadow-[4px_6px_0_0] shadow-[#050071]"
+          >
             همه مربیان را ببینید
             <Image src={ArowPic} alt="" width={24} height={24} />
           </Link>
         </div>
         <div className="w-[850px] h-full flex flex-wrap gap-14">
           {teacherList ? (
-            teacherList.slice(0, 4).map((item, index) =>  (
-                  <TeacherCard teacher={item} key={index} />
-              )
-            )
+            teacherList
+              .slice(0, 4)
+              .map((item, index) => <TeacherCard teacher={item} key={index} />)
           ) : (
             <div>منتظر بمانبد</div>
           )}
         </div>
       </div>
-      <div className=" w-[90%] mt-20 mb-20 lg:w-[1410px] flex items-center h-auto lg:h-[270px] rounded-[40px] bg-[#282568] dark:bg-[#1F1F31] overflow-hidden shadow-[0_25px_70px_0] shadow-[#28256866]">
+      <div className=" w-[90%] mt-20 mb-20 lg:w-[1410px] flex lg:flex-nowrap flex-wrap items-center h-auto lg:h-[270px] rounded-[40px] bg-[#282568] dark:bg-[#1F1F31] overflow-hidden shadow-[0_25px_70px_0] shadow-[#28256866]">
         <StatItem label="وبلاگ ها" count={landingApi?.newsCount ?? 0} />
         <StatItem label="بهترین اساتید" count={landingApi?.teacherCount ?? 0} />
         <StatItem label="دروس دانشکده" count={landingApi?.courseCount ?? 0} />
@@ -80,7 +82,7 @@ const StatItem: React.FC<{ label: string; count: number }> = ({
   label,
   count,
 }) => (
-  <div className="border-l-2 border-white/50 h-[90%] w-1/4 flex flex-col items-center justify-center">
+  <div className=" border-t-2 lg:border-l-2 border-white/50 h-[90%] w-full lg:w-1/4 flex flex-col items-center justify-center">
     <div className="text-white text-[56px] font-bold" data-aos="zoom-out">
       <CountUp end={count} duration={30} />
     </div>

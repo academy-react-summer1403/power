@@ -20,8 +20,8 @@ export const HeroSection = () => {
     className="absolute inset-0 z-10 dark:opacity-[0.03]"
   />
       <div className="w-auto h-full flex justify-center items-center relative z-20">
-        <div className="h-[433.5px] max-w-[90%] md:max-w-[600px] flex justify-right flex-wrap items-center">
-          <div className="text-[30px] md:text-[40px] w-[490px] leading-[40px] md:leading-[60px] font-semibold flex flex-wrap text-gray-800 dark:text-white">
+        <div className="h-auto lg:h-[433.5px] max-w-[90%] md:max-w-[600px] flex justify-right flex-wrap items-center">
+          <div className="h-auto text-[30px] md:text-[40px] w-full lg:w-[490px] leading-[40px] md:leading-[60px] font-semibold flex flex-wrap text-gray-800 dark:text-white">
             هرگز از{" "}
             <TypeAnimation
               sequence={["یادگیری", 5000, "مقاومت", 5000]}
@@ -36,7 +36,7 @@ export const HeroSection = () => {
             />
             دست نکشید زندگی هرگز از آموزش دست نمی کشد
           </div>
-          <div className="text-[#6D6C80] font-normal leading-7 w-full dark:text-gray-400">
+          <div className="text-[#6D6C80] h-auto flex font-normal leading-7 w-full dark:text-gray-400">
             هر سفر آموزشی و یادگیری دنبال کردن منحصر به فرد است ما به شما کمک
             خواهیم کرد
           </div>
@@ -48,7 +48,7 @@ export const HeroSection = () => {
         </div>
       </div>
       <div
-        className=" hidden lg:h-[460px] lg:w-[720px] flex-wrap lg:flex-nowrap bg-cover bg-center lg:flex justify-center dark:relative z-30"
+        className=" hidden lg:h-[460px] w-full lg:w-[720px] flex-wrap lg:flex-nowrap bg-cover bg-center lg:flex justify-center dark:relative z-30"
         style={{
           backgroundImage: `url(${HeroSectionPic.src})`,
           backgroundSize: "cover",
