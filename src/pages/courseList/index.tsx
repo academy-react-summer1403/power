@@ -18,6 +18,7 @@ import Pagination from "@/components/Course/Pagination";
 import { FilterSection } from "@/components/Course/FilterSection";
 import { useLocation } from "react-router-dom";
 import CountUp from 'react-countup'
+import { GetTeacher } from "@/core/services/api/landing";
 
 type Filter = {
   search: string;
@@ -27,6 +28,7 @@ type Filter = {
   courseLevel: string;
   costRange: [number, number];
   PageNumber: number;
+  teacherId?: number; 
 };
 
 export const CourseList: React.FC = () => {
@@ -39,6 +41,7 @@ export const CourseList: React.FC = () => {
   const [courseLevels, setCourseLevels] = useState<any[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [teachers, setTeachers] = useState<any[]>([]);
 
   const location = useLocation();
 
@@ -51,6 +54,7 @@ export const CourseList: React.FC = () => {
     courseLevel: "",
     costRange: [0, 1000000],
     PageNumber: 1,
+    teacherId: null,
   });
 
   const fetchCourses = async () => {
@@ -62,7 +66,8 @@ export const CourseList: React.FC = () => {
       filter.courseLevel,
       filter.costRange[1],
       filter.costRange[0],
-      currentPage
+      currentPage,
+      filter.teacherId
     );
     setCourses(courseFilterDtos || []);
     setTotalCount(totalCount);
@@ -86,14 +91,22 @@ export const CourseList: React.FC = () => {
   useEffect(() => {
     fetchFilterOptions();
     fetchCourses();
+    fetchTeachers();
   }, [filter, currentPage]);
 
   // Handle Filter Change
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleFilterChange = (
+  e: React.ChangeEvent<HTMLInputElement> | { name: string; value: any }
+) => {
+  if ("target" in e) {
     const { name, value } = e.target;
-    setFilter({ ...filter, [name]: value });
-    setCurrentPage(1);
-  };
+    setFilter((prev) => ({ ...prev, [name]: value }));
+  } else {
+    const { name, value } = e; 
+    setFilter((prev) => ({ ...prev, [name]: value }));
+  }
+  setCurrentPage(1);
+};
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const values = e.target.value.split(",");
@@ -101,6 +114,19 @@ export const CourseList: React.FC = () => {
       ...filter,
       costRange: [parseInt(values[0]), parseInt(values[1])],
     });
+  };
+
+  const resetFilters = () => {
+    setFilter({
+      search: "",
+      sort: "",
+      category: [],
+      courseType: "",
+      courseLevel: "",
+      costRange: [0, 1000000],
+      teacherId: [], 
+    });
+    setCurrentPage(1); 
   };
 
   // Handle Sorting
@@ -152,6 +178,27 @@ export const CourseList: React.FC = () => {
     setCurrentPage(1);
   };
 
+  const handleTeacherChange = (teacherId: number) => {
+    setFilter((prev) => {
+      const currentTeacherIds = prev.teacherId || [];
+      const updatedTeacherIds = currentTeacherIds.includes(teacherId)
+        ? currentTeacherIds.filter((id) => id !== teacherId)
+        : [...currentTeacherIds, teacherId]; 
+  
+      return { ...prev, teacherId: updatedTeacherIds };
+    });
+  };
+
+  const fetchTeachers = async () => {
+    try {
+      const teacherResults = await GetTeacher();
+      setTeachers(teacherResults || []);
+    } catch (error) {
+      console.error("Error fetching teachers:", error);
+    }
+  };
+
+  
   return (
     <>
       <Header />
@@ -160,14 +207,17 @@ export const CourseList: React.FC = () => {
         <div className="w-[90%] h-auto mt-32 mb-32 flex flex-wrap lg:flex-nowrap">
           <FilterSection
             filter={filter}
+            teachers={teachers}
             categories={categories}
             courseTypes={courseTypes}
             courseLevels={courseLevels}
+            handleTeacherChange={handleTeacherChange}
             handleFilterChange={handleFilterChange}
             handleRangeChange={handleRangeChange}
             handleCategoryChange={handleCategoryChange}
             handleCourseTypeChange={handleCourseTypeChange}
             handleCourseLevelChange={handleCourseLevelChange}
+            resetFilters={resetFilters}
           />
           <div className="h-auto w-[100%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">

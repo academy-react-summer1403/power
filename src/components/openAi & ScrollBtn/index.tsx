@@ -3,10 +3,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { handleInputChange } from "@/core/validation/forbiddenWords";
-import { FaArrowCircleUp, FaMoon, FaSun } from "react-icons/fa";
-import UpArow from "@/assets/Icon.png"
+import {
+  FaArrowCircleUp,
+  FaMoon,
+  FaSun,
+  FaBatteryFull,
+  FaBatteryHalf,
+  FaBatteryEmpty,
+  FaWifi,
+} from "react-icons/fa";
+import { CiWifiOff } from "react-icons/ci";
+import UpArow from "@/assets/Icon.png";
 import { AiOutlineMessage } from "react-icons/ai";
 import Image from "next/image";
+import { useBattery, useNetworkState } from "react-use";
 
 interface Message {
   sender: "user" | "bot";
@@ -27,11 +37,11 @@ const date = currentDate.getDate().toLocaleString("fa-IR");
 const month = currentDate.toLocaleString("fa-IR", { month: "long" }); // ماه به زبان فارسی
 
 const responses: { [key: string]: string | string[] } = {
-  "سلام": "سلام! چطور می‌توانم به شما کمک کنم؟",
+  سلام: "سلام! چطور می‌توانم به شما کمک کنم؟",
   "خوبی؟": "من یک هوش مصنوعی هستم و احساس ندارم",
   "چطوری؟": "من یک هوش مصنوعی هستم و احساس ندارم",
-  "چطوری": "من یک هوش مصنوعی هستم و احساس ندارم",
-  "خوبی": "من یک هوش مصنوعی هستم و احساس ندارم",
+  چطوری: "من یک هوش مصنوعی هستم و احساس ندارم",
+  خوبی: "من یک هوش مصنوعی هستم و احساس ندارم",
   "حالت چطوره": "من یک هوش مصنوعی هستم و حالت خاصی ندارم",
   "امروز چند شنبه است": `امروز ${dayOfWeek} است.`,
   "امروز چندم ماهه": `امروز ${date} ${month} است.`,
@@ -58,20 +68,20 @@ const responses: { [key: string]: string | string[] } = {
     "من می‌توانم به شما راه‌های عمومی را معرفی کنم، اما برای مشکلات خاص باید به یک متخصص مراجعه کنید.",
     "برای حل مشکلات عاطفی و روانی بهتر است از مشاوران حرفه‌ای کمک بگیرید.",
   ],
-  "برو": "اگر نمی‌خواهید صحبت کنید، می‌توانید هر زمان که خواستید برگردید.",
+  برو: "اگر نمی‌خواهید صحبت کنید، می‌توانید هر زمان که خواستید برگردید.",
   "کجا هستی؟": "من در دنیای دیجیتال هستم و فقط به سوالات شما پاسخ می‌دهم!",
   "دربارهٔ خودت بگو":
     "من یک چت‌بات هستم و برای پاسخ به سوالات شما و کمک به شما طراحی شده‌ام.",
   "من غمگینم":
     "متوجه‌ام. مهم است که در این شرایط به خودتان توجه کنید و با کسی که قابل اعتماد است صحبت کنید.",
-  "خسته‌ام": "استراحت کنید! کمی وقت بگذارید و به خودتان استراحت دهید.",
+  خسته‌ام: "استراحت کنید! کمی وقت بگذارید و به خودتان استراحت دهید.",
   "با من صحبت کن":
     "من اینجا هستم تا با شما صحبت کنم، احساس خود را با من در میان بگذارید.",
-  "گزارش":
+  گزارش:
     "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  "مشکل": "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  "خطا": "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  "ایراد":
+  مشکل: "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  خطا: "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  ایراد:
     "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
   "تو انسان زنده‌ای؟": "خیر! من یک هوش مصنوعی هستم.",
   "میتونی به من چیزی یاد بدی؟":
@@ -142,6 +152,10 @@ export const ChatBot: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
 
+    // Battery and Network state hooks
+    const batteryState = useBattery();
+    const networkState = useNetworkState();
+
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
     if (savedMode === "true") {
@@ -160,17 +174,17 @@ export const ChatBot: React.FC = () => {
 
     const handleScrollProgress = () => {
       const totalHeight =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-  const currentScroll = window.scrollY;
-  const scrollProgress = (currentScroll / totalHeight) * 100;
-  setProgress(scrollProgress);
-  setShowScrollBtn(scrollProgress > 0);
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const currentScroll = window.scrollY;
+      const scrollProgress = (currentScroll / totalHeight) * 100;
+      setProgress(scrollProgress);
+      setShowScrollBtn(scrollProgress > 0);
     };
 
     window.addEventListener("scroll", handleScrollProgress);
     return () => {
-      window.removeEventListener("scroll",  handleScrollProgress);
+      window.removeEventListener("scroll", handleScrollProgress);
     };
   }, []);
 
@@ -276,7 +290,7 @@ export const ChatBot: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    handleInputChange(value, setInput, setErrorMessage); // اطمینان حاصل کنید که این تابع به درستی کار کند
+    handleInputChange(value, setInput, setErrorMessage);
   };
 
   const toggleChat = () => {
@@ -291,26 +305,61 @@ export const ChatBot: React.FC = () => {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(prevMode => {
+    setDarkMode((prevMode) => {
       const newMode = !prevMode;
-      localStorage.setItem('darkMode', newMode.toString());
+      localStorage.setItem("darkMode", newMode.toString());
       return newMode;
     });
   };
 
   return (
-    <div className={darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
-            <div
-        className={`fixed z-50 bottom-0 left-0 h-3 ${darkMode ? 'bg-[#7875ac]' : 'bg-[#15133a]'} transition-all`}
+    <div
+      className={darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
+    >
+      <div
+        className={`fixed z-50 bottom-0 left-0 h-3 ${
+          darkMode ? "bg-[#7875ac]" : "bg-[#15133a]"
+        } transition-all`}
         style={{ width: `${progress}%` }}
       />
-      <button 
-        title={darkMode ? 'لایت مد' : 'دارک مد'}
-        onClick={toggleDarkMode} 
-        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-10 md:bottom-8 right-40' : 'bottom-10 md:bottom-8 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
+      <button
+        title={darkMode ? "لایت مد" : "دارک مد"}
+        onClick={toggleDarkMode}
+        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${
+          showScrollBtn
+            ? "bottom-10 md:bottom-8 right-40"
+            : "bottom-10 md:bottom-8 right-24"
+        } bg-[#514dad] text-white p-2 rounded-lg transition-all`}
       >
-        {darkMode ? <FaSun /> : <FaMoon />} 
+        {darkMode ? <FaSun /> : <FaMoon />}
       </button>
+      <div className="fixed bottom-4 left-4 z-50 flex items-center gap-4">
+        {batteryState.isSupported ? (
+          <div className="flex items-center gap-2">
+            {batteryState.level !== undefined && (
+              <>
+                {batteryState.level > 0.75 && <FaBatteryFull className="text-green-500" />}
+                {batteryState.level <= 0.75 && batteryState.level > 0.25 && (
+                  <FaBatteryHalf className="text-yellow-500" />
+                )}
+                {batteryState.level <= 0.25 && <FaBatteryEmpty className="text-red-500" />}
+                <span>{Math.round(batteryState.level * 100)}%</span>
+              </>
+            )}
+          </div>
+        ) : (
+          <span>Battery status not supported</span>
+        )}
+
+        <div className="flex items-center gap-2">
+          {networkState.online ? (
+            <FaWifi className="text-green-500" />
+          ) : (
+            <CiWifiOff  className="text-red-500" />
+          )}
+          <span>{networkState.online ? "Online" : "Offline"}</span>
+        </div>
+      </div>
       {!isChatOpen ? (
         <div
           title="باته پشتیبان"
@@ -385,7 +434,7 @@ export const ChatBot: React.FC = () => {
           showScrollBtn ? " bottom-10 md:bottom-8 " : "  bottom-[-50px]"
         } `}
       >
-        <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt='' />
+        <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt="" />
       </button>
     </div>
   );

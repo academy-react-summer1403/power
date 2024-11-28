@@ -34,8 +34,8 @@ export const Header = () => {
 
   const getLinkClassName = (path: string) => {
     return location.pathname === path
-      ? "text-[#5751E1] after:block after:w-full after:h-1 after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#5751E1] after:to-transparent mt-4"
-      : "p-2 md:p-3 lg:p-5 dark:text-white transition-all hover:text-blue-500 hover:text-[110%]";
+      ? "text-[#5751E1] text-[16px] after:block after:w-full after:h-[2px] after:rounded-full after:bg-gradient-to-r after:from-transparent after:via-[#5751E1] after:to-transparent mt-4"
+      : "p-2 md:p-3 text-[16px] lg:p-5 dark:text-white transition-all hover:text-blue-500 hover:text-[110%]";
   };
 
   const toggleMenu = () => {

@@ -2,12 +2,14 @@
 const nextConfig = {
   images: {
     domains: [
-      "classapi.sepehracademy.ir", 
-      "tahacode.ir", 
-      "cdn.donya-e-eqtesad.com", 
-      "cdn.thenewstack.io", 
-      "vmtw.in",          
-      "www.vmtw.in"        
+      "classapi.sepehracademy.ir",
+      "tahacode.ir",
+      "cdn.donya-e-eqtesad.com",
+      "cdn.thenewstack.io",
+      "vmtw.in",
+      "www.vmtw.in",
+      "miro.medium.com",
+      "miro.medium",
     ],
   },
   css: ["./app/global.css"],
@@ -15,8 +17,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        destination: '/', 
+        source: "/:path*",
+        destination: "/",
       },
     ];
   },

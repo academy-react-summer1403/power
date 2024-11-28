@@ -21,7 +21,8 @@ export const getallbypgCourseList = async (
   level: string,
   costDown: string,
   costUp: string,
-  page: string
+  page: string,
+  teacherId: number
 ) => {
   try {
     const queryParams = [];
@@ -42,15 +43,12 @@ export const getallbypgCourseList = async (
       if (!costDown) queryParams.push(`CostDown=0`);
     }
     if (costDown) queryParams.push(`CostDown=${costDown}`);
+    if (teacherId) queryParams.push(`TeacherId=${teacherId}`);
 
     const url = `/Home/GetCoursesWithPagination?RowsOfPage=12&${queryParams.join(
       "&"
     )}`;
-    // console.log("tt",{ url });
-
-    // const result = await axios.get(`/Home/GetCoursesWithPagination?Query=${search}&TechCount=1&courseLevelId=${level}&SortingCol=${sort}&ListTech=${cat}&CourseTypeId=${type}`);
     const result = await axios.get(`${BaseUrl}${url}`);
-    //console.log(result);
     return result.data;
   } catch (error) {
     console.log(error);

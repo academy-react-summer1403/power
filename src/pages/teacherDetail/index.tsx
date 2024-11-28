@@ -8,7 +8,7 @@ import WhatsAppPic from "@/assets/landing/body/Symbol (1).png";
 import TwitterPic from "@/assets/landing/body/Symbol (2).png";
 import FacebookPic from "@/assets/landing/body/Symbol (3).png";
 import Breadcrumb from "@/components/path";
-import { GetTeacherDetail } from "@/core/services/api/teacer";
+import { GetTeacherDetail } from "@/core/services/api/teacher";
 import TeacherDefualtPic from "@/assets/landing/body/Section → Link → instructor06.png.png";
 import ArowPic from "@/assets/arow.png";
 import Image from "next/image";

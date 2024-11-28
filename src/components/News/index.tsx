@@ -124,14 +124,10 @@ export const News: React.FC<LandingNewsProps> = ({
             </button>
             <button
               onClick={handleLike}
-              className={`w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center ${
-                !userLiked ? "bg-red-200" : ""
-              }`}
+              className={`w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center `}
             >
               <FaThumbsDown
-                className={`w-6 h-6 ${
-                  !userLiked ? "text-red-500" : "text-gray-600"
-                }`}
+                className={"w-6 h-6  text-gray-600"}
               />
               {dislikesCount}
             </button>
