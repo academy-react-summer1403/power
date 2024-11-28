@@ -56,8 +56,8 @@ export const Contact = () => {
       <WhatWeOfferSection />
       <NewsletterSection />
       <LearningJourney />
-      <div className="mt-10 mb-52 p-6 bg-[#1c1a2f] dark:bg-gray-700 rounded-lg shadow-md max-w-[85%] mx-auto flex flex-col items-center">
-        <h2 className="text-2xl font-semibold text-[#5851d5] dark:text-white mb-4">
+      <div className="mt-10 mb-52 p-6 bg-[#F7F7FA] dark:bg-gray-700 rounded-lg shadow-md max-w-[85%] mx-auto flex flex-col items-center">
+        <h2 className="text-2xl font-semibold text-[#161439] font-semibold dark:text-white mb-4">
           ارسال نظر
         </h2>
         <form
@@ -67,14 +67,14 @@ export const Contact = () => {
           <div className="w-full mb-4">
             <label
               htmlFor="title"
-              className="block mb-2 font-medium text-[#acaadf] dark:text-gray-300"
+              className="block mb-2 font-medium text-[#161439] dark:text-gray-300"
             >
               عنوان
             </label>
             <input
               id="title"
               type="text"
-              className="p-2 border w-full h-[50px] rounded bg-[#F7F7F9] dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white"
+              className="p-2 border w-full h-[50px] bg-white rounded bg-[#F7F7F9] dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white"
               value={titleInput}
               onChange={(e) => setTitleInput(e.target.value)}
               required
@@ -83,13 +83,13 @@ export const Contact = () => {
           <div className="w-full mb-4">
             <label
               htmlFor="description"
-              className="block mb-2 font-medium text-[#acaadf] dark:text-gray-300"
+              className="block mb-2 font-medium text-[#161439] dark:text-gray-300"
             >
               توضیحات
             </label>
             <textarea
               id="description"
-              className="p-2 border w-full h-[100px] rounded bg-[#F7F7F9] dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white resize-none"
+              className="p-2 border w-full h-[100px] bg-white rounded dark:bg-gray-700 outline-none dark:border-gray-600 dark:text-white resize-none"
               value={descriptionInput}
               onChange={(e) => setDescriptionInput(e.target.value)}
               required
@@ -97,12 +97,12 @@ export const Contact = () => {
           </div>
           <button
             type="submit"
-            className={`w-[230px] h-[50px] flex justify-center items-center rounded-[50px] 
-        text-white font-medium shadow-[4px_6px_0_0] shadow-[#050071]
+            className={`w-[230px] text-black border-2 border-black h-[50px] text-[18px] justify-center items-center rounded-[50px] 
+         font-medium shadow-[4px_4px_0_0] shadow-black
         ${
           isLoading
             ? "bg-gray-400"
-            : "bg-[#5751E1] hover:bg-[#4a46c1] dark:bg-[#6D6C80]"
+            : "bg-[#FFC224] hover:bg-[#ffc124d0] dark:bg-[#6D6C80]"
         }`}
             disabled={isLoading}
           >

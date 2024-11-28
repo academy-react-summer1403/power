@@ -22,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage, onPage
   };
 
   return (
-    <div className="flex justify-center w-full gap-2 items-center">
+    <div className="flex justify-center lg:flex-nowrap flex-wrap w-full gap-2 items-center">
       <button
         onClick={goToPreviousPage}
         disabled={currentPage === 1}

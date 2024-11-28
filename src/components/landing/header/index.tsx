@@ -116,7 +116,7 @@ export const Header = () => {
       }`}
     >
       <div className="w-full xl:w-[40%] flex flex-col md:flex-row justify-between items-center">
-        <div className="hidden xl:flex text-[80%] font-medium">
+        <div className="hidden xl:flex text-[80%] gap-[6px] font-medium">
           <Link to="/" className={getLinkClassName("/")}>
             صفحه اصلی
           </Link>

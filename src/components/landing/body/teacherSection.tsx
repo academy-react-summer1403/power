@@ -32,12 +32,12 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
 }) => {
   return (
     <div className=" h-auto min-h-[1105px] w-full flex flex-wrap justify-center items-center">
-      <div className=" h-auto lg:h-[425px] w-full flex flex-wrap lg:flex-none">
+      <div className=" h-auto mb-24 lg:h-[425px] w-full flex flex-wrap lg:flex-none">
         <div
-          className="w-[450px] min-h-[425px] lg:h-full flex flex-wrap justify-center items-center"
+          className="w-[450px] h-auto lg:h-full flex flex-wrap justify-center items-center"
           data-aos="fade-up-left"
         >
-          <div className="w-[160px] h-[30px] bg-[#EFEEFE] dark:bg-[#5751E1] rounded-[30px] text-[#5751E1] dark:text-white text-center content-center font-medium">
+          <div className="w-[160px] h-auto lg:h-[30px] bg-[#EFEEFE] dark:bg-[#5751E1] rounded-[30px] text-[#5751E1] dark:text-white text-center content-center font-medium">
             معلم های ماهر
           </div>
           <h1 className="font-semibold w-[350px] text-4xl text-[#161439] dark:text-white">
@@ -55,7 +55,7 @@ export const TeacherSection: React.FC<StatsSectionProps> = ({
             <Image src={ArowPic} alt="" width={24} height={24} />
           </Link>
         </div>
-        <div className="w-[850px] h-full flex flex-wrap gap-14">
+        <div className="w-full lg:w-[850px] h-auto lg:h-full flex flex-wrap gap-14">
           {teacherList ? (
             teacherList
               .slice(0, 4)
@@ -82,7 +82,7 @@ const StatItem: React.FC<{ label: string; count: number }> = ({
   label,
   count,
 }) => (
-  <div className=" border-t-2 lg:border-l-2 border-white/50 h-[90%] w-full lg:w-1/4 flex flex-col items-center justify-center">
+  <div className=" border-t-2 lg:border-t-0 lg:border-l-2 border-white/50 h-[90%] w-full lg:w-1/4 flex flex-col items-center justify-center">
     <div className="text-white text-[56px] font-bold" data-aos="zoom-out">
       <CountUp end={count} duration={30} />
     </div>
