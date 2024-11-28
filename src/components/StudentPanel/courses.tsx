@@ -95,13 +95,13 @@ const Courses: React.FC = () => {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white p-4">
+    <div className=" text-gray-800 dark:text-white p-4">
       <div className="flex border-b border-[#EBEBEB] flex-col md:flex-row justify-between items-center mb-4">
         <div className="w-[535px] h-[50px] flex items-center justify-center border border-[#D3D2DF] rounded-full">
           <input
             type="text"
             placeholder="جستجو برای دوره . ."
-            className="w-[90%] outline-none h-full p-3 text-[14px] text-[#8D9DB5] dark:bg-[#333] dark:text-white"
+            className="w-[90%] outline-none h-full p-3 text-[14px] text-[#8D9DB5]  dark:text-white"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -110,7 +110,7 @@ const Courses: React.FC = () => {
           </div>
         </div>
         <select
-          className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700 text-center mt-2 md:mt-0"
+          className="bg-gray-100 rounded-full h-10 w-full md:w-44 shadow-sm dark:bg-gray-700/50 text-center mt-2 md:mt-0"
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
         >
@@ -136,13 +136,17 @@ const Courses: React.FC = () => {
             sortedCourses.map((course, index) => (
               <div
                 key={index}
-                className={`grid  grid-cols-3 md:grid-cols-5 h-10  items-center w-full rounded-md  shadow-[0_1px_2px_0] shadow-black/15 ${
+                className={`grid  grid-cols-3 md:grid-cols-5 h-10 dark:text-white  items-center w-full rounded-md  shadow-[0_1px_2px_0] shadow-black/15 ${
                   index % 2 !== 0 ? " bg-[#F7F7F7]" : "  bg-[#C8C1ED4D]"
                 }`}
               >
                 <div>{course.courseName}</div>
-                <div className="hidden lg:flex">{DateConvert(course.reserverDate)}</div>
-                <div className="hidden lg:flex">{coursePrices[course.courseId] || "قیمت مشخص نشده"}</div>
+                <div className="hidden lg:flex">
+                  {DateConvert(course.reserverDate)}
+                </div>
+                <div className="hidden lg:flex">
+                  {coursePrices[course.courseId] || "قیمت مشخص نشده"}
+                </div>
                 <div>
                   <span
                     className={
