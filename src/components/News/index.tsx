@@ -22,6 +22,7 @@ interface LandingNewsProps {
   LikeCount: number;
   Catregory: string;
   currentUserIsLike: boolean;
+  viewMode: "flex" | "grid";
 }
 
 export const News: React.FC<LandingNewsProps> = ({
@@ -35,6 +36,7 @@ export const News: React.FC<LandingNewsProps> = ({
   LikeCount,
   Catregory,
   currentUserIsLike,
+  viewMode,
 }) => {
   const navigate = useNavigate();
   const [userLiked, setUserLiked] = useState(currentUserIsLike);
@@ -79,8 +81,13 @@ export const News: React.FC<LandingNewsProps> = ({
   return (
     <div
       onDoubleClick={handleDoubleClick}
-      className="card w-[345px] flex justify-center flex-wrap items-center h-[470px] bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px]"
-      data-aos="fade-up"
+      className={`card ${
+        viewMode === "grid"
+          ? "w-[345px] h-[470px] flex-wrap"
+          : viewMode === "flex"
+          ? "w-full h-[310px] items-center flex-row"
+          : "w-[345px] h-[470px] justify-center flex-wrap"
+      }  flex justify-center bg-white dark:bg-gray-800 border border-[#B5B5C380] dark:border-gray-700 rounded-[10px] overflow-hidden`}
     >
       <Image
         src={ImgSrc}
@@ -94,7 +101,7 @@ export const News: React.FC<LandingNewsProps> = ({
           {title}
         </h3>
         <div className="mt-2 w-[90%] h-auto flex items-center justify-between">
-          <div className="bg-[#5751E1] w-auto h-auto rounded-[30px] text-white p-1">
+          <div className="bg-[#5751E1] w-auto h-auto rounded-[30px] text-[13px] text-white p-[6px]">
             {Catregory}
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -126,9 +133,7 @@ export const News: React.FC<LandingNewsProps> = ({
               onClick={handleLike}
               className={`w-[70px] h-[35px] bg-[#EFEFF1] dark:bg-gray-700 rounded-[30px] flex items-center justify-center `}
             >
-              <FaThumbsDown
-                className={"w-6 h-6  text-gray-600"}
-              />
+              <FaThumbsDown className={"w-6 h-6  text-gray-600"} />
               {dislikesCount}
             </button>
           </div>

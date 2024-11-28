@@ -21,9 +21,10 @@ interface News {
 
 interface NewsWrapperProps {
   newsList: News[];
+  viewMode: "flex" | "grid";
 }
 
-export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
+export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList , viewMode}) => {
   return (
     <>
       {newsList ? (
@@ -31,6 +32,7 @@ export const NewsWrapper: React.FC<NewsWrapperProps> = ({ newsList }) => {
           <News
             key={index}
             Id={item.id}
+            viewMode={viewMode}
             title={item.title}
             Img={item.currentImageAddressTumb}
             Date={item.insertDate}

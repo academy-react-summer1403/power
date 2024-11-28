@@ -17,7 +17,7 @@ import { CourseWrapper } from "@/components/Course/CourseWrapper";
 import Pagination from "@/components/Course/Pagination";
 import { FilterSection } from "@/components/Course/FilterSection";
 import { useLocation } from "react-router-dom";
-import CountUp from 'react-countup'
+import CountUp from "react-countup";
 import { GetTeacher } from "@/core/services/api/landing";
 
 type Filter = {
@@ -28,7 +28,7 @@ type Filter = {
   courseLevel: string;
   costRange: [number, number];
   PageNumber: number;
-  teacherId?: number; 
+  teacherId?: number;
 };
 
 export const CourseList: React.FC = () => {
@@ -42,6 +42,7 @@ export const CourseList: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [teachers, setTeachers] = useState<any[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "flex">("grid");
 
   const location = useLocation();
 
@@ -95,18 +96,18 @@ export const CourseList: React.FC = () => {
   }, [filter, currentPage]);
 
   // Handle Filter Change
-const handleFilterChange = (
-  e: React.ChangeEvent<HTMLInputElement> | { name: string; value: any }
-) => {
-  if ("target" in e) {
-    const { name, value } = e.target;
-    setFilter((prev) => ({ ...prev, [name]: value }));
-  } else {
-    const { name, value } = e; 
-    setFilter((prev) => ({ ...prev, [name]: value }));
-  }
-  setCurrentPage(1);
-};
+  const handleFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement> | { name: string; value: any }
+  ) => {
+    if ("target" in e) {
+      const { name, value } = e.target;
+      setFilter((prev) => ({ ...prev, [name]: value }));
+    } else {
+      const { name, value } = e;
+      setFilter((prev) => ({ ...prev, [name]: value }));
+    }
+    setCurrentPage(1);
+  };
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const values = e.target.value.split(",");
@@ -124,9 +125,9 @@ const handleFilterChange = (
       courseType: "",
       courseLevel: "",
       costRange: [0, 1000000],
-      teacherId: [], 
+      teacherId: [],
     });
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   // Handle Sorting
@@ -183,8 +184,8 @@ const handleFilterChange = (
       const currentTeacherIds = prev.teacherId || [];
       const updatedTeacherIds = currentTeacherIds.includes(teacherId)
         ? currentTeacherIds.filter((id) => id !== teacherId)
-        : [...currentTeacherIds, teacherId]; 
-  
+        : [...currentTeacherIds, teacherId];
+
       return { ...prev, teacherId: updatedTeacherIds };
     });
   };
@@ -198,7 +199,10 @@ const handleFilterChange = (
     }
   };
 
-  
+  const handleViewChange = (mode: "flex" | "grid") => {
+    setViewMode(mode);
+  };
+
   return (
     <>
       <Header />
@@ -223,7 +227,7 @@ const handleFilterChange = (
             <div className="w-full h-[50px] flex justify-between">
               <div className=" hidden lg:flex items-center gap-2 justify-center">
                 <CountUp end={totalCount} duration={15} />
-                 دوره در دسترس است
+                دوره در دسترس است
               </div>
               <div className="flex items-center gap-3">
                 <p> مرتب سازی بر اساس: </p>
@@ -245,15 +249,41 @@ const handleFilterChange = (
                   <option value="courseRate">بروز ترین</option>
                 </select>
 
-                <button className="w-10 h-10 flex justify-center items-center bg-[#5751E1]  rounded">
-                  <Image src={FlexListPic} alt="" />
+                <button
+                  className={`w-10 h-10 flex justify-center items-center ${
+                    viewMode === "grid"
+                      ? "bg-[#5751E1] "
+                      : "border border-[#6196EA]"
+                  } rounded`}
+                  onClick={() => handleViewChange("grid")}
+                >
+                  <Image
+                    className={`                    ${
+                      viewMode === "grid" ? " " : " brightness-0"
+                    } `}
+                    src={FlexListPic}
+                    alt=""
+                  />
                 </button>
-                <button className="w-10 h-10 flex justify-center items-center border border-[#6196EA] rounded">
-                  <Image src={GridListPic} alt="" />
+                <button
+                  className={`w-10 h-10 flex justify-center items-center ${
+                    viewMode === "flex"
+                      ? "bg-[#5751E1] "
+                      : "border border-[#6196EA]"
+                  } rounded`}
+                  onClick={() => handleViewChange("flex")}
+                >
+                  <Image
+                    className={`                    ${
+                      viewMode === "grid" ? "  " : "brightness-200"
+                    } `}
+                    src={GridListPic}
+                    alt=""
+                  />
                 </button>
               </div>
             </div>
-            <CourseWrapper stateTopCourse={courses} />
+            <CourseWrapper viewMode={viewMode} stateTopCourse={courses} />
             <Pagination
               totalCount={totalCount}
               currentPage={currentPage}

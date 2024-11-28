@@ -26,14 +26,16 @@ interface CourseType {
 
 interface CourseWrapperProps {
     stateTopCourse: CourseType[];
+    viewMode: "flex" | "grid";
 }
 
-export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) => {
+export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse , viewMode }) => {
     return (
         <>
             {stateTopCourse && stateTopCourse.length > 0 ? (
                 stateTopCourse.map((item , index) => (
                     <Course
+                        viewMode={viewMode}
                         key={index} 
                         tumbImageAddress={item.tumbImageAddress}
                         title={item.title}

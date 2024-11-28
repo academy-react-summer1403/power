@@ -6,8 +6,11 @@ import { NewsWrapper } from "@/components/News/NewsWrapper";
 import { NewsPagination } from "@/components/News/newsPagination";
 import { getNews, getPaperCat } from "@/core/services/api/news";
 import { NewsFilterSection } from "@/components/News/newsFilterSection";
+import FlexListPic from "@/assets/CourseList/flex.png";
+import GridListPic from "@/assets/CourseList/grid.svg";
 import { useLocation } from "react-router-dom";
-import CountUp from 'react-countup'
+import CountUp from "react-countup";
+import Image from "next/image";
 
 type Filter = {
   search: string;
@@ -23,6 +26,7 @@ export const NewsListPage: React.FC = () => {
   const [categoriesState, setCategories] = useState<Array<any>>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [viewMode, setViewMode] = useState<"grid" | "flex">("grid");
   const location = useLocation();
   const [filter, setFilter] = useState<Filter>({
     search: new URLSearchParams(location.search).get("search") || "",
@@ -87,6 +91,10 @@ export const NewsListPage: React.FC = () => {
     });
   };
 
+  const handleViewChange = (mode: "flex" | "grid") => {
+    setViewMode(mode);
+  };
+
   return (
     <>
       <Header />
@@ -102,7 +110,7 @@ export const NewsListPage: React.FC = () => {
           />
           <div className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
-            <div className=" hidden lg:flex items-center gap-2 justify-center">
+              <div className=" hidden lg:flex items-center gap-2 justify-center">
                 <CountUp end={totalCount} duration={15} />
                 خبر در دسترس است
               </div>
@@ -116,16 +124,48 @@ export const NewsListPage: React.FC = () => {
                   <option value="Popularity">محبوبیت</option>
                   <option value="Date">تاریخ</option>
                 </select>
+                <button
+                  className={`w-10 h-10 flex justify-center items-center ${
+                    viewMode === "grid"
+                      ? "bg-[#5751E1] "
+                      : "border border-[#6196EA]"
+                  } rounded`}
+                  onClick={() => handleViewChange("grid")}
+                >
+                  <Image
+                    className={`                    ${
+                      viewMode === "grid" ? " " : " brightness-0"
+                    } `}
+                    src={FlexListPic}
+                    alt=""
+                  />
+                </button>
+                <button
+                  className={`w-10 h-10 flex justify-center items-center ${
+                    viewMode === "flex"
+                      ? "bg-[#5751E1] "
+                      : "border border-[#6196EA]"
+                  } rounded`}
+                  onClick={() => handleViewChange("flex")}
+                >
+                  <Image
+                    className={`                    ${
+                      viewMode === "grid" ? "  " : "brightness-200"
+                    } `}
+                    src={GridListPic}
+                    alt=""
+                  />
+                </button>
               </div>
             </div>
-            <div className="flex h-auto mb-[450px] lg:h-[1475px] items-start flex-wrap justify-center gap-4">
-              <NewsWrapper newsList={news} />
+            <div className="flex h-auto mb-[450px]  items-start flex-wrap justify-center gap-4">
+              <NewsWrapper viewMode={viewMode} newsList={news} />
             </div>
-              <NewsPagination
-                totalCount={totalCount}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
+            <NewsPagination
+              totalCount={totalCount}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
           </div>
         </div>
       </div>

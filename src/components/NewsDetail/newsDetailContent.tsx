@@ -11,8 +11,12 @@ import DisLikePic from "@/assets/NewsDetail/dislike.png";
 import CommentPic from "@/assets/NewsDetail/comment.png";
 import React, { useEffect, useState } from "react";
 import { DateConvert } from "@/core/services/utils/date";
+import { AddDisLikeNews, AddLikeNews } from "@/core/services/api/news";
+import { getItem } from "@/core/services/common/storage.services";
+import toast from "react-hot-toast";
 
 interface NewsDetail {
+  id: number;
   title: string;
   miniDescribe: string;
   describe: string;
@@ -22,6 +26,9 @@ interface NewsDetail {
   currentView: number;
   commentsCount: number;
   newsCatregoryName: string;
+  currentLikeCount: number;
+  currentDissLikeCount: number;
+  currentUserIsLike: boolean;
 }
 
 interface NewsDetailContentProps {
@@ -39,6 +46,11 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
   sortOption,
   comment,
 }) => {
+  const [userLiked, setUserLiked] = useState(detail?.currentUserIsLike);
+  const [likesCount, setLikesCount] = useState(detail?.currentLikeCount);
+  const [dislikesCount, setDislikesCount] = useState(
+    detail?.currentDissLikeCount
+  );
   const [readingTime, setReadingTime] = useState<string>("");
   const [showAllComments, setShowAllComments] = useState(false);
 
@@ -59,9 +71,37 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
   const commentsToShow = showAllComments ? comment : comment.slice(0, 4);
 
   const ImgSrc =
-  detail?.currentImageAddressTumb  && (detail?.currentImageAddressTumb .startsWith("/") || detail?.currentImageAddressTumb .startsWith("http"))
-    ? detail?.currentImageAddressTumb 
-    : DefaultPic;
+    detail?.currentImageAddressTumb &&
+    (detail?.currentImageAddressTumb.startsWith("/") ||
+      detail?.currentImageAddressTumb.startsWith("http"))
+      ? detail?.currentImageAddressTumb
+      : DefaultPic;
+
+  const handleLike = async () => {
+    if (getItem("token")) {
+      if (userLiked) {
+        const res = await AddDisLikeNews(detail?.id);
+        if (res.success == true) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.ErrorMessage);
+        }
+        setUserLiked(false);
+        setLikesCount((prevCount) => prevCount - 1);
+      } else {
+        const res = await AddLikeNews(detail?.id);
+        if (res.success == true) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.ErrorMessage);
+        }
+        setUserLiked(true);
+        setLikesCount((prevCount) => prevCount + 1);
+      }
+    } else {
+      toast.error("لطفا ابتدا وارد شوید");
+    }
+  };
 
   return (
     <>
@@ -104,8 +144,8 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
       <div className="w-[90%] h-[110px] overflow-y-auto text-[#6D6C80] dark:text-gray-300">
         {detail?.miniDescribe}
       </div>
-      <div className="w-[85%] h-[150px] flex justify-center items-center bg-[#EFEEFE] dark:bg-gray-700 border-r-[6px] border-[#5751E1]">
-        <div className="w-[70%] h-full gap-14 content-center p-2">
+      <div className=" w-[85%] h-[150px] flex justify-center items-center bg-[#EFEEFE] dark:bg-gray-700 border-r-[6px] border-[#5751E1]">
+        <div className="overflow-hidden w-[70%] h-full gap-14 content-center p-2">
           {detail?.describe.length > 100
             ? `${detail?.describe.substring(0, 100)}...`
             : detail?.describe}
@@ -120,10 +160,18 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
           آیا از این مقاله راضی بودید؟
         </p>
         <div className="flex gap-4">
-          <div className="w-9 h-9 rounded-full bg-[#EFEFF1] dark:bg-[#5751E1] flex justify-center items-center cursor-pointer">
+          <div
+            className="w-auto h-9 p-[6px] rounded-full bg-[#EFEFF1] dark:bg-[#5751E1] flex justify-center items-center cursor-pointer"
+            onClick={handleLike}
+          >
+            {likesCount}
             <Image src={LikePic} className="w-5 h-6" alt="Like" />
           </div>
-          <div className="w-9 h-9 rounded-full bg-[#EFEFF1] dark:bg-[#5751E1] flex justify-center items-center cursor-pointer">
+          <div
+            className="w-auto p-[6px] h-9 rounded-full bg-[#EFEFF1] dark:bg-[#5751E1] flex justify-center items-center cursor-pointer"
+            onClick={handleLike}
+          >
+            {dislikesCount}
             <Image src={DisLikePic} className="w-5 h-6" alt="Dislike" />
           </div>
         </div>
@@ -136,17 +184,19 @@ export const NewsDetailContent: React.FC<NewsDetailContentProps> = ({
         <h1 className="text-[#161439] dark:text-white mt-8 mb-8 w-full text-[24px]">
           نظر {detail?.commentsCount}
         </h1>
-        <div className="flex mb-4">
-          <select
-            value={sortOption}
-            onChange={(e) => handleSortChange(e.target.value)}
-            className="rounded-xl border p-2 border-gray-500 w-52 h-auto"
-          >
-            <option value="newest">جدیدترین</option>
-            <option value="mostLiked">محبوب‌ترین</option>
-            <option value="leastLiked">کمترین لایک</option>
-          </select>
-        </div>
+        {comment.length > 4 && (
+          <div className="flex mb-4">
+            <select
+              value={sortOption}
+              onChange={(e) => handleSortChange(e.target.value)}
+              className="rounded-xl border p-2 border-gray-500 w-52 h-auto"
+            >
+              <option value="newest">جدیدترین</option>
+              <option value="mostLiked">محبوب‌ترین</option>
+              <option value="leastLiked">کمترین لایک</option>
+            </select>
+          </div>
+        )}
         <div className="w-full h-auto overflow-y-scroll">
           <NewsCommentWrapper Comment={commentsToShow} />
         </div>
