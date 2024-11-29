@@ -158,7 +158,7 @@ export const NewsListPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            <div className="flex h-auto mb-[450px]  items-start flex-wrap justify-center gap-4">
+            <div className="flex h-auto items-start flex-wrap justify-center gap-4">
               <NewsWrapper viewMode={viewMode} newsList={news} />
             </div>
             <NewsPagination

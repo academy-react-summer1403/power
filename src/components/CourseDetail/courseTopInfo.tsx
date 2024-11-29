@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { DateConvert } from "@/core/services/utils/date";
 import StudentPic from "@/assets/CourseDetail/student.png";
 import CalenderPic from "@/assets/CourseDetail/date.png";
@@ -25,6 +27,28 @@ export const CourseTopInfo: React.FC<CourseInfoProps> = ({
   const [localUserLike, setLocalUserLike] = useState(detail?.currentUserLike);
   const [localRate, setLocalRate] = useState(detail?.currentUserRateNumber);
   const [loading, setLoading] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    setLoading(true);
+    try {
+      const element = document.body; 
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true, 
+      });
+
+      const pdf = new jsPDF("p", "mm", "a4"); 
+      const imgData = canvas.toDataURL("image/png");
+      const imgWidth = 210; // عرض A4
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; 
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save(`${detail.title}.pdf`); 
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLike = async () => {
     if(getItem("token")){
@@ -188,6 +212,12 @@ export const CourseTopInfo: React.FC<CourseInfoProps> = ({
             </div>
           ))}
         </div>
+        <button
+        onClick={handleDownloadPDF}
+        className="bg-[#5751E1] text-white rounded-xl shadow-[2px_3px_0_0] shadow-[#050071] p-2 h-auto"
+      >
+        {loading ? "در حال آماده‌سازی..." : "دانلود PDF"}
+      </button>
         <button
           onClick={handleAddToFavorites}
           className="bg-[#5751E1] text-white rounded-xl shadow-[2px_3px_0_0] shadow-[#050071] p-2 h-auto"

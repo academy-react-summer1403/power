@@ -23,6 +23,8 @@
     "framer-motion": "^11.11.9",
     "google-map-react": "^2.2.1",
     "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "leaflet": "^1.9.4",
     "next": "^15.0.0-canary.203",
     "notificationapi-node-server-sdk": "^2.2.1",
