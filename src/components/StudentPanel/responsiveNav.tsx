@@ -46,6 +46,9 @@ export const ResponsiveNav = () => {
           <Link to="settings" className="block text-sm text-white mb-2">
             تنظیمات امنیتی
           </Link>
+          <Link to="jobs" className="block text-sm text-white mb-2">
+            کار ها
+          </Link>
           <button
             className="block text-sm text-red-500"
             onClick={() => setIsModalOpen(true)} 

@@ -118,3 +118,12 @@ export const deleteProfileImage = async (imgId: number) => {
     return false;
   }
 };
+
+export const GetJobs = async () => {
+  try {
+    const res = await http.get("/SharePanel/GetMyJobHistories")
+    return res
+  } catch (error) {
+    return false;
+  }
+}

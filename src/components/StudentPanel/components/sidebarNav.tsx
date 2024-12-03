@@ -8,6 +8,7 @@ import {
   FaHeart,
   FaCog,
 } from "react-icons/fa";
+import { IoBagRemoveSharp } from "react-icons/io5";
 
 interface SidebarNavProps {
   getLinkClassName: (path: string) => string;
@@ -58,11 +59,19 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ getLinkClassName }) => {
           <span className=" hidden lg:inline-block">علاقه مندی ها</span>
         </Link>
         <Link
+          title="کار ها"
+          to="jobs"
+          className={getLinkClassName("/StudentPanel/favorites")}
+        >
+          <FaHeart className="mr-2" />
+          <span className=" hidden lg:inline-block">کار ها</span>
+        </Link>
+        <Link
           to="settings"
           title="تنظیمات امنیتی"
           className={getLinkClassName("/StudentPanel/settings")}
         >
-          <FaCog className="mr-2" />
+          <IoBagRemoveSharp className="mr-2" />
           <span className=" hidden lg:inline-block">تنظیمات امنیتی</span>
         </Link>
       </nav>

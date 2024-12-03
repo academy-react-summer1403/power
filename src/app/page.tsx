@@ -25,6 +25,7 @@ import { TeacherList } from "@/pages/teacherList";
 import { StartCourseNotifier } from "@/components/CourseNotif";
 import { TeacherDetail } from "@/pages/teacherDetail";
 import { Contact } from "@/pages/contact";
+import Jobs from "@/components/StudentPanel/jobs";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -81,6 +82,7 @@ export default function Home() {
           <Route path="comments" element={<Comments />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="jobs" element={<Jobs />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
