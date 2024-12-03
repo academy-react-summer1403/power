@@ -15,6 +15,7 @@ export const getallCourseList = async () => {
 };
 export const getallbypgCourseList = async (
   sort: string,
+  SortType: string,
   search: string,
   cat: string,
   type: string,
@@ -26,6 +27,7 @@ export const getallbypgCourseList = async (
 ) => {
   try {
     const queryParams = [];
+    if (SortType) queryParams.push(`SortType=${SortType}`);
     if (page) queryParams.push(`PageNumber=${page}`);
     if (search) queryParams.push(`Query=${search}`);
     if (level) queryParams.push(`courseLevelId=${level}`);

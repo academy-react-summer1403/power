@@ -38,6 +38,7 @@ interface TopCourseProps {
   userLikeId: string;
   userIsLiked: boolean;
   userIsDissLiked: boolean;
+  courseRate: number;
   viewMode: "flex" | "grid";
 }
 
@@ -57,6 +58,7 @@ export const Course: React.FC<TopCourseProps> = ({
   userIsLiked,
   userIsDissLiked,
   viewMode,
+  courseRate
 }) => {
   const navigate = useNavigate();
   const [localIsUserFavorite, setLocalIsUserFavorite] =

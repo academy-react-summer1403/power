@@ -18,6 +18,7 @@ interface CourseType {
     cost: string;
     courseId: number;
     typeName: string;
+    courseRate: number;
     isUserFavorite: boolean;
     userLikeId: string;
     userIsLiked: boolean;
@@ -39,6 +40,7 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse , v
                         key={index} 
                         tumbImageAddress={item.tumbImageAddress}
                         title={item.title}
+                        courseRate={item.courseRate}
                         date={item.lastUpdate}
                         Hours={item.Hours}
                         NumerOfLessons={item.levelName} 

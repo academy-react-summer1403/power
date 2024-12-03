@@ -23,6 +23,7 @@ import { GetTeacher } from "@/core/services/api/landing";
 type Filter = {
   search: string;
   sort: string;
+  SortType: string;
   category: string[];
   courseType: string;
   courseLevel: string;
@@ -50,6 +51,7 @@ export const CourseList: React.FC = () => {
   const [filter, setFilter] = useState<Filter>({
     search: new URLSearchParams(location.search).get("search") || "",
     sort: "",
+    SortType: "",
     category: [],
     courseType: "",
     courseLevel: "",
@@ -61,6 +63,7 @@ export const CourseList: React.FC = () => {
   const fetchCourses = async () => {
     const { courseFilterDtos, totalCount } = await getallbypgCourseList(
       filter.sort,
+      filter.SortType,
       filter.search,
       filter.category,
       filter.courseType,
@@ -121,6 +124,7 @@ export const CourseList: React.FC = () => {
     setFilter({
       search: "",
       sort: "",
+      SortType: "",
       category: [],
       courseType: "",
       courseLevel: "",
@@ -139,6 +143,17 @@ export const CourseList: React.FC = () => {
     } else {
       setFilter((prev) => ({ ...prev, sort: "" }));
     }
+    setCurrentPage(1);
+  };
+
+  // Handle SortingType
+  const handleSortTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+
+    setFilter((prev) => ({
+      ...prev,
+      SortType: value || "",
+    }));
     setCurrentPage(1);
   };
 
@@ -232,21 +247,22 @@ export const CourseList: React.FC = () => {
               <div className="flex items-center gap-3">
                 <p> مرتب سازی بر اساس: </p>
                 <select
-                  name="sort"
-                  onChange={handleSortChange}
+                  name="SortType"
+                  onChange={handleSortTypeChange}
                   className="p-2 border rounded mt-2"
                 >
-                  <option value="cost">قیمت (صعودی)</option>
-                  <option value="cost">قیمت (نزولی)</option>
+                  <option value="">انتخاب کنید</option>
+                  <option value="ASC">قیمت (صعودی)</option>
+                  <option value="DESC">قیمت (نزولی)</option>
                 </select>
                 <select
                   name="sort"
                   onChange={handleSortChange}
                   className="p-2 border rounded mt-2 ml-2"
                 >
-                  <option value="likeCount">محبوبیت</option>
-                  <option value="Active">دوره فعال</option>
-                  <option value="courseRate">بروز ترین</option>
+                  <option value="courseRate">محبوبیت</option>
+                  <option value="cost">قیمت</option>
+                  <option value="lastUpdate">بروز ترین</option>
                 </select>
 
                 <button
