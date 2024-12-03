@@ -10,6 +10,7 @@ const nextConfig = {
       "www.vmtw.in",
       "miro.medium.com",
       "miro.medium",
+      "www.mckinsey.com"
     ],
   },
   css: ["./app/global.css"],

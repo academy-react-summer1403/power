@@ -45,7 +45,7 @@ export const getallbypgCourseList = async (
     if (costDown) queryParams.push(`CostDown=${costDown}`);
     if (teacherId) queryParams.push(`TeacherId=${teacherId}`);
 
-    const url = `/Home/GetCoursesWithPagination?RowsOfPage=12&${queryParams.join(
+    const url = `/Home/GetCoursesWithPagination?RowsOfPage=15&${queryParams.join(
       "&"
     )}`;
     const result = await axios.get(`${BaseUrl}${url}`);

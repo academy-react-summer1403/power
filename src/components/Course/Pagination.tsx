@@ -7,7 +7,7 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage, onPageChange }) => {
-  const totalPages = Math.ceil(totalCount / 12);
+  const totalPages = Math.ceil(totalCount / 15);
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
