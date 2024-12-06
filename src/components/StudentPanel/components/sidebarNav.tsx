@@ -61,9 +61,9 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ getLinkClassName }) => {
         <Link
           title="کار ها"
           to="jobs"
-          className={getLinkClassName("/StudentPanel/favorites")}
+          className={getLinkClassName("/StudentPanel/jobs")}
         >
-          <FaHeart className="mr-2" />
+          <IoBagRemoveSharp className="mr-2" />
           <span className=" hidden lg:inline-block">کار ها</span>
         </Link>
         <Link
@@ -71,7 +71,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ getLinkClassName }) => {
           title="تنظیمات امنیتی"
           className={getLinkClassName("/StudentPanel/settings")}
         >
-          <IoBagRemoveSharp className="mr-2" />
+          <FaCog className="mr-2" />
           <span className=" hidden lg:inline-block">تنظیمات امنیتی</span>
         </Link>
       </nav>

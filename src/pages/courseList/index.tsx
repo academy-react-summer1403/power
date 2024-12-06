@@ -19,6 +19,7 @@ import { FilterSection } from "@/components/Course/FilterSection";
 import { useLocation } from "react-router-dom";
 import CountUp from "react-countup";
 import { GetTeacher } from "@/core/services/api/landing";
+import { useTimeout } from "@/hook/UseTimeOut";
 
 type Filter = {
   search: string;
@@ -33,6 +34,8 @@ type Filter = {
 };
 
 export const CourseList: React.FC = () => {
+  const textTimeOut = useTimeout();
+
   const path = ["درروه های اموزشی"];
   const title = "همه ی دوره ها";
 
@@ -99,17 +102,9 @@ export const CourseList: React.FC = () => {
   }, [filter, currentPage]);
 
   // Handle Filter Change
-  const handleFilterChange = (
-    e: React.ChangeEvent<HTMLInputElement> | { name: string; value: any }
-  ) => {
-    if ("target" in e) {
-      const { name, value } = e.target;
-      setFilter((prev) => ({ ...prev, [name]: value }));
-    } else {
-      const { name, value } = e;
-      setFilter((prev) => ({ ...prev, [name]: value }));
-    }
-    setCurrentPage(1);
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFilter((prev) => ({ ...prev, search: e.target.value }));
+      setCurrentPage(1);
   };
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

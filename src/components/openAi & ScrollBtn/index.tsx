@@ -327,8 +327,8 @@ export const ChatBot: React.FC = () => {
         onClick={toggleDarkMode}
         className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${
           showScrollBtn
-            ? "bottom-10 md:bottom-8 right-40"
-            : "bottom-10 md:bottom-8 right-24"
+            ? "bottom-16 md:bottom-14 right-40"
+            : "bottom-16 md:bottom-14 right-24"
         } bg-[#514dad] text-white p-2 rounded-lg transition-all`}
       >
         {darkMode ? <FaSun /> : <FaMoon />}
@@ -364,7 +364,7 @@ export const ChatBot: React.FC = () => {
         <div
           title="باته پشتیبان"
           onClick={toggleChat}
-          className="hover:scale-105 fixed z-50 bottom-10 md:bottom-6 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
+          className="hover:scale-105 fixed z-50 bottom-14 md:bottom-10 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
         >
           <span
             role="img"
@@ -375,7 +375,7 @@ export const ChatBot: React.FC = () => {
           </span>
         </div>
       ) : (
-        <div className="fixed z-50 bottom-10 md:bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
+        <div className="fixed z-50 bottom-14 md:bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
           <div className="overflow-y-auto max-h-60">
             {messages.map((msg, index) => (
               <div
@@ -431,7 +431,7 @@ export const ChatBot: React.FC = () => {
         title="رفتن به بالا"
         onClick={scrollToTop}
         className={`fixed z-40 w-9 h-9 justify-center flex items-center right-24 bg-[#514dad] shadow-[4px_4px_0_0] text-white p-2 rounded-lg shadow-[#3D3D3D] transition-all transform ${
-          showScrollBtn ? " bottom-10 md:bottom-8 " : "  bottom-[-50px]"
+          showScrollBtn ? " bottom-14 md:bottom-14 " : "  bottom-[-50px]"
         } `}
       >
         <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt="" />

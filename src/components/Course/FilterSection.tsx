@@ -105,7 +105,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         <p className="text-[20px] font-semibold text-black dark:text-white">
           دسته بندی
         </p>
-        <ul className="flex mt-5 flex-col gap-2">
+        <ul className="flex mt-5 max-h-[150px] overflow-auto flex-col gap-2">
           {categories.map((category) => (
             <li key={category.id} className="flex items-center hover:p-1 transition-all gap-2">
               <input
@@ -153,7 +153,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         <p className="text-[20px] font-semibold text-black dark:text-white">
           سطح دوره
         </p>
-        <ul className="flex mt-5 flex-col gap-2">
+        <ul className="flex mt-5 flex-col max-h-[150px] overflow-auto gap-2">
           {courseLevels.map((level) => (
             <li key={level.id} className="flex  hover:p-1 transition-all  items-center gap-2">
               <input
@@ -175,7 +175,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         <p className="text-[20px] font-semibold text-black dark:text-white">
           مدرس
         </p>
-        <ul className="flex mt-5 flex-col gap-2">
+        <ul className="flex mt-5 flex-col max-h-[150px] overflow-auto gap-2">
           {teachers.map((teacher, index) => (
             <li
               key={`${teacher.teacherId}-${index}`}

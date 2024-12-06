@@ -11,6 +11,7 @@ import GridListPic from "@/assets/CourseList/grid.svg";
 import { useLocation } from "react-router-dom";
 import CountUp from "react-countup";
 import Image from "next/image";
+import { useTimeout } from "@/hook/UseTimeOut";
 
 type Filter = {
   search: string;
@@ -19,6 +20,7 @@ type Filter = {
 };
 
 export const NewsListPage: React.FC = () => {
+  const textTimeOut = useTimeout();
   const path = ["در رویدادهای خبری"];
   const title = "همه ی اخبار";
 
@@ -60,8 +62,10 @@ export const NewsListPage: React.FC = () => {
   }, [filter, currentPage]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter((prev) => ({ ...prev, search: e.target.value }));
-    setCurrentPage(1);
+    textTimeOut(() => {
+      setFilter((prev) => ({ ...prev, search: e.target.value }));
+      setCurrentPage(1);
+    }, 800);
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
