@@ -1,42 +1,46 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { getItem, removeItem } from "../common/storage.services";
+// services/axiosInstance.ts
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { clearStorage, getItem, removeItem } from '../common/storage.services';
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL; // تغییر به NEXT_PUBLIC برای دسترسی به ENV
+const baseURL = process.env.NEXT_PUBLIC_VITE_BASE_URL; 
+
 const instance = axios.create({
-  baseURL,
+  baseURL: baseURL,
 });
 
-interface ApiResponse<T> {
-  data: T;
-}
-
-const onSuccess = <T>(response: AxiosResponse<ApiResponse<T>>): T => {
-  return response.data.data; // فرض بر این است که api شما در این فرمت پاسخ می‌دهد
+const clearStorageWithTimeout = () => {
+  const twoHoursInSeconds = 2 * 60 * 60; 
+  setTimeout(() => {
+    clearStorage();
+  }, twoHoursInSeconds * 1000); 
 };
 
-const onError = (err: AxiosError) => {
-  if (err.response?.status === 401) {
-    removeItem("token");
-    window.location.pathname = "/Login";
-  }
-
-  // if (err?.response.status >= 400 && err.response.status < 500) {
-  //   alert("Client Error: " + err.response.status);
-  // }
-
-  return Promise.reject(err);
+const onSuccess = (response: AxiosResponse) => {
+  return response.data;
 };
 
-instance.interceptors.request.use((opt: AxiosRequestConfig) => {
-  const token = getItem("token");
+const onError = (error: AxiosError) => {
+  if (error.response) {
+    if (error.response.status === 401) {
+      clearStorage();
+    }
 
-  if (token) {
-    opt.headers.Authorization = `Bearer ${token}`;
+    if (error.response.status >= 404 && error.response.status < 500) {
+      alert(`Client Error: ${error.response.status}`);
+    }
   }
-  return opt;
-});
 
-// افزودن interceptor برای پاسخ‌ها
+  return Promise.reject(error);
+};
+
+
 instance.interceptors.response.use(onSuccess, onError);
-
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
+  const token = getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+clearStorageWithTimeout();
 export default instance;

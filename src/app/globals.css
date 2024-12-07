@@ -9,47 +9,24 @@
   --foreground: #171717;
 }
 
-::selection{
+::selection {
   background-color: transparent;
 }
 
-input::selection{
+input::selection {
   background-color: skyblue;
 }
 
-body {
+body , html  {
   font-family: IRANSans !important;
   font-weight: 500;
   direction: rtl;
-  background: #FFFFFF;
+  background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  transition: 0.5s;
 }
 
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
-}
-[data-title]:after {
-  content: attr(data-title);
-  background-color: white;
-  color: #111;
-  font-size: 14px;
-  position: absolute;
-  border-radius: 10px;
-  padding: 5px;
-  bottom: -1.8em;
-  white-space: nowrap;
-  box-shadow: 1px 1px 3px #3a3a3a;
-  opacity: 0;
-  border: 1px solid #111111;
-  z-index: 99999;
-  visibility: hidden;
-}
-[data-title] {
-  position: relative;
-}
 
 @layer utilities {
   .text-balance {
@@ -61,6 +38,204 @@ body {
   display: none;
 }
 
-.dark{
-  background:rgb(17, 16, 36)
+.dark {
+  background: rgb(17, 16, 36);
+  color: white;
 }
+.dark select{
+  background: transparent;
+}
+
+.dark option{
+  color: black;
+}
+
+input{
+  background: transparent;
+}
+
+select{
+  background: transparent;
+}
+input[type="checkbox"] {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 15px; 
+  height: 15px; 
+  border: 2px solid #5751E1; 
+  border-radius: 4px; 
+  outline: none; 
+  cursor: pointer; 
+  position: relative; 
+  background: white; 
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+input[type="checkbox"]:checked {
+  background: #5751E1; 
+  border-color: #5751E1; 
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 3px; 
+  left: 3px; 
+  width: 5px; 
+  height: 5px; 
+  background: white;
+  border-radius: 2px; 
+}
+
+input[type="checkbox"]:hover {
+  border-color: #5751E1;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%; 
+  height: 8px; 
+  background: #e0e0e0; 
+  border-radius: 4px; 
+  outline: none; 
+  transition: background 0.3s; 
+}
+
+input[type="range"]:hover {
+  background: #d0d0d0; 
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px; 
+  border: 2px solid #5751E1; 
+  border-radius: 50%; 
+  background: white; 
+  cursor: pointer; 
+  transition: background 0.3s, border-color 0.3s; 
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  border-color: #5751E1; 
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #5751E1;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  border-color: #5751E1;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #5751E1;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+input[type="range"]::-ms-thumb:hover {
+  border-color: #5751E1;
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  border: none;
+  color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: #e0e0e0; 
+  border-radius: 4px;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: #e0e0e0; 
+  border-radius: 4px;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  perspective: 1000px;
+}
+
+.card:hover {
+  transform: translateY(-10px) rotateX(10deg);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25);
+}
+
+.cover-image {
+  transition: transform 0.5s ease;
+}
+
+.card:hover .cover-image {
+  transform: scale(1.05);
+}
+
+.wrapper {
+  background-color: transparent;
+  transition: transform 0.5s ease;
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  transition: all 0.5s;
+}
+
+.wrapper::before {
+  top: 0;
+  height: 100%;
+}
+
+.wrapper::after {
+  bottom: 0;
+}
+
+.card:hover .wrapper::before,
+.card:hover .wrapper::after {
+  opacity: 1;
+}
+
+.title {
+  transition: transform 0.5s ease;
+}
+
+.card:hover .title {
+  transform: translateY(-15px);
+  color: #5751E1;
+}
+
+.dark .card:hover {
+  box-shadow: 0 30px 50px rgba(255, 255, 255, 0.15);
+}
+
+.dark .title {
+  color: #FFF;
+}
+
+.social-icon {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.social-icon:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0px 4px 10px rgba(87, 81, 225, 0.3);
+}
+

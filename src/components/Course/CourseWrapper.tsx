@@ -2,7 +2,7 @@
 import React from "react";
 import { Course } from "./index";
 
-interface Course {
+interface CourseType {
     id: number;
     title: string; 
     tumbImageAddress: string;
@@ -18,35 +18,49 @@ interface Course {
     cost: string;
     courseId: number;
     typeName: string;
+    courseRate: number;
     isUserFavorite: boolean;
+    userLikeId: string;
+    userIsLiked: boolean;
+    userIsDissLiked: boolean;
 }
 
 interface CourseWrapperProps {
-    stateTopCourse: Course[];
+    stateTopCourse: CourseType[];
+    viewMode: "flex" | "grid";
 }
 
-export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse }) => {
+export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse , viewMode }) => {
     return (
         <>
-            {stateTopCourse? stateTopCourse.map((item) => (
-                <Course
-                    key={item.id}
-                    tumbImageAddress={item.tumbImageAddress}
-                    title={item.title}
-                    date={item.lastUpdate}
-                    Hours={item.Hours}
-                    NumerOfLessons={item.levelName} 
-                    teacherName={item.teacherName}
-                    likeCount={item.likeCount}
-                    dissLikeCount={item.dissLikeCount}
-                    describe={item.describe}
-                    statusName={item.statusName}
-                    typeName={item.typeName}
-                    cost={item.cost}
-                    id={item.courseId}
-                    isUserFavorite={item.isUserFavorite}
-                />
-            )): <div className="text-center"> منتظر بمانید ... </div>}
+            {stateTopCourse && stateTopCourse.length > 0 ? (
+                stateTopCourse.map((item , index) => (
+                    <Course
+                        viewMode={viewMode}
+                        key={index} 
+                        tumbImageAddress={item.tumbImageAddress}
+                        title={item.title}
+                        courseRate={item.courseRate}
+                        date={item.lastUpdate}
+                        Hours={item.Hours}
+                        NumerOfLessons={item.levelName} 
+                        teacherName={item.teacherName}
+                        likeCount={item.likeCount}
+                        dissLikeCount={item.dissLikeCount}
+                        describe={item.describe}
+                        statusName={item.statusName}
+                        typeName={item.typeName}
+                        cost={item.cost}
+                        id={item.courseId}
+                        isUserFavorite={item.isUserFavorite}
+                        userLikeId={item.userLikeId}
+                        userIsLiked={item.userIsLiked}
+                        userIsDissLiked={item.userIsDissLiked}
+                    />
+                ))
+            ) : (
+                <div className="text-center"> منتظر بمانید ... </div>
+            )}
         </>
     );
 };

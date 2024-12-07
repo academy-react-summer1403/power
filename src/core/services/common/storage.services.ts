@@ -1,35 +1,41 @@
+
 const setItem = (key: string, value: any): void => {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    const serializedValue = JSON.stringify(value);
+    localStorage.setItem(key, serializedValue);
+  } catch (error) {
+    console.error(`Error setting item ${key} in localStorage:`, error);
+  }
 };
 
-const getItem = <T>(key: string): T | null => {
-  const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) as T : null;
-};
-
-const getItemGeneric = (key: string): string | null => {
-  return localStorage.getItem(key);
-};
-
-const setItemGeneric = (key: string, value: string): void => {
-  localStorage.setItem(key, value);
+const getItem = (key: string): any | null => {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error(`Error getting item ${key} from localStorage:`, error);
+    return null;
+  }
 };
 
 const removeItem = (key: string): boolean => {
-  if (!localStorage.getItem(key)) return false;
-  localStorage.removeItem(key);
-  return true;
+  try {
+    const exists = getItem(key);
+    if (exists === null) return false;
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    console.error(`Error removing item ${key} from localStorage:`, error);
+    return false;
+  }
 };
 
 const clearStorage = (): void => {
-  localStorage.clear();
+  try {
+    localStorage.clear();
+  } catch (error) {
+    console.error('Error clearing localStorage:', error);
+  }
 };
 
-export {
-  setItem,
-  getItem,
-  removeItem,
-  clearStorage,
-  setItemGeneric,
-  getItemGeneric,
-};
+export { setItem, clearStorage, getItem, removeItem };

@@ -10,7 +10,8 @@ interface Comment {
   likeCount: number;
   disslikeCount: number;
   insertDate: string;
-  id: number;
+  id: string;
+  courseId: string;
 }
 
 interface CourseCommentWrapperProps {
@@ -30,6 +31,7 @@ export const CourseCommentWrapper: React.FC<CourseCommentWrapperProps> = ({ Comm
           DisLikes={item.disslikeCount}
           Date={item.insertDate}
           id={item.id}
+          courseId={item.courseId}
         />
       ))}
     </>

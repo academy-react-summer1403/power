@@ -6,9 +6,10 @@ import { LoginValidation } from "@/core/validation/Auth";
 import toast from "react-hot-toast";
 import { setItem } from "@/core/services/common/storage.services";
 import { LoginApi } from "@/core/services/api/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContent } from "../authDefualt";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   type Container,
   type ISourceOptions,
@@ -18,8 +19,10 @@ import {
 import { loadSlim } from "@tsparticles/slim"; 
 
 export const LoginContainer = () => {
+  const navigate = useNavigate();
   const [init, setInit] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
@@ -121,6 +124,7 @@ export const LoginContainer = () => {
         setItem("token", send.token);
         setItem("id", send.id);
         setItem("apiKey", send.apiKey);
+        navigate("/StudentPanel/dashboard")
         toast.success("با موفقیت لاگین کردید");
       } else {
         toast.error(send.message);
@@ -129,93 +133,104 @@ export const LoginContainer = () => {
       toast.error("An error occurred while logging in.");
     } finally {
       setIsLoading(false); 
-      toast.dismiss(toastId); 
+      toast.dismiss(toastId);
     }
   };
 
   return (
-    <div className=" h-screen flex justify-center items-center relative overflow-hidden">
-      {init && (
-        <Particles
-          id="tsparticles"
-          particlesLoaded={particlesLoaded}
-          options={options}
-          className="absolute inset-0 z-0"
-        />
-      )}
-      <Formik
-        initialValues={{ phoneOrGmail: "", password: "", rememberMe: false }}
-        validationSchema={LoginValidation}
-        onSubmit={OnSubmit}
-      >
-        <Form>
-          <div className="relative z-10 flex justify-center items-center h-full">
-            <div data-aos='flip-up' className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 rounded-[50px] flex">
-              <div className="w-full overflow-y-auto md:w-[40%] h-full flex flex-wrap justify-center items-center bg-white rounded-[50px] p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
-                <h1 className="w-full text-[30px] md:text-[35px] 2xl:text-[40px]">
-                  خوش اومدید!
-                </h1>
-                <p className="w-full text-[#6D6C80] text-[16px] md:text-[20px] mb-4">
-                  برای ورود به حساب خود ایمیل یا شماره موبایل و رمز عبور خود را وارد کنید
-                </p>
-                <Field
-                  name="phoneOrGmail"
-                  className="bg-[#FBFBFB] w-full md:w-[480px] h-[60px] outline-none rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4"
-                  placeholder="ایمیل خود را وارد کنید..."
-                />
-                <ErrorMessage
-                  className="text-sm text-red-700"
-                  component={"p"}
-                  name="phoneOrGmail"
-                />
+<div className="h-screen flex justify-center items-center relative overflow-hidden dark:bg-gray-900">
+    {init && (
+      <Particles
+        id="tsparticles"
+        particlesLoaded={particlesLoaded}
+        options={options}
+        className="absolute inset-0 z-0"
+      />
+    )}
+    <Formik
+      initialValues={{ phoneOrGmail: "", password: "", rememberMe: false }}
+      validationSchema={LoginValidation}
+      onSubmit={OnSubmit}
+    >
+      <Form>
+        <div className="relative z-10 flex justify-center items-center h-full">
+          <div data-aos='flip-up' className="w-[95%] flex-wrap h-auto lg:flex-nowrap md:w-[85%] 2xl:w-[1645px] lg:h-[85%] bg-white/50 dark:bg-gray-800 rounded-[50px] flex">
+            <div className="w-full overflow-y-auto md:w-[40%] h-full flex flex-wrap justify-center items-center bg-white rounded-[50px] dark:bg-gray-700 p-8 md:p-20 shadow-[10px_8px_0_0] shadow-[#000000]">
+              <h1 className="w-full text-[30px] md:text-[35px] 2xl:text-[40px] text-gray-900 dark:text-white">
+                خوش اومدید!
+              </h1>
+              <p className="w-full text-[#6D6C80] dark:text-gray-300 text-[16px] md:text-[20px] mb-4">
+                برای ورود به حساب خود ایمیل یا شماره موبایل و رمز عبور خود را وارد کنید
+              </p>
+              <Field
+                name="phoneOrGmail"
+                className="bg-[#FBFBFB] dark:bg-gray-600 w-full md:w-[480px] h-[60px] outline-none rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4"
+                placeholder="ایمیل خود را وارد کنید..."
+              />
+              <ErrorMessage
+                className="text-sm text-red-700"
+                component={"p"}
+                name="phoneOrGmail"
+              />
+              <div className="flex items-center bg-[#FBFBFB] w-full md:w-[480px] h-[60px] rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4 mt-8">
                 <Field
                   name="password"
-                  className="bg-[#FBFBFB] mt-8  w-full md:w-[480px] h-[60px] outline-none rounded-[50px] shadow-[0_1px_2px_0] shadow-black p-4"
+                  type={showPassword ? "text" : "password"}
+                  className="p-2 outline-none flex-grow text-gray-900 dark:text-white"
                   placeholder="رمز عبور خود را وارد کنید..."
                 />
-                <ErrorMessage
-                  className="text-sm text-red-700"
-                  component={"p"}
-                  name="password"
-                />
-                <div className="w-full flex flex-col md:flex-row justify-between items-center mt-6 mb-4">
-                  <div className="flex items-center gap-2">
-                    <Field
-                      className="outline-none border-2 border-[#8E8E8E] rounded-sm"
-                      name="rememberMe"
-                      id="SavePass"
-                      type="checkbox"
-                    />
-                    <label htmlFor="SavePass" className="ml-2">
-                      مرا به خاطر بسپار
-                    </label>
-                  </div>
-                  <Link
-                    to="/Forget"
-                    className="text-[#6D6C80] text-sm md:text-base"
-                  >
-                    قراموشی رمز؟
-                  </Link>
-                </div>
-                <button 
-                  type="submit"
-                  className={`w-full md:w-[480px] h-[60px] rounded-[50px] bg-[#FFC224] border border-black shadow-[4px_4px_0_0] shadow-[#3D3D3D] ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={isLoading}
+                <button
+                  type="button"
+                  className="ml-2 text-gray-900 dark:text-white"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  {isLoading ? "در حال ورود..." : "ورود به حساب کاربری"}
+                  {showPassword ? <FaEye className="text-[#5751E1]"/> : <FaEyeSlash className="text-[#5751E1]"/>}
                 </button>
+              </div>
+              <ErrorMessage
+                className="text-sm text-red-700"
+                component={"p"}
+                name="password"
+              />
+
+              <div className="w-full flex flex-col md:flex-row justify-between items-center mt-6 mb-4">
+                <div className="flex items-center gap-2">
+                  <Field
+                    className="outline-none border-2 border-[#8E8E8E] dark:border-gray-500 rounded-sm"
+                    name="rememberMe"
+                    id="SavePass"
+                    type="checkbox"
+                  />
+                  <label htmlFor="SavePass" className="ml-2 dark:text-white">
+                    مرا به خاطر بسپار
+                  </label>
+                </div>
                 <Link
-                  to="/SignUp"
-                  className="flex justify-center mt-4 text-sm gap-1 font-semibold text-[20px] md:text-base"
+                  to="/Forget"
+                  className="text-[#6D6C80] dark:text-gray-300 text-sm md:text-base"
                 >
-                  حساب کاربری ندارید؟ <span className="font-bold text-[#050079]"> ثبت نام </span>
+                  فراموشی رمز؟
                 </Link>
               </div>
-              <AuthContent />
+              <button 
+                type="submit"
+                className={`w-full md:w-[480px] h-[60px] rounded-[50px] bg-[#FFC224] border border-black shadow-[4px_4px_0_0] shadow-[#3D3D3D] ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={isLoading}
+              >
+                {isLoading ? "در حال ورود..." : "ورود به حساب کاربری"}
+              </button>
+              <Link
+                to="/SignUp"
+                className="flex justify-center mt-4 text-sm gap-1 font-semibold text-[20px] md:text-base dark:text-gray-300"
+              >
+                حساب کاربری ندارید؟ <span className="font-bold text-[#050079] dark:text-[#FFC224]"> ثبت نام </span>
+              </Link>
             </div>
+            <AuthContent />
           </div>
-        </Form>
-      </Formik>
-    </div>
+        </div>
+      </Form>
+    </Formik>
+  </div>
   );
 };

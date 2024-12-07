@@ -3,10 +3,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { handleInputChange } from "@/core/validation/forbiddenWords";
-import { FaArrowCircleUp, FaMoon, FaSun } from "react-icons/fa";
-import UpArow from "@/assets/Icon.png"
+import {
+  FaArrowCircleUp,
+  FaMoon,
+  FaSun,
+  FaBatteryFull,
+  FaBatteryHalf,
+  FaBatteryEmpty,
+  FaWifi,
+} from "react-icons/fa";
+import { CiWifiOff } from "react-icons/ci";
+import UpArow from "@/assets/Icon.png";
 import { AiOutlineMessage } from "react-icons/ai";
 import Image from "next/image";
+import { useBattery, useNetworkState } from "react-use";
 
 interface Message {
   sender: "user" | "bot";
@@ -68,11 +78,11 @@ const responses: { [key: string]: string | string[] } = {
   "با من صحبت کن":
     "من اینجا هستم تا با شما صحبت کنم، احساس خود را با من در میان بگذارید.",
   گزارش:
-    "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  مشکل: "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
-  خطا: "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+    "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  مشکل: "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+  خطا: "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
   ایراد:
-    "لطفا به صفحهٔ تماس با ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
+    "لطفا به صفحهٔ درباره ما بروید و نظر خود را ارسال کنید تا در سریع‌ترین حالت این مشکل را حل کنم.",
   "تو انسان زنده‌ای؟": "خیر! من یک هوش مصنوعی هستم.",
   "میتونی به من چیزی یاد بدی؟":
     "بله! من می‌توانم در زمینه‌های مختلف به شما کمک کنم. دربارهٔ چه موضوعی نیاز به یادگیری دارید؟",
@@ -93,13 +103,15 @@ const responses: { [key: string]: string | string[] } = {
   "چطور دوره‌ها را خریداری کنم؟":
     "برای خرید دوره‌ها، لطفاً دوره مورد نظر خود را انتخاب کنید و مراحل پرداخت را دنبال کنید.",
   "چطور می‌توانم نظر خود را درباره دوره‌ها ارسال کنم؟":
-    "لطفاً به صفحهٔ تماس با ما بروید و فرم ارسال نظر را پر کنید.",
+    "لطفاً به صفحهٔ درباره ما بروید و فرم ارسال نظر را پر کنید.",
   "اینجا چه خبری است؟":
     "ما در اینجا دوره‌های جدید آموزشی و اخبار مرتبط با تکنولوژی را منتشر می‌کنیم. لطفاً سوالات خاص‌تری بپرسید!",
   "چه خبر؟":
     "اخبار جدید در اینجا در حال به روز رسانی است. آیا سوال خاصی دارید؟",
   "چه خبر": "اخبار جدید در اینجا در حال به روز رسانی است. آیا سوال خاصی دارید؟",
   "این سایت برای چی هست؟":
+    "این سایت به شما کمک می‌کند تا به سوالات خود پاسخ دهید و دوره‌های آموزشی را پیدا کنید.",
+  "این سایت برای چی اصلا":
     "این سایت به شما کمک می‌کند تا به سوالات خود پاسخ دهید و دوره‌های آموزشی را پیدا کنید.",
   "چرا این سایت طراحی شده است؟":
     "این سایت برای ارائه مشاوره و دوره‌های آموزشی به شما طراحی شده است.",
@@ -138,6 +150,11 @@ export const ChatBot: React.FC = () => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
   const [userMessageHistory, setUserMessageHistory] = useState<string[]>([]);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [progress, setProgress] = useState(0);
+
+    // Battery and Network state hooks
+    const batteryState = useBattery();
+    const networkState = useNetworkState();
 
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
@@ -155,23 +172,33 @@ export const ChatBot: React.FC = () => {
       hasWelcomed.current = true;
     }
 
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowScrollBtn(true);
-      } else {
-        setShowScrollBtn(false);
-      }
+    const handleScrollProgress = () => {
+      const totalHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const currentScroll = window.scrollY;
+      const scrollProgress = (currentScroll / totalHeight) * 100;
+      setProgress(scrollProgress);
+      setShowScrollBtn(scrollProgress > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScrollProgress);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScrollProgress);
     };
   }, []);
 
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -229,7 +256,7 @@ export const ChatBot: React.FC = () => {
       const keywords = ["گزارش", "مشکل", "خطا", "ایراد"];
       if (keywords.some((keyword) => userMessage.includes(keyword))) {
         botResponse =
-          "لطفا به صفحهٔ تماس با ما بروید و مشکل یا نظر خود را راجب سایت بگویید.";
+          "لطفا به صفحهٔ درباره ما بروید و مشکل یا نظر خود را راجب سایت بگویید.";
       }
 
       // Check for mentioned programming languages
@@ -263,7 +290,7 @@ export const ChatBot: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    handleInputChange(value, setInput, setErrorMessage); // اطمینان حاصل کنید که این تابع به درستی کار کند
+    handleInputChange(value, setInput, setErrorMessage);
   };
 
   const toggleChat = () => {
@@ -278,28 +305,66 @@ export const ChatBot: React.FC = () => {
   };
 
   const toggleDarkMode = () => {
-    document.body.classList.toggle("dark");
     setDarkMode((prevMode) => {
-        const newMode = !prevMode;
-        localStorage.setItem('darkMode', newMode.toString());
-        return newMode;
+      const newMode = !prevMode;
+      localStorage.setItem("darkMode", newMode.toString());
+      return newMode;
     });
-};
+  };
 
   return (
-    <div className={darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}>
-      <button 
-        title={darkMode ? 'لایت مد' : 'دارک مد'}
-        onClick={toggleDarkMode} 
-        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${showScrollBtn ? 'bottom-6 right-40' : 'bottom-6 right-24'} bg-[#514dad] text-white p-2 rounded-lg transition-all`}
+    <div
+      className={darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}
+    >
+      <div
+        className={`fixed z-50 bottom-0 left-0 h-3 ${
+          darkMode ? "bg-[#7875ac]" : "bg-[#15133a]"
+        } transition-all`}
+        style={{ width: `${progress}%` }}
+      />
+      <button
+        title={darkMode ? "لایت مد" : "دارک مد"}
+        onClick={toggleDarkMode}
+        className={`fixed z-40 w-9 h-9 justify-center flex items-center shadow-[4px_4px_0_0] shadow-[#3D3D3D]  ${
+          showScrollBtn
+            ? "bottom-16 md:bottom-14 right-40"
+            : "bottom-16 md:bottom-14 right-24"
+        } bg-[#514dad] text-white p-2 rounded-lg transition-all`}
       >
-        {darkMode ? <FaSun /> : <FaMoon />} 
+        {darkMode ? <FaSun /> : <FaMoon />}
       </button>
+      <div className="fixed bottom-4 left-4 z-50 flex items-center gap-4">
+        {batteryState.isSupported ? (
+          <div className="flex items-center gap-2">
+            {batteryState.level !== undefined && (
+              <>
+                {batteryState.level > 0.75 && <FaBatteryFull className="text-green-500" />}
+                {batteryState.level <= 0.75 && batteryState.level > 0.25 && (
+                  <FaBatteryHalf className="text-yellow-500" />
+                )}
+                {batteryState.level <= 0.25 && <FaBatteryEmpty className="text-red-500" />}
+                <span>{Math.round(batteryState.level * 100)}%</span>
+              </>
+            )}
+          </div>
+        ) : (
+          <span>Battery status not supported</span>
+        )}
+
+        <div className="flex items-center gap-2">
+          {networkState.online ? (
+            <FaWifi className="text-green-500" />
+          ) : (
+            <CiWifiOff  className="text-red-500" />
+          )}
+          <span>{networkState.online ? "Online" : "Offline"}</span>
+        </div>
+      </div>
       {!isChatOpen ? (
         <div
           title="باته پشتیبان"
           onClick={toggleChat}
-          className="hover:scale-105 fixed z-50 bottom-4 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
+          className="hover:scale-105 fixed z-50 bottom-14 md:bottom-10 right-4 bg-[#3d37af] shadow-[4px_6px_0_0] shadow-[#050071] rounded-full p-3 cursor-pointer"
         >
           <span
             role="img"
@@ -310,7 +375,7 @@ export const ChatBot: React.FC = () => {
           </span>
         </div>
       ) : (
-        <div className="fixed z-50 bottom-4 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
+        <div className="fixed z-50 bottom-14 md:bottom-6 right-4 shadow-lg rounded-lg w-80 sm:w-96 p-4 border border-gray-400 bg-gray-200">
           <div className="overflow-y-auto max-h-60">
             {messages.map((msg, index) => (
               <div
@@ -366,10 +431,10 @@ export const ChatBot: React.FC = () => {
         title="رفتن به بالا"
         onClick={scrollToTop}
         className={`fixed z-40 w-9 h-9 justify-center flex items-center right-24 bg-[#514dad] shadow-[4px_4px_0_0] text-white p-2 rounded-lg shadow-[#3D3D3D] transition-all transform ${
-          showScrollBtn ? " bottom-6 " : "  bottom-[-50px]"
+          showScrollBtn ? " bottom-14 md:bottom-14 " : "  bottom-[-50px]"
         } `}
       >
-        <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt='' />
+        <Image className="w-[10px] h-2 overflow-hidden" src={UpArow} alt="" />
       </button>
     </div>
   );

@@ -20,10 +20,19 @@ export const GetTopCoursesApi = async () => {
         console.log(error , "error")
     }
 }
+export const GetTopCoursesForDetail = async () => {
+    try {
+        const res = await axios.get(`${BaseUrl}/Home/GetCoursesTop/?Count=3`)
+        return res.data;
+    } catch (error) {
+        console.log(error , "error")
+    }
+}
 
 export const AddCourseFavoriteApi = async (CouseId : string) => {
     try {
-        await http.post('/Course/AddCourseFavorite' , CouseId)
+       const res = await http.post('/Course/AddCourseFavorite' , CouseId)
+       return res
     } catch (error) {
         console.log(error , "error")
     }
@@ -33,12 +42,12 @@ export const GetNewsForLanding = async () => {
       const res = await axios.get(`${BaseUrl}/News`); 
       return res.data;
     } catch (error) {
-      console.error(error, "error");
+      console.log(error, "error");
     }
   };
 
 
-export const GetTeacherForLanding = async () => { 
+export const GetTeacher = async () => { 
     try {
         const res = await axios.get(`${BaseUrl}/Home/GetTeachers`); 
         return res.data;
