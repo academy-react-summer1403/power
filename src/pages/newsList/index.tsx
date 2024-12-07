@@ -112,7 +112,7 @@ export const NewsListPage: React.FC = () => {
             handleCategoryChange={handleCategoryChange}
             handleSortChange={handleSortChange}
           />
-          <div className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
+          <div data-aos="flip-up" className="h-auto mb-20 w-[80%] flex flex-wrap gap-4">
             <div className="w-full h-[50px] flex justify-between">
               <div className=" hidden lg:flex items-center gap-2 justify-center">
                 <CountUp end={totalCount} duration={15} />

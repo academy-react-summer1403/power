@@ -233,7 +233,7 @@ export const CourseList: React.FC = () => {
             resetFilters={resetFilters}
           />
           <div className="h-auto w-[100%] flex flex-wrap gap-4">
-            <div className="w-full h-[50px] flex justify-between">
+            <div data-aos="flip-up"  className="w-full h-[50px] flex justify-between">
               <div className=" hidden lg:flex items-center gap-2 justify-center">
                 <CountUp end={totalCount} duration={15} />
                 دوره در دسترس است

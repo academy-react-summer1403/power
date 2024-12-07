@@ -26,7 +26,7 @@ export const NewsFilterSection: React.FC<NewsFilterSectionProps> = ({
   handleSortChange,
 }) => {
   return (
-    <div className="w-full md:w-[20%] p-4 flex flex-col gap-4 ">
+    <div data-aos="flip-left" className="w-full md:w-[20%] p-4 flex flex-col gap-4 ">
       <input
         type="text"
         name="query"

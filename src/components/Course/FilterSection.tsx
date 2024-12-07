@@ -82,7 +82,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   };
 
   return (
-    <div className="w-full transition-all md:w-[20%] h-auto p-4 flex flex-col gap-4 ">
+    <div data-aos="flip-left" className="w-full transition-all md:w-[20%] h-auto p-4 flex flex-col gap-4 ">
       <div className="flex transition-all flex-col gap-4">
         {isFilterActive() && (
           <button

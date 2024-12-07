@@ -156,7 +156,7 @@ export const Course: React.FC<TopCourseProps> = ({
             : viewMode === "flex"
             ? "w-full h-[310px] items-center flex-row"
             : "w-full sm:w-[350px] h-[470px] justify-center flex-wrap" 
-        } relative p-6 flex rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]`}
+        } relative p-6 overflow-hidden flex rounded-xl bg-white border border-[#B5B5C380] dark:bg-[#1F1F1F] dark:border-[#444444]`}
         onDoubleClick={handleDoubleClick}
       >
         <Image
