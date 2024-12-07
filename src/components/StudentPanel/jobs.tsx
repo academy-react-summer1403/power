@@ -96,6 +96,9 @@ const Jobs: React.FC = () => {
               <div className="w-[200px] text-center hidden lg:flex">
                 {job.aboutJob}
               </div>
+              <div className="w-[200px] text-center hidden lg:flex">
+                {job.companyName}
+              </div>
               <div className="w-[130px] text-center hidden lg:flex">
                 {DateConvert( job.workStartDate)}
               </div>

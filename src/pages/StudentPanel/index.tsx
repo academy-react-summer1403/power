@@ -54,7 +54,7 @@ export const StudentPanel = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center">
-      <div className="w-full  bg-white dark:bg-[#222222] rounded-2xl shadow-lg overflow-hidden flex h-full">
+      <div className="w-full  bg-white dark:bg-[#222222] shadow-lg overflow-hidden flex h-full">
         <aside className=" hidden md:w-[20%] min-w-[160px] lg:min-w-[310px] lg:w-[315px] h-full bg-[#5751E1] dark:bg-[#3e3e3e] lg:flex flex-col items-center p-4">
           <Profile profileSrc={getProfilePictureSrc()} name={name} />
           <SidebarNav getLinkClassName={getLinkClassName} />

@@ -19,7 +19,7 @@ import { FilterSection } from "@/components/Course/FilterSection";
 import { useLocation } from "react-router-dom";
 import CountUp from "react-countup";
 import { GetTeacher } from "@/core/services/api/landing";
-import { useTimeout } from "@/hook/UseTimeOut";
+import { useDebounce } from "@/hook/useDebounce";
 
 type Filter = {
   search: string;
@@ -34,8 +34,6 @@ type Filter = {
 };
 
 export const CourseList: React.FC = () => {
-  const textTimeOut = useTimeout();
-
   const path = ["درروه های اموزشی"];
   const title = "همه ی دوره ها";
 
@@ -47,9 +45,9 @@ export const CourseList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [teachers, setTeachers] = useState<any[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "flex">("grid");
-
+  
   const location = useLocation();
-
+  
   // State for filters
   const [filter, setFilter] = useState<Filter>({
     search: new URLSearchParams(location.search).get("search") || "",
@@ -62,7 +60,7 @@ export const CourseList: React.FC = () => {
     PageNumber: 1,
     teacherId: null,
   });
-
+  
   const fetchCourses = async () => {
     const { courseFilterDtos, totalCount } = await getallbypgCourseList(
       filter.sort,
@@ -79,6 +77,7 @@ export const CourseList: React.FC = () => {
     setCourses(courseFilterDtos || []);
     setTotalCount(totalCount);
   };
+  const debouncedSearch = useDebounce(filter.search , 800);
 
   const fetchFilterOptions = async () => {
     try {
@@ -99,7 +98,7 @@ export const CourseList: React.FC = () => {
     fetchFilterOptions();
     fetchCourses();
     fetchTeachers();
-  }, [filter, currentPage]);
+  }, [debouncedSearch , filter, currentPage ]);
 
   // Handle Filter Change
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
