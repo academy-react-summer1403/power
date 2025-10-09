@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 export const GetLandingApi = async () => {
     try {
-        const res = await axios.get(`${BaseUrl}/Home/LandingReport`)
+        const res = await axios.get(`${BaseUrl}Home/LandingReport`)
         return res.data;
     } catch (error) {
         console.log(error, "error")
@@ -14,7 +14,7 @@ export const GetLandingApi = async () => {
 
 export const GetTopCoursesApi = async () => {
     try {
-        const res = await axios.get(`${BaseUrl}/Home/GetCoursesTop/?Count=4`)
+        const res = await axios.get(`${BaseUrl}Home/GetCoursesTop/?Count=4`)
         return res.data;
     } catch (error) {
         console.log(error , "error")
@@ -22,7 +22,7 @@ export const GetTopCoursesApi = async () => {
 }
 export const GetTopCoursesForDetail = async () => {
     try {
-        const res = await axios.get(`${BaseUrl}/Home/GetCoursesTop/?Count=3`)
+        const res = await axios.get(`${BaseUrl}Home/GetCoursesTop/?Count=3`)
         return res.data;
     } catch (error) {
         console.log(error , "error")
@@ -39,7 +39,7 @@ export const AddCourseFavoriteApi = async (CouseId : string) => {
 }
 export const GetNewsForLanding = async () => { 
     try {
-      const res = await axios.get(`${BaseUrl}/News`); 
+      const res = await axios.get(`${BaseUrl}News`); 
       return res.data;
     } catch (error) {
       console.log(error, "error");
@@ -49,7 +49,7 @@ export const GetNewsForLanding = async () => {
 
 export const GetTeacher = async () => { 
     try {
-        const res = await axios.get(`${BaseUrl}/Home/GetTeachers`); 
+        const res = await axios.get(`${BaseUrl}Home/GetTeachers`); 
         return res.data;
     } catch (error) {
         console.log(error, "error");

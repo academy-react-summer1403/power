@@ -10,7 +10,7 @@ interface User {
 
 export const LoginApi = async (user : any) => {
     try {
-        const response = await http.post(`/Sign/Login`, user);
+        const response = await http.post(`Sign/Login`, user);
         return response; 
     } catch (error) {
         console.error(error, "Error");
@@ -20,7 +20,7 @@ export const LoginApi = async (user : any) => {
 
 export const SignUpS1Api = async (phoneOrGmail : string) => {
 try {
-    await axios.post(`${BaseUrl}/Sign/SendVerifyMessage` , phoneOrGmail)
+    await axios.post(`${BaseUrl}Sign/SendVerifyMessage` , phoneOrGmail)
 } catch (error) {
     console.log(error, "Error");
 }
@@ -29,7 +29,7 @@ try {
 
 export const SignUpS2Api = async (Code :  number) => {
 try {
-    await axios.post(`${BaseUrl}/Sign/VerifyMessage` , Code)
+    await axios.post(`${BaseUrl}Sign/VerifyMessage` , Code)
 } catch (error) {
     console.log(error, "Error");
 }
@@ -37,7 +37,7 @@ try {
 
 export const SignUpS3Api = async (OBJ :  string) => {
 try {
-    await axios.post(`${BaseUrl}/Sign/Register` , OBJ)
+    await axios.post(`${BaseUrl}Sign/Register` , OBJ)
 } catch (error) {
     console.log(error, "Error");
 }

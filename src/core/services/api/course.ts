@@ -4,7 +4,7 @@ import http from "../interceptor";
 
 export const getallCourseList = async () => {
   try {
-    const url = "/Home/GetCoursesWithPagination";
+    const url = "Home/GetCoursesWithPagination";
 
     const result = await axios.get(`${BaseUrl}${url}`);
     return result;
@@ -47,7 +47,7 @@ export const getallbypgCourseList = async (
     if (costDown) queryParams.push(`CostDown=${costDown}`);
     if (teacherId) queryParams.push(`TeacherId=${teacherId}`);
 
-    const url = `/Home/GetCoursesWithPagination?RowsOfPage=12&${queryParams.join(
+    const url = `Home/GetCoursesWithPagination?RowsOfPage=12&${queryParams.join(
       "&"
     )}`;
     const result = await axios.get(`${BaseUrl}${url}`);
@@ -80,7 +80,7 @@ export const getallbypgCourseListt = async (search: string) => {
     //console.log("Fetching started...");
 
     const result = await axios.get(
-      `${BaseUrl}/Home/GetCoursesWithPagination?Query=${search}`
+      `${BaseUrl}Home/GetCoursesWithPagination?Query=${search}`
     );
     return result;
   } catch (error) {
@@ -92,7 +92,7 @@ export const getCat = async () => {
   try {
     //console.log("Fetching started...");
 
-    const result = await axios.get(`${BaseUrl}/Home/GetTechnologies`);
+    const result = await axios.get(`${BaseUrl}Home/GetTechnologies`);
     return result.data;
   } catch (error) {
     console.log(error);
@@ -124,7 +124,7 @@ export const getCourseLevel = async () => {
 export const getCourseById = async (id: string) => {
   try {
     const result = await axios.get(
-      `${BaseUrl}/Home/GetCourseDetails?CourseId=${id}`
+      `${BaseUrl}Home/GetCourseDetails?CourseId=${id}`
     );
     return result.data;
   } catch (error) {
@@ -298,7 +298,7 @@ export const deleteLikedCourseCmnt = async (id: string) => {
 export const GetTeacherDetailById = async (id: string) => {
   try {
     const res = await axios.get(
-      `${BaseUrl}/Home/GetTeacherDetails?TeacherId=${id}`
+      `${BaseUrl}Home/GetTeacherDetails?TeacherId=${id}`
     );
     res.data;
   } catch (error) {
@@ -350,7 +350,7 @@ export const StudentAddPeyment = async (data : string) => {
 
 export const GetTeacherCourses = async (id : string) => {
   try {
-    const res = await http.get(`/Home/GetCoursesWithPagination?TeacherId=${id}`)
+    const res = await http.get(`Home/GetCoursesWithPagination?TeacherId=${id}`)
     return res
   } catch (error) {
     console.log(error ,"Error")

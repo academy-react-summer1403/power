@@ -80,7 +80,7 @@ export const getMyCourse = async () => {
 
 export const getNewCourse = async () => {
   try {
-    const res = await http.get("/Home/GetCoursesTop?Count=3")
+    const res = await http.get("Home/GetCoursesTop?Count=3")
     return res;
   } catch (error) {
     console.log(error , "error")

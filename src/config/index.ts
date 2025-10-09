@@ -1,1 +1,1 @@
-export const BaseUrl = ("https://classapi.sepehracademy.ir/api")
+export const BaseUrl = ("https://sepehracademy.liara.run/")

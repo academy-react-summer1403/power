@@ -26,7 +26,7 @@ const onError = (error: AxiosError) => {
     }
 
     if (error.response.status >= 404 && error.response.status < 500) {
-      alert(`Client Error: ${error.response.status}`);
+      // alert(`Client Error: ${error.response.status}`);
     }
   }
 

@@ -69,7 +69,7 @@ export const CourseInfo: React.FC<CourseInfoProps> = ({ course, AddCourseReserve
               {" "}
               <Image src={lessonPic} alt="" /> درس ها{" "}
             </p>
-            <h5 className="text-[#7F7E97]"> {course.techs.length} </h5>
+            <h5 className="text-[#7F7E97]"> {course.techs  ? course.techs.length : ""} </h5>
           </div>
           <div className="flex justify-between mt-4 items-center border-b border-[#D9D9D9] w-full h-[40px]">
             <p className="flex gap-1">

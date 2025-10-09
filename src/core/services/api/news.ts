@@ -19,7 +19,7 @@ export const getNews = async (
     if (sort) queryParams.push(`SortingCol=${sort}`);
     if (query) queryParams.push(`query=${query}`);
     if (catId) queryParams.push(`NewsCategoryId=${catId}`);
-    const url = `/News?&RowsOfPage=12&${queryParams.join("&")}`;
+    const url = `News?&RowsOfPage=12&${queryParams.join("&")}`;
     const result = await axios.get(`${BaseUrl}${url}`);
     return result.data; 
   } catch (error) {
@@ -30,7 +30,7 @@ export const getNews = async (
 
 export const getPaperCat = async (): Promise<Array<any> | null> => {
   try {
-    const result = await axios.get(`${BaseUrl}/News/GetListNewsCategory`);
+    const result = await axios.get(`${BaseUrl}News/GetListNewsCategory`);
     return result.data; 
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -40,7 +40,7 @@ export const getPaperCat = async (): Promise<Array<any> | null> => {
 
 export const getPaperDetail = async (id : string) => {
   try {
-    const result = await axios.get(`${BaseUrl}/News/${id}`);
+    const result = await axios.get(`${BaseUrl}News/${id}`);
 
     return result.data;
   } catch (error) {
@@ -51,7 +51,7 @@ export const getPaperDetail = async (id : string) => {
 export const getCommentById = async (id : string) => {
   try {
 
-    const result = await axios.get(`${BaseUrl}/News/GetNewsComments?NewsId=${id}`);
+    const result = await axios.get(`${BaseUrl}News/GetNewsComments?NewsId=${id}`);
 
     return result.data;
   } catch (error) {
@@ -61,7 +61,7 @@ export const getCommentById = async (id : string) => {
 };
 export const likedPaper = async (id : string) => {
   try {
-    const result = await http.post(`/News/NewsLike/${id}`);
+    const result = await http.post(`News/NewsLike/${id}`);
 
     return result;
   } catch (error) {
@@ -72,7 +72,7 @@ export const likedPaper = async (id : string) => {
 export const deletlikedPaper = async (id : string) => {
   console.log(id);
   try {
-    const result = await http.delete("/News/DeleteLikeNews", { data: id });
+    const result = await http.delete("News/DeleteLikeNews", { data: id });
     console.log("ss", data);
 
     return result;
@@ -84,7 +84,7 @@ export const deletlikedPaper = async (id : string) => {
 export const newsDisLiked = async (id : string) => {
   try {
     console.log("Fetching started...");
-    const result = await http.post(`/News/NewsDissLike/${id}`);
+    const result = await http.post(`News/NewsDissLike/${id}`);
 
     return result;
   } catch (error) {
@@ -95,7 +95,7 @@ export const newsDisLiked = async (id : string) => {
 export const newsFavorite = async (id : string) => {
   try {
     console.log("Fetching started...");
-    const result = await http.post(`/News/AddFavoriteNews?NewsId=${id}`);
+    const result = await http.post(`News/AddFavoriteNews?NewsId=${id}`);
     return result;
   } catch (error) {
     console.log(error);
@@ -105,7 +105,7 @@ export const newsFavorite = async (id : string) => {
 export const delNewsFavorite = async (id : string) => {
   try {
     console.log("Fetching started...");
-    const result = await http.delete("/News/DeleteFavoriteNews", { data: id });
+    const result = await http.delete("News/DeleteFavoriteNews", { data: id });
     return result;
   } catch (error) {
     console.log(error);
@@ -114,7 +114,7 @@ export const delNewsFavorite = async (id : string) => {
 };
 export const GetNewsCommentReplies = async (id : string) => {
   try {
-    const result = await http.get(`/News/GetRepliesComments?Id=${id}`);
+    const result = await http.get(`News/GetRepliesComments?Id=${id}`);
 
     return result;
   } catch (error) {
@@ -126,7 +126,7 @@ export const addNewsComment = async (comment : any) => {
   try {
     console.log("Fetching started...");
 
-    const result = await http.post("/News/CreateNewsComment", comment);
+    const result = await http.post("News/CreateNewsComment", comment);
 
     return result;
   } catch (error) {
@@ -136,7 +136,7 @@ export const addNewsComment = async (comment : any) => {
 };
 export const addPaperReplyComment = async (reply : string) => {
   try {
-    const result = await http.post("/News/CreateNewsReplyComment", reply);
+    const result = await http.post("News/CreateNewsReplyComment", reply);
 
     return result;
   } catch (error) {
@@ -159,7 +159,7 @@ export const getFavoriteNews = async () => {
 
 export const AddLikeNews = async (newsId: string) => {
   try {
-    const res = await http.post(`/News/NewsLike/${newsId}`); 
+    const res = await http.post(`News/NewsLike/${newsId}`); 
     return res;
   } catch (error) {
     console.log(error, "Error");
@@ -169,7 +169,7 @@ export const AddLikeNews = async (newsId: string) => {
 
 export const AddDisLikeNews = async (newsId: string) => {
   try {
-    const res = await http.post(`/News/NewsDissLike/${newsId}`);
+    const res = await http.post(`News/NewsDissLike/${newsId}`);
     return res; 
   } catch (error) {
     console.log(error, "Error");
