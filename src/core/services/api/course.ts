@@ -2,6 +2,15 @@ import axios from "axios";
 import { BaseUrl } from "@/config";
 import http from "../interceptor";
 
+type ApiResponse<T = any> = {
+  success?: boolean;
+  message?: string;
+  errorMessage?: string;
+  ErrorMessage?: string;
+  data?: T;
+  [key: string]: any;
+};
+
 export const getallCourseList = async () => {
   try {
     const url = "Home/GetCoursesWithPagination";
@@ -178,41 +187,36 @@ export const reserved = async () => {
     return null;
   }
 };
-export const liked = async (id: string) => {
+export const liked = async (id: string): Promise<ApiResponse> => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/Course/AddCourseLike?CourseId=${id}`);
-    //console.log(result);
-
-    return result;
+    return result.data as ApiResponse;
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error(error);
+    return { success: false, ErrorMessage: "Failed to like course", message: "Failed to like course" };
   }
 };
-export const disLiked = async (id: string) => {
+export const disLiked = async (id: string): Promise<ApiResponse> => {
   try {
     console.log("Fetching started...");
     const result = await http.post(`/Course/AddCourseDissLike?CourseId=${id}`);
-    //console.log(result);
-
-    return result;
+    return result.data as ApiResponse;
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error(error);
+    return { success: false, ErrorMessage: "Failed to dislike course", message: "Failed to dislike course" };
   }
 };
-export const deletliked = async (data: string) => {
+export const deletliked = async (data: string): Promise<ApiResponse> => {
   try {
     console.log("Fetching started...");
     const result = await http.delete(`/Course/DeleteCourseLike`, {
       data: data,
     });
-
-    return result;
+    return result.data as ApiResponse;
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error(error);
+    return { success: false, ErrorMessage: "Failed to delete like", message: "Failed to delete like" };
   }
 };
 export const favorite = async (a: string) => {
@@ -261,37 +265,33 @@ export const likedCourseCmnt = async (id: string) => {
     return [];
   }
 };
-export const disLikedCourseCmnt = async (id: string) => {
+export const disLikedCourseCmnt = async (id: string): Promise<ApiResponse> => {
   try {
     console.log("Fetching started...");
-    const result = await axios.post(
-      `${BaseUrl}/Course/AddCourseCommentDissLike?CourseCommandId=${id}`
-    );
-
-    return result;
+    const result = await axios.post(`${BaseUrl}/Course/AddCourseCommentDissLike?CourseCommandId=${id}`);
+    return result.data as ApiResponse;
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error(error);
+    return { success: false, ErrorMessage: "Failed to dislike comment", message: "Failed to dislike comment" };
   }
 };
-export const deleteCourseComment = async (id = String) => {
+export const deleteCourseComment = async (id: string): Promise<ApiResponse> => {
   try {
     await http.delete(`/Course/DeleteCourseComment?CourseCommandId=${id}`);
+    return { success: true, message: "Deleted" };
   } catch (error) {
-    console.log(error, "error");
+    console.error(error, "error");
+    return { success: false, ErrorMessage: "Failed to delete comment", message: "Failed to delete comment" };
   }
 };
-export const deleteLikedCourseCmnt = async (id: string) => {
+export const deleteLikedCourseCmnt = async (id: string): Promise<ApiResponse> => {
   try {
     console.log("Fetching started...");
-    const result = await axios.delete(
-      `${BaseUrl}/Course/DeleteCourseCommentLike?CourseCommandId=${id}`
-    );
-
-    return result;
+    const result = await axios.delete(`${BaseUrl}/Course/DeleteCourseCommentLike?CourseCommandId=${id}`);
+    return result.data as ApiResponse;
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error(error);
+    return { success: false, ErrorMessage: "Failed to delete comment like", message: "Failed to delete comment like" };
   }
 };
 // GetTeacherDetailForCourseDetail

@@ -114,7 +114,7 @@ export const Course: React.FC<TopCourseProps> = ({
 
     try {
       const loadingToast = toast.loading("Liking course...");
-      const res = await liked(id);
+      const res = await liked(String(id)); // <-- تبدیل به string
       if (res.success) {
         setLocalLikeCount((prev) => (likedByUser ? prev - 1 : prev + 1));
         if (dislikedByUser) {
@@ -132,12 +132,12 @@ export const Course: React.FC<TopCourseProps> = ({
     }
   };
 
-  const handleDislike = async () => {
+const handleDislike = async () => {
     if (!getItem("token")) return toast.error("لطفا ابتدا وارد سایت شوید");
 
     try {
       const loadingToast = toast.loading("Disliking course...");
-      const res = await disLiked(id);
+      const res = await disLiked(String(id)); // <-- تبدیل به string
       if (res.success) {
         setLocalDislikeCount((prev) => (dislikedByUser ? prev - 1 : prev + 1));
         if (likedByUser) {
@@ -154,7 +154,6 @@ export const Course: React.FC<TopCourseProps> = ({
       toast.error("Failed to dislike the course.");
     }
   };
-
   return (
     <>
       <div
