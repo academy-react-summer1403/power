@@ -18,6 +18,18 @@ import {
 } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim"; 
 
+interface LoginResponse {
+  success: boolean;
+  token: string;
+  id: string;
+  apiKey: string;
+  role: string;
+  name: string;
+  lastName: string;
+  phoneNumber: string;
+  message : string
+}
+
 export const LoginContainer = () => {
   const navigate = useNavigate();
   const [init, setInit] = useState(false);
@@ -119,7 +131,8 @@ export const LoginContainer = () => {
     const toastId = toast.loading("در حال ورود..."); 
 
     try {
-      const send = await LoginApi(user);
+      const response  = await LoginApi(user);
+      const send: LoginResponse = response.data;
       if (send.success) {
         setItem("token", send.token);
         setItem("id", send.id);

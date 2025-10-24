@@ -81,11 +81,19 @@ export const Course: React.FC<TopCourseProps> = ({
   const score = totalVotes > 0 ? 1 + 4 * likeRatio : 1;
 
   const AddCoursefavorite = async () => {
-    const data = { courseId: id };
     if (getItem("token")) {
       try {
         const loadingToast = toast.loading("Adding course to favorites...");
-        const res = await AddCourseFavoriteApi(data);
+        
+        // راه حل 1: اگر API رشته می‌خواد
+        await AddCourseFavoriteApi(id.toString());
+        
+        // یا راه حل 2: اگر API آبجکت می‌خواد اما تابع تعریف شده اشتباه هست
+        // await AddCourseFavoriteApi({ courseId: id });
+        
+        // یا راه حل 3: مستقیماً از axios استفاده کنید
+        // await axios.post("/api/favorites", { courseId: id });
+        
         setLocalIsUserFavorite(true);
         toast.success("Course added to favorites!");
         toast.dismiss(loadingToast);

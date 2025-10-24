@@ -22,7 +22,7 @@ import Dashboard from "@/components/StudentPanel/dashboard";
 import { Payment } from "@/pages/payment";
 import { Invoice } from "@/pages/invoice";
 import { TeacherList } from "@/pages/teacherList";
-import { StartCourseNotifier } from "@/components/CourseNotif";
+// import { StartCourseNotifier } from "@/components/CourseNotif/index";
 import { TeacherDetail } from "@/pages/teacherDetail";
 import { Contact } from "@/pages/contact";
 import Jobs from "@/components/StudentPanel/jobs";
@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <Router>
-      <StartCourseNotifier/>
+      {/* <StartCourseNotifier/> */}
       <ChatBot />
       <Routes>
         <Route path="/" element={<Landing />} />

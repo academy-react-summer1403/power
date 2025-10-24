@@ -23,6 +23,7 @@ interface CourseType {
     userLikeId: string;
     userIsLiked: boolean;
     userIsDissLiked: boolean;
+    numberOfStudents?: number; // اضافه کردن این property اختیاری
 }
 
 interface CourseWrapperProps {
@@ -56,6 +57,7 @@ export const CourseWrapper: React.FC<CourseWrapperProps> = ({ stateTopCourse , v
                         userLikeId={item.userLikeId}
                         userIsLiked={item.userIsLiked}
                         userIsDissLiked={item.userIsDissLiked}
+                        NumberOfStudents={item.numberOfStudents || 0} // اضافه کردن این خط
                     />
                 ))
             ) : (

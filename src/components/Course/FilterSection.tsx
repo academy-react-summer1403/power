@@ -26,15 +26,16 @@ interface Filter {
   courseType: string;
   courseLevel: string;
   costRange: [number, number];
+  teacherId: number[]; // اضافه کردن teacherId به interface
 }
 
 const initialFilter: Filter = {
   search: "",
-  category: [],
+  category: "",
   courseType: "",
   courseLevel: "",
   costRange: [0, 1000000],
-  teacherId: [], 
+  teacherId: [], // حالا این با interface مطابقت داره
 };
 
 interface FilterSectionProps {
@@ -49,7 +50,7 @@ interface FilterSectionProps {
   handleCourseLevelChange: (courseLevelId: string) => void;
   handleFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRangeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  resetFilters:() => void;
+  resetFilters: () => void;
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
@@ -66,8 +67,6 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   handleTeacherChange,
   resetFilters
 }) => {
-
-  
 
   const isFilterActive = (): boolean => {
     return (
